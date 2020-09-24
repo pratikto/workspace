@@ -138,3 +138,11 @@ managed_ip_project/
 .sdk/
 
 .metadata/
+
+ClockFrequencyCounter/ClockFrequencyCounter.cache/
+
+ClockFrequencyCounter/ClockFrequencyCounter.ip_user_files/
+
+ClockFrequencyCounter/ClockFrequencyCounter.runs/
+
+ClockFrequencyCounter/ClockFrequencyCounter.srcs/
