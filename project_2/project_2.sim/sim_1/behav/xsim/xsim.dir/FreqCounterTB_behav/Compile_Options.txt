@@ -1,0 +1,1 @@
+-wto "7b67b8fa7bef404cbe369bdc98ec6f37" --incr --debug "typical" --relax --mt "8" -L "xil_defaultlib" -L "secureip" --snapshot "FreqCounterTB_behav" "xil_defaultlib.FreqCounterTB" -log "elaborate.log" 

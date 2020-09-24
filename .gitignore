@@ -1,0 +1,140 @@
+#########
+#Exclude all
+#########
+*
+!*/
+!.gitignore
+###########################################################################
+##	VIVADO
+###########################################################################
+#########
+#Source files:
+#########
+#Do NOT ignore VHDL, Verilog, block diagrams or EDIF files.
+!*.vhd
+!*.v
+!*.bd
+!*.edif
+#########
+#IP files
+#########
+#.xci: synthesis and implemented not possible - you need to return back to the previous version to generate output products
+#.xci + .dcp: implementation possible but not re-synthesis
+#*.xci(www.spiritconsortium.org)
+!*.xci
+#*.dcp(checkpoint files)
+!*.dcp
+!*.vds
+!*.pb
+#All bd comments and layout coordinates are stored within .ui
+!*.ui
+!*.ooc
+#########
+#System Generator
+#########
+!*.mdl
+!*.slx
+!*.bxml
+#########
+#Simulation logic analyzer
+#########
+!*.wcfg
+!*.coe
+#########
+#MIG
+#########
+!*.prj
+!*.mem
+#########
+#Project files
+#########
+#XPR  +  *.XML ? XPR (Files are merged into a single XPR file for 2014.1 version)
+#Do NOT ignore *.xpr files
+!*.xpr
+#Include *.xml files for 2013.4 or earlier version
+!*.xml
+#########
+#Constraint files
+#########
+#Do NOT ignore *.xdc files
+!*.xdc
+#########
+#TCL - files
+#########
+!*.tcl
+#########
+#Journal - files
+#########
+!*.jou
+#########
+#Reports
+#########
+!*.rpt
+!*.txt
+!*.vdi
+#########
+#C-files
+#########
+!*.c
+!*.h
+!*.elf
+!*.bmm
+!*.xmp
+
+*.dwf3work
+
+zybo_new1/
+
+zybo_new/
+
+zybo_nav/
+
+Zybo2020.1/
+
+zybo.sdk/
+
+zybo/
+
+TestFreqSW_system/
+
+TestFreqSW_3B_system/
+
+design_1_wrapper/
+
+design_1_wrapper_2/
+
+design_2b_wrapper/
+
+FreqCountTestHW/
+
+koprosesor_AHRS/
+
+madgwick_1/
+
+madgwick_2/
+
+madgwick_3/
+
+MadgwickAHRS_HW_development/
+
+TestFreqSW_3B/
+
+TestFreqSW_3_system/
+
+TestFreqSW_3/
+
+TestFreqSW/
+
+TestFreqHW/
+
+test_freq_count_ip/
+
+project_3/
+
+project_1/
+
+managed_ip_project/
+
+.sdk/
+
+.metadata/

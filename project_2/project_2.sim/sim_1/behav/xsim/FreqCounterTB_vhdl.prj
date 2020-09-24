@@ -1,0 +1,12 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  \
+"../../../../source/AorB.vhd" \
+"../../../../source/FSM.vhd" \
+"../../../../source/Frequency_Counter.vhd" \
+"../../../../source/Frequency_Counter_wrapper.vhd" \
+"../../../../source/counter.vhd" \
+"../../../../source/register.vhd" \
+"../../../../source/FreqCounterTB.vhd" \
+
+# Do not sort compile order
+nosort
