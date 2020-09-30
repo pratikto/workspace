@@ -76,6 +76,7 @@
 #C-files
 #########
 !*.c
+!*.cpp
 !*.h
 !*.elf
 !*.bmm
@@ -146,3 +147,5 @@ ClockFrequencyCounter/ClockFrequencyCounter.ip_user_files/
 ClockFrequencyCounter/ClockFrequencyCounter.runs/
 
 ClockFrequencyCounter/ClockFrequencyCounter.srcs/
+
+HLS/DAQ/
