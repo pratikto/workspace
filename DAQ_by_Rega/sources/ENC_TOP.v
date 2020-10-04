@@ -17,8 +17,9 @@ module ENC_TOP(
 	output[63:0]	O_CNT_A1
 );
 
-wire[63:0] w_cnt_a0;
-wire[63:0] w_cnt_a1;
+wire[63:0]  w_cnt_a0;
+wire[63:0]  w_cnt_a1;
+wire        w_cnt_z;
 
 // Bypassing input signal
 assign O_SEL 	= I_SEL;
@@ -27,6 +28,14 @@ assign O_A1 	= I_A1;
 assign O_Z0 	= I_Z0;
 assign O_Z1 	= I_Z1;
 
+//Multiplexer 
+mux_2to1 mux0(
+    .select (I_SEL),
+    .d      ({I_Z1, I_Z0}),
+    .q      (w_cnt_z)
+);
+
+
 // Encoder 0
 assign O_CNT_A0	= w_cnt_a0;
 ENC_CNT ENC_CNT0(
@@ -34,7 +43,7 @@ ENC_CNT ENC_CNT0(
 	.I_ARM	(I_ARM),
 	// .I_SEL	(I_SEL),	// only be used when SEL RESET is implemented
 	.I_A	(I_A0),
-	.I_Z	(I_Z0),
+	.I_Z	(w_cnt_z),
 	.O_CNT	(w_cnt_a0)
 );
 
@@ -45,7 +54,7 @@ ENC_CNT ENC_CNT1(
 	.I_ARM	(I_ARM),
 	// .I_SEL	(I_SEL),	// only be used when SEL RESET is implemented
 	.I_A	(I_A1),
-	.I_Z	(I_Z1),
+	.I_Z	(w_cnt_z),
 	.O_CNT	(w_cnt_a1)
 );
 
