@@ -149,3 +149,7 @@ ClockFrequencyCounter/ClockFrequencyCounter.runs/
 ClockFrequencyCounter/ClockFrequencyCounter.srcs/
 
 HLS/DAQ/
+
+DAQ_by_Rega/DAQ_by_Rega.cache/
+
+DAQ_by_Rega/DAQ_by_Rega.runs/
