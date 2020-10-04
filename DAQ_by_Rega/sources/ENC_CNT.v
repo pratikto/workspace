@@ -5,7 +5,9 @@ module ENC_CNT(
 	input 	I_A,
 	input 	I_Z,
 
-	output[63:0]	O_CNT
+	output[63:0]	O_CNT,
+	output			O_OVERFLOW,
+	output			O_READY
 );
 
 parameter 	P_STM_IDLE 		= 2'b01,
@@ -16,10 +18,14 @@ wire		w_stm_active;
 wire		w_sig_init;		// for initial counting (wait state)
 reg[63:0]	r_cnt;			// register counter
 reg[63:0]	r_out;			// buffer output
+reg			r_overflow;		// overflow status
+
+// Ready Signal
+assign O_READY = w_stm_active & I_A ;
 
 // FSM to detect Z signal HIGH or not
 assign w_stm_active = r_stm[1];
-assign w_sig_init	= (I_Z == 1) && (I_ARM == 1)? 1 : 0;	// for initial counting (wait state)
+assign w_sig_init	= (w_stm_active == 0) && (I_Z == 1) && (I_ARM == 1) ? 1 : 0;	// for initial counting (wait state)
 always @(negedge I_ARM or posedge CLK) begin
 	if ( I_ARM == 0 )
 		r_stm <= P_STM_IDLE;
@@ -41,10 +47,34 @@ always @(negedge I_ARM or posedge CLK) begin
 	else begin
 		if ( w_sig_init == 1)
 			r_cnt <= r_cnt + 1'b1;
-		else if( w_stm_active == 1 )
-			r_cnt <= r_cnt + 1'b1;
+		
+		else if( w_stm_active == 1 ) begin
+			if ( r_cnt == 64'hFFFF_FFFF_FFFF_FFFF )
+				r_cnt <= 64'd0;
+			else
+				r_cnt <= r_cnt + 1'b1;
+		end
+
 		else
 			r_cnt <= r_cnt;
+	end
+end
+
+// Overflow operation
+assign O_OVERFLOW = r_overflow;
+always @(negedge I_ARM or posedge CLK) begin
+	if ( I_ARM == 0 )
+		r_overflow <= 0;
+	else begin
+		if( w_stm_active == 1 ) begin
+			if ( r_cnt == 64'hFFFF_FFFF_FFFF_FFFF )
+				r_overflow <= 1;
+			else
+				r_overflow <= r_overflow;
+		end
+
+		else
+			r_overflow <= r_overflow;
 	end
 end
 

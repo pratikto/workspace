@@ -1,3 +1,36 @@
+task overflow;
+	begin
+		I_ARM = 1;
+		repeat(100000)
+		begin
+			#(P_CLK+1)
+			fork 
+				I_A0 = 1;
+				I_A1 = 1;
+			join
+			#(P_CLK+1)
+			fork
+				I_A0 = 0;
+				I_A1 = 0;
+			join
+		end
+
+		repeat(5)
+		begin
+			#(P_CLK+1)
+			fork 
+				I_A0 = 1;
+				I_A1 = 1;
+			join
+			#(P_CLK+1)
+			fork
+				I_A0 = 0;
+				I_A1 = 0;
+			join
+		end
+	end
+endtask
+
 task rand_sig_a0;
 	input min_delay, max_delay;
 	begin

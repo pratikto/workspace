@@ -18,6 +18,12 @@ module TB_TOP;
 	wire[63:0]	O_CNT_A0;
 	wire[63:0]	O_CNT_A1;
 
+	wire		O_OVERFLOW_0;
+	wire		O_OVERFLOW_1;
+
+	wire		O_READY_0;
+	wire		O_READY_1;
+
 	// To trigger z signals after signal [A0/1] 
 	// is triggered [P_A0/1_NUM] times
 	integer		cnt_a0;
@@ -54,6 +60,10 @@ module TB_TOP;
 	,.O_SEL			(O_SEL)
 	,.O_CNT_A0		(O_CNT_A0)
 	,.O_CNT_A1		(O_CNT_A1)
+	,.O_OVERFLOW_0	(O_OVERFLOW_0)
+	,.O_OVERFLOW_1	(O_OVERFLOW_1)
+	,.O_READY_0		(O_READY_0)
+	,.O_READY_1		(O_READY_1)
 	);
 
 	// Clocking
@@ -128,18 +138,8 @@ module TB_TOP;
 		end
 
 		// Overflow Test
-		// fork 
-		// 	I_ARM = 1;
-		// 	operation_0(33'd4294967299, 33'd4294967299);
-		// 	operation_1(33'd4294967299, 33'd4294967299);
-		// join
-
-		// fork 
-		// 	I_ARM = 1;
-		// 	operation_0(33'd4294967299, 33'd4294967299);
-		// 	operation_1(33'd4294967299, 33'd4294967299);
-		// join
-
+		// overflow();
+		
 		#(P_CLK*100);
 		status_done = 1;
 		$stop();
