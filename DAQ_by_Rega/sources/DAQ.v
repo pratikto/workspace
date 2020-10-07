@@ -84,7 +84,8 @@
         .I_A1           (I_A1),
         .I_Z0           (I_Z0),
         .I_Z1           (I_Z1),
-    
+        
+        .O_ARM          (O_ARM),    
         .O_A0           (O_A0),
         .O_A1           (O_A1),
         .O_Z0           (O_Z0),
