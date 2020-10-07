@@ -1,21 +1,28 @@
 module ENC_TOP(
+    //input clock for pulse measurements
 	input 	CLK,
+	//arm signal to start measurements
 	input 	I_ARM,
+	//select encoder reference
 	input 	I_SEL,
+	//input from encoder
 	input 	I_A0,
 	input 	I_A1,
 	input 	I_Z0,
 	input 	I_Z1,
-
+    //output from encoder
 	output		O_A0,
 	output		O_A1,
 	output		O_Z0,
 	output		O_Z1,
+	//arm signal to start measurements
+	output 	O_ARM,
+	//selector output
 	output	 	O_SEL,
-
+    //counter result, only send through AXI
 	output[63:0]	O_CNT_A0,
 	output[63:0]	O_CNT_A1,
-
+    //interrupt output
 	output			O_OVERFLOW_0,
 	output			O_OVERFLOW_1,
 	output			O_READY_0,
@@ -43,6 +50,7 @@ assign O_A0 	= I_A0;
 assign O_A1 	= I_A1;
 assign O_Z0 	= I_Z0;
 assign O_Z1 	= I_Z1;
+assign O_ARM 	= I_ARM;
 
 // Ready Signals
 assign O_READY_0 = w_ready0;
@@ -51,6 +59,7 @@ assign O_READY_1 = w_ready1;
 // Encoder 0
 assign O_CNT_A0			= w_cnt_a0;
 assign O_OVERFLOW_0		= w_overflow_0;
+
 ENC_CNT ENC_CNT0(
 	.CLK	(CLK),
 	.I_ARM	(I_ARM),
