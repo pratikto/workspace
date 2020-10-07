@@ -15,7 +15,35 @@
 	)
 	(
 		// Users to add ports here
-
+        //input clock for pulse measurements
+        input 	CLK,
+        //arm signal to start measurements
+        input 	I_ARM,
+        //select encoder reference
+        input 	I_SEL,
+        //input from encoder
+        input 	I_A0,
+        input 	I_A1,
+        input 	I_Z0,
+        input 	I_Z1,
+        //arm signal to start measurements
+	    output 	O_ARM,
+        //selector output
+        output	 	O_SEL,
+        //output from encoder
+        output		O_A0,
+        output		O_A1,
+        output		O_Z0,
+        output		O_Z1,
+        //counter result, only send through AXI
+//        output[63:0]	O_CNT_A0,
+//        output[63:0]	O_CNT_A1,
+        //interrupt output
+        output			O_OVERFLOW_0,
+        output			O_OVERFLOW_1,
+        output			O_READY_0,
+        output			O_READY_1,
+            
 		// User ports ends
 		// Do not modify the ports beyond this line
 
@@ -80,6 +108,14 @@
     		// accept the read data and response information.
 		input wire  S_AXI_RREADY
 	);
+	
+	//DAQ couter-0 and countr-1 wire
+    wire[63:0]	 O_CNT_A0;
+    wire[63:0]	 O_CNT_A1;
+    //arm signal to start measurements
+	wire 	     w_ARM;
+    //selector output
+    wire	 	 w_SEL;
 
 	// AXI4LITE signals
 	reg [C_S_AXI_ADDR_WIDTH-1 : 0] 	axi_awaddr;
@@ -410,11 +446,11 @@
 	begin
 	      // Address decoding for reading registers
 	      case ( axi_araddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] )
-	        3'h0   : reg_data_out <= slv_reg0;
-	        3'h1   : reg_data_out <= slv_reg1;
-	        3'h2   : reg_data_out <= slv_reg2;
-	        3'h3   : reg_data_out <= slv_reg3;
-	        3'h4   : reg_data_out <= slv_reg4;
+	        3'h0   : reg_data_out <= O_CNT_A0[63:32];
+	        3'h1   : reg_data_out <= O_CNT_A0[31:0];
+	        3'h2   : reg_data_out <= O_CNT_A1[63:32];
+	        3'h3   : reg_data_out <= O_CNT_A1[31:0];
+	        3'h4   : reg_data_out <= {O_A0, O_A1, O_Z0, O_Z1, O_ARM, O_SEL, O_OVERFLOW_0, O_OVERFLOW_1, O_READY_0, O_READY_1};
 	        3'h5   : reg_data_out <= slv_reg5;
 	        3'h6   : reg_data_out <= slv_reg6;
 	        3'h7   : reg_data_out <= slv_reg7;
@@ -441,7 +477,37 @@
 	    end
 	end    
 
+    
 	// Add user logic here
+	//arm and sel can be triggered from Zynq and input port
+    assign w_arm = I_ARM | slv_reg5[0];
+    assign w_sel = I_ARM | slv_reg5[1];
+	
+    ENC_TOP ENC_DAQ(
+        //input clock for pulse measurements
+		.CLK            (CLK),
+		//arm signal to start measurements
+        .I_ARM          (W_ARM),
+        .I_SEL          (W_SEL),
+        .I_A0           (I_A0),
+        .I_A1           (I_A1),
+        .I_Z0           (I_Z0),
+        .I_Z1           (I_Z1),
+    
+        .O_A0           (O_A0),
+        .O_A1           (O_A1),
+        .O_Z0           (O_Z0),
+        .O_Z1           (O_Z1),
+        .O_SEL          (O_SEL),
+        //result counter
+        .O_CNT_A0       (O_CNT_A0),
+        .O_CNT_A1       (O_CNT_A1),
+        //interrupt output
+        .O_OVERFLOW_0   (O_OVERFLOW_0),  
+        .O_OVERFLOW_1   (O_OVERFLOW_1),
+        .O_READY_0      (O_READY_0),
+        .O_READY_1      (O_READY_1)
+	);
 
 	// User logic ends
 

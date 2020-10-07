@@ -15,7 +15,34 @@
 	)
 	(
 		// Users to add ports here
-
+        //input clock for pulse measurements
+        input 	CLK,
+        //arm signal to start measurements
+        input 	I_ARM,
+        //select encoder reference
+        input 	I_SEL,
+        //input from encoder
+        input 	I_A0,
+        input 	I_A1,
+        input 	I_Z0,
+        input 	I_Z1,
+        //arm signal to start measurements
+	    output 	O_ARM,
+        //selector output
+        output	 	O_SEL,
+        //output from encoder
+        output		O_A0,
+        output		O_A1,
+        output		O_Z0,
+        output		O_Z1,
+        //counter result, only send through AXI
+//        output[63:0]	O_CNT_A0,
+//        output[63:0]	O_CNT_A1,
+        //interrupt output
+        output			O_OVERFLOW_0,
+        output			O_OVERFLOW_1,
+        output			O_READY_0,
+        output			O_READY_1,
 		// User ports ends
 		// Do not modify the ports beyond this line
 
@@ -48,6 +75,29 @@
 		.C_S_AXI_DATA_WIDTH(C_S00_AXI_DATA_WIDTH),
 		.C_S_AXI_ADDR_WIDTH(C_S00_AXI_ADDR_WIDTH)
 	) DAQ_S00_AXI_inst (
+	        //input clock for pulse measurements
+		.CLK            (CLK),
+		//arm signal to start measurements
+        .I_ARM          (I_ARM),
+        .I_SEL          (I_SEL),
+        .I_A0           (I_A0),
+        .I_A1           (I_A1),
+        .I_Z0           (I_Z0),
+        .I_Z1           (I_Z1),
+    
+        .O_A0           (O_A0),
+        .O_A1           (O_A1),
+        .O_Z0           (O_Z0),
+        .O_Z1           (O_Z1),
+        .O_SEL          (O_SEL),
+        //result counter
+//        .O_CNT_A0       (O_CNT_A0),
+//        .O_CNT_A1       (O_CNT_A1),
+        //interrupt output
+        .O_OVERFLOW_0   (O_OVERFLOW_0),  
+        .O_OVERFLOW_1   (O_OVERFLOW_1),
+        .O_READY_0      (O_READY_0),
+        .O_READY_1      (O_READY_1),
 		.S_AXI_ACLK(s00_axi_aclk),
 		.S_AXI_ARESETN(s00_axi_aresetn),
 		.S_AXI_AWADDR(s00_axi_awaddr),
