@@ -16,7 +16,9 @@
 	(
 		// Users to add ports here
         //input clock for pulse measurements
-        input 	CLK,
+//        input 	CLK,
+        //input to select using ARM or from processor
+        input   I_proc, 
         //arm signal to start measurements
         input 	I_ARM,
         //select encoder reference
@@ -76,7 +78,9 @@
 		.C_S_AXI_ADDR_WIDTH(C_S00_AXI_ADDR_WIDTH)
 	) DAQ_S00_AXI_inst (
 	        //input clock for pulse measurements
-		.CLK            (CLK),
+		.CLK            (s00_axi_aclk),
+		//input to select using ARM or from processor
+        .I_proc   (I_proc), 
 		//arm signal to start measurements
         .I_ARM          (I_ARM),
         .I_SEL          (I_SEL),
@@ -98,6 +102,7 @@
         .O_OVERFLOW_1   (O_OVERFLOW_1),
         .O_READY_0      (O_READY_0),
         .O_READY_1      (O_READY_1),
+        
 		.S_AXI_ACLK(s00_axi_aclk),
 		.S_AXI_ARESETN(s00_axi_aresetn),
 		.S_AXI_AWADDR(s00_axi_awaddr),

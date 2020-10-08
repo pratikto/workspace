@@ -17,6 +17,8 @@
 		// Users to add ports here
         //input clock for pulse measurements
         input 	CLK,
+		//input to select using ARM or from processor
+        input   I_proc, 
         //arm signal to start measurements
         input 	I_ARM,
         //select encoder reference
@@ -113,9 +115,11 @@
     wire[63:0]	 O_CNT_A0;
     wire[63:0]	 O_CNT_A1;
     //arm signal to start measurements
-	wire 	     w_ARM;
+	reg 	     w_ARM;
+	wire         w_mux_arm;
     //selector output
     wire	 	 w_SEL;
+    reg	 	 w_mux_SEL;
 
 	// AXI4LITE signals
 	reg [C_S_AXI_ADDR_WIDTH-1 : 0] 	axi_awaddr;
@@ -479,9 +483,27 @@
 
     
 	// Add user logic here
+	
+	//arm Multiplexer
+    mux_2to1 mux0( 
+        .select (I_Proc), 
+        .d      ({slv_reg5[0], I_ARM}), 
+        .q      (w_mux_arm) 
+    ); 
+    
+    // Multiplexer
+    mux_2to1 mux1( 
+        .select (I_Proc), 
+        .d      ({slv_reg5[1], I_sel}), 
+        .q      (w_mux_sel) 
+    ); 
+        
+     assign w_arm = w_mux_arm;
+     assign w_sel = w_mux_sel;
+     
 	//arm and sel can be triggered from Zynq and input port
-    assign w_arm = I_ARM | slv_reg5[0];
-    assign w_sel = I_ARM | slv_reg5[1];
+//    assign w_arm = I_ARM | slv_reg5[0];
+//    assign w_sel = I_sel | slv_reg5[1];
 	
     ENC_TOP ENC_DAQ(
         //input clock for pulse measurements
