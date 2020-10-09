@@ -17,6 +17,8 @@
 		// Users to add ports here
         //input clock for pulse measurements
         input 	CLK,
+		//input to select using ARM or from processor
+        input   I_PROC, 
         //arm signal to start measurements
         input 	I_ARM,
         //select encoder reference
@@ -479,26 +481,45 @@
 
     
 	// Add user logic here
+	
+	//arm Multiplexer
+    mux_2to1 mux0( 
+        .select (I_PROC), 
+        .d      ({slv_reg5[0], I_ARM}), 
+        .q      (w_ARM) 
+    ); 
+    
+    // Multiplexer
+    mux_2to1 mux1( 
+        .select (I_PROC), 
+        .d      ({slv_reg5[1], I_SEL}), 
+        .q      (w_SEL) 
+    ); 
+        
+//     assign w_ARM = w_mux_arm;
+//     assign w_sel = w_mux_sel;
+     
 	//arm and sel can be triggered from Zynq and input port
-    assign w_arm = I_ARM | slv_reg5[0];
-    assign w_sel = I_ARM | slv_reg5[1];
+//    assign w_arm = I_ARM | slv_reg5[0];
+//    assign w_sel = I_sel | slv_reg5[1];
 	
     ENC_TOP ENC_DAQ(
         //input clock for pulse measurements
 		.CLK            (CLK),
 		//arm signal to start measurements
-        .I_ARM          (W_ARM),
-        .I_SEL          (W_SEL),
+        .I_ARM          (w_ARM),
+        .I_SEL          (w_SEL),
         .I_A0           (I_A0),
         .I_A1           (I_A1),
         .I_Z0           (I_Z0),
         .I_Z1           (I_Z1),
-        .O_ARM          (O_ARM),    
+    
+        .O_ARM          (O_ARM),
+        .O_SEL          (O_SEL),
         .O_A0           (O_A0),
         .O_A1           (O_A1),
         .O_Z0           (O_Z0),
         .O_Z1           (O_Z1),
-        .O_SEL          (O_SEL),
         //result counter
         .O_CNT_A0       (O_CNT_A0),
         .O_CNT_A1       (O_CNT_A1),
