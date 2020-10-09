@@ -18,7 +18,7 @@
         //input clock for pulse measurements
 //        input 	CLK,
         //input to select using ARM or from processor
-        input   I_proc, 
+        input   I_PROC, 
         //arm signal to start measurements
         input 	I_ARM,
         //select encoder reference
@@ -80,7 +80,7 @@
 	        //input clock for pulse measurements
 		.CLK            (s00_axi_aclk),
 		//input to select using ARM or from processor
-        .I_proc   (I_proc), 
+        .I_PROC   (I_PROC), 
 		//arm signal to start measurements
         .I_ARM          (I_ARM),
         .I_SEL          (I_SEL),
@@ -88,12 +88,14 @@
         .I_A1           (I_A1),
         .I_Z0           (I_Z0),
         .I_Z1           (I_Z1),
-    
+        //arm signal to start measurements
+        .O_ARM 	        (O_ARM),
+        //selector output
+        .O_SEL          (O_SEL),    
         .O_A0           (O_A0),
         .O_A1           (O_A1),
         .O_Z0           (O_Z0),
         .O_Z1           (O_Z1),
-        .O_SEL          (O_SEL),
         //result counter
 //        .O_CNT_A0       (O_CNT_A0),
 //        .O_CNT_A1       (O_CNT_A1),
