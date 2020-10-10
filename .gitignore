@@ -85,7 +85,10 @@
 #export hardware
 #########
 !*.xsa
-
+#########
+#export zip
+#########
+!*.zip
 
 *.dwf3work
 
@@ -169,3 +172,7 @@ DAQtest/DAQtest.runs/
 DAQtest/DAQtest.ip_user_files/
 
 DAQtest/DAQtest.cache/
+
+vitis_export_archive.ide.zip
+
+DAQtestBD_wrapper/
