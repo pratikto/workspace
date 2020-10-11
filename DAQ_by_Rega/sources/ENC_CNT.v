@@ -14,6 +14,7 @@ parameter 	P_STM_IDLE 		= 2'b01,
 			P_STM_ACTIVE	= 2'b10;
 
 reg[1:0]	r_stm;			// fsm register
+reg		r_ready;		// Add ready signal as register
 wire		w_stm_active;
 wire		w_sig_init;		// for initial counting (wait state)
 reg[63:0]	r_cnt;			// register counter
@@ -21,7 +22,23 @@ reg[63:0]	r_out;			// buffer output
 reg			r_overflow;		// overflow status
 
 // Ready Signal
-assign O_READY = w_stm_active & I_A ;
+assign O_READY = w_stm_active & r_ready ;
+
+always @(negedge I_ARM or posedge CLK) begin
+	if ( I_ARM == 0 )
+		r_ready <= 0;
+	else begin  
+		case (r_ready)
+			0: begin
+				if ( I_A == 1 )
+					r_ready <= 1;
+				else
+					r_ready <= 0;
+			end
+			
+			1: r_ready <= 0;
+	end
+end
 
 // FSM to detect Z signal HIGH or not
 assign w_stm_active = r_stm[1];
