@@ -77,6 +77,11 @@
 #define O_READY_1		85
 
 /*
+ * check bit macro
+ */
+#define checkBit(var,pos) ((var) & (1<<(pos)))
+
+/*
  * ============================================================================================================================================================
  * Variable definitions
  * ============================================================================================================================================================
@@ -88,10 +93,10 @@
  * hardware.
  */
 
-static XScuGic 		ScuGic;						//Interrupt Controller Instance
-static XScuGic_Config 	*ScuGic_cfg_ptr;
-static XScuTimer 		timer_processor;				//timer
-static Xuint32 		*baseaddr_DAQ = (Xuint32 *)XPAR_DAQ_0_BASEADDR;
+static XScuGic ScuGic;											//Interrupt Controller Instance
+static XScuGic_Config *ScuGic_cfg_ptr;
+static XScuTimer timer_processor;								//processor timer
+static Xuint32 *baseaddr_DAQ = (Xuint32 *)XPAR_DAQ_0_BASEADDR; 	//DAQ base address
 
 /*
  * Define global variables to interface with the interrupt service routine (ISR).

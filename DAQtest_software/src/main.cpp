@@ -82,6 +82,11 @@ int main()
 	}
 
     do{
+    	if (checkBit(*(baseaddr_DAQ+4), 5))
+    		xil_printf("O_ARM is 1\n");
+    	else
+    		xil_printf("O_ARM is 0\n");
+    	xil_printf("");
     }while(1);
 
     cleanup_platform();
