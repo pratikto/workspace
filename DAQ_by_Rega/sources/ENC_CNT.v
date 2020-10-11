@@ -37,6 +37,7 @@ always @(negedge I_ARM or posedge CLK) begin
 			end
 			
 			1: r_ready <= 0;
+			endcase
 	end
 end
 
