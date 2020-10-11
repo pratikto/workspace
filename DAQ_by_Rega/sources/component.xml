@@ -242,7 +242,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>2fb99c0d</spirit:value>
+            <spirit:value>2555a026</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -258,7 +258,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>2fb99c0d</spirit:value>
+            <spirit:value>2555a026</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1002,20 +1002,20 @@
       <xilinx:displayName>DAQ_v1_0</xilinx:displayName>
       <xilinx:definitionSource>package_project</xilinx:definitionSource>
       <xilinx:coreRevision>2</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2020-10-09T15:12:32Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2020-10-11T08:02:17Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@47eb6fe6_ARCHIVE_LOCATION">/home/toni/workspace/DAQ_by_Rega/sources</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@1a2517d3_ARCHIVE_LOCATION">/home/toni/workspace/DAQ_by_Rega/sources</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@dc78018_ARCHIVE_LOCATION">/home/toni/workspace/DAQ_by_Rega/sources</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6693b75f_ARCHIVE_LOCATION">/home/toni/workspace/DAQ_by_Rega/sources</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@b507980_ARCHIVE_LOCATION">/home/toni/workspace/DAQ_by_Rega/sources</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@46846f08_ARCHIVE_LOCATION">/home/toni/workspace/DAQ_by_Rega/sources</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@f7a0587_ARCHIVE_LOCATION">/home/toni/workspace/DAQ_by_Rega/sources</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@173e30e4_ARCHIVE_LOCATION">/home/toni/workspace/DAQ_by_Rega/sources</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@9548fdd_ARCHIVE_LOCATION">/home/toni/workspace/DAQ_by_Rega/sources</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@38dc94e3_ARCHIVE_LOCATION">/home/toni/workspace/DAQ_by_Rega/sources</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2020.1</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="6f0949ea"/>
       <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="871c369d"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="acd0a61f"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="eaa17579"/>
       <xilinx:checksum xilinx:scope="ports" xilinx:value="8c8986de"/>
       <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="20f50d64"/>
       <xilinx:checksum xilinx:scope="parameters" xilinx:value="6f04e406"/>
