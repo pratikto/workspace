@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ASCII"?>
+<sdkproject:SdkProject xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdkproject="http://www.xilinx.com/sdkproject" name="DAQtest" location="/home/toni/workspace/SW/DAQtest" platform="/home/toni/workspace/SW/DAQtestBD_wrapper/export/DAQtestBD_wrapper/DAQtestBD_wrapper.xpfm" platformUID="xilinx:zybo-z7-20::0.0(custom)" systemProject="DAQtest_system" sysConfig="DAQtestBD_wrapper" runtime="cpp" cpu="domain_ps7_cortexa9_0" cpuInstance="ps7_cortexa9_0" os="standalone" language="CPP" mssSignature="3c3efedf999fea7cbe7972252765b9c6">
+  <configuration name="Debug" id="xilinx.gnu.armv7.exe.debug.520716060">
+    <configBuildOptions xsi:type="sdkproject:SdkOptions"/>
+    <lastBuildOptions xsi:type="sdkproject:SdkOptions"/>
+  </configuration>
+  <configuration name="Release" id="xilinx.gnu.armv7.exe.release.1520689721" dirty="true">
+    <configBuildOptions xsi:type="sdkproject:SdkOptions"/>
+  </configuration>
+  <template appTemplateName="empty_application"/>
+</sdkproject:SdkProject>
