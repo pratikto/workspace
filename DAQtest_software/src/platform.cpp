@@ -123,7 +123,9 @@ interrupt_init(
 {
 
 	/*
-	 * Initialise the GIC driver
+	 * ============================================================================================================================================================
+	 * Initialize the GIC driver
+	 * ============================================================================================================================================================
 	 */
 
 	int result;
@@ -150,29 +152,88 @@ interrupt_init(
 		return result;
 	}
 
-    // set the priority of IRQ_F2P[0:0] to 0xA0 (highest 0xF8, lowest 0x00) and a trigger for a rising edge 0x3.
+	/*
+	 * ============================================================================================================================================================
+	 * O_ARM interrupt configuration
+	 * ============================================================================================================================================================
+	 */
+//    // set the priority of O_ARM to 0xA0 (highest 0xF8, lowest 0x00) and a trigger for a rising edge 0x3.
+//    XScuGic_SetPriorityTriggerType(
+//    		intr_ptr,
+//    		O_ARM,
+//			0xA0,
+//			0x3);
+//
+//    // connect the interrupt service routine O_ARM_isr to the interrupt controller
+//    result = XScuGic_Connect(
+//    		intr_ptr,
+//			O_ARM,
+//			(Xil_ExceptionHandler)O_ARM_isr,
+//			(void *)&intr_ptr);
+//
+//    if (result != XST_SUCCESS) {
+//		xil_printf("O_ARM ISR connection failed!");
+//        return result;
+//    }
+//
+//    // enable interrupts for O_ARM
+//    XScuGic_Enable(intr_ptr, O_ARM);
+
+	/*
+	 * ============================================================================================================================================================
+	 * O_READY_0 interrupt configuration
+	 * ============================================================================================================================================================
+	 */
+    // set the priority of O_READY_0 to 0xA1 (highest 0xF8, lowest 0x00) and a trigger for a rising edge 0x3.
     XScuGic_SetPriorityTriggerType(
     		intr_ptr,
-    		O_ARM,
-			0xA0,
+			O_READY_0,
+			0xA1,
 			0x3);
 
-    // connect the interrupt service routine isr0 to the interrupt controller
+    // connect the interrupt service routine O_READY_0_isr to the interrupt controller
     result = XScuGic_Connect(
     		intr_ptr,
-			O_ARM,
-			(Xil_ExceptionHandler)O_ARM_isr,
+			O_READY_0,
+			(Xil_ExceptionHandler)O_READY_0_isr,
 			(void *)&intr_ptr);
 
     if (result != XST_SUCCESS) {
-		xil_printf("O_ARM ISR connection failed!");
+		xil_printf("O_READY_0 ISR connection failed!");
         return result;
     }
 
-    // enable interrupts for IRQ_F2P[0:0]
-    XScuGic_Enable(intr_ptr, O_ARM);
+    // enable interrupts for O_ARM
+    XScuGic_Enable(intr_ptr, O_READY_0);
 
-	// Initialize the exception handler
+	/*
+	 * ============================================================================================================================================================
+	 * O_READY_1 interrupt configuration
+	 * ============================================================================================================================================================
+	 */
+    // set the priority of O_READY_1 to 0xA2 (highest 0xF8, lowest 0x00) and a trigger for a rising edge 0x3.
+    XScuGic_SetPriorityTriggerType(
+    		intr_ptr,
+			O_READY_1,
+			0xA2,
+			0x3);
+
+    // connect the interrupt service routine O_READY_1_isr to the interrupt controller
+    result = XScuGic_Connect(
+    		intr_ptr,
+			O_READY_0,
+			(Xil_ExceptionHandler)O_READY_1_isr,
+			(void *)&intr_ptr);
+
+    if (result != XST_SUCCESS) {
+		xil_printf("O_READY_1 ISR connection failed!");
+        return result;
+    }
+
+    // enable interrupts for O_ARM
+    XScuGic_Enable(intr_ptr, O_READY_0);
+
+    // Initialize the exception handler
 	Xil_ExceptionInit();
 
 	// Register the exception handler

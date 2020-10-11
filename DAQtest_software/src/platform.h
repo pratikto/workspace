@@ -126,6 +126,16 @@ int interrupt_init(
 static void O_ARM_isr(void *CallBackRef);
 
 /*
+ * Define an interrupt service routine for O_READY_0
+ */
+static void O_READY_0_isr(void *CallBackRef);
+
+/*
+ * Define an interrupt service routine for O_READY_1
+ */
+static void O_READY_1_isr(void *CallBackRef);
+
+/*
  * Define an interrupt service routine for processor timer
  */
 static void timer_processor_isr(void *CallBackRef);
