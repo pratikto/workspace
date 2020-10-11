@@ -92,87 +92,100 @@
 
 *.dwf3work
 
-zybo_new1/
+HW/project_2/project_2.sim/
 
-zybo_new/
+HW/project_2/project_2.cache/
 
-zybo_nav/
+HW/project_2/project_2.ip_user_files/
 
-Zybo2020.1/
+HW/project_2/project_2.runs/
 
-zybo.sdk/
+HW/ClockFrequencyCounter/ClockFrequencyCounter.cache/
 
-zybo/
+HW/ClockFrequencyCounter/ClockFrequencyCounter.ip_user_files/
 
-TestFreqSW_system/
+HW/ClockFrequencyCounter/ClockFrequencyCounter.runs/
 
-TestFreqSW_3B_system/
+HW/ClockFrequencyCounter/ClockFrequencyCounter.srcs/
 
-design_1_wrapper/
+HW/DAQ_by_Rega/DAQ_by_Rega.cache/
 
-design_1_wrapper_2/
+HW/DAQ_by_Rega/DAQ_by_Rega.ip_user_files/
 
-design_2b_wrapper/
+HW/DAQ_by_Rega/DAQ_by_Rega.runs/
 
-FreqCountTestHW/
-
-koprosesor_AHRS/
-
-madgwick_1/
-
-madgwick_2/
-
-madgwick_3/
-
-MadgwickAHRS_HW_development/
-
-TestFreqSW_3B/
-
-TestFreqSW_3_system/
-
-TestFreqSW_3/
-
-TestFreqSW/
-
-TestFreqHW/
-
-test_freq_count_ip/
-
-project_3/
-
-project_1/
-
-managed_ip_project/
-
-.sdk/
+project_2/
 
 .metadata/
 
-ClockFrequencyCounter/ClockFrequencyCounter.cache/
+.sdk/
 
-ClockFrequencyCounter/ClockFrequencyCounter.ip_user_files/
+HLS/MadgwickAHRS_HW_development/
 
-ClockFrequencyCounter/ClockFrequencyCounter.runs/
+HW/DAQtest/DAQtest.cache/
 
-ClockFrequencyCounter/ClockFrequencyCounter.srcs/
+HW/DAQtest/DAQtest.ip_user_files/
 
-HLS/DAQ/
+HW/DAQtest/DAQtest.runs/
 
+HW/madgwick_1/
 
-DAQ_by_Rega/DAQ_by_Rega.cache/
+HW/madgwick_2/
 
-DAQ_by_Rega/DAQ_by_Rega.runs/
+HW/madgwick_3/
 
-DAQ_by_Rega/DAQ_by_Rega.ip_user_files/
+HW/zybo/
 
-DAQ_by_Rega/DAQ_by_Rega.sim/
+HW/zybo.sdk/
 
-DAQtest/DAQtest.runs/
+HW/Zybo2020.1/
 
-DAQtest/DAQtest.ip_user_files/
+HW/zybo_nav/
 
-DAQtest/DAQtest.cache/
+HW/koprosesor_AHRS/
 
-vitis_export_archive.ide.zip
+HW/FreqCountTestHW/
 
-DAQtestBD_wrapper/
+HW/project_1/
+
+HW/project_3/
+
+HW/zybo_new1/
+
+HW/zybo_new/
+
+SW/DAQtest_software_backup1/
+
+SW/DAQtestBD_wrapper_backup1/
+
+HW/managed_ip_project/
+
+HW/TestFreqHW/
+
+HW/test_freq_count_ip/
+
+HW/ClockFrequencyCounter/
+
+SW/TestFreqSW_system/
+
+SW/ClockFreqCountSW/
+
+SW/ClockFreqCountSW_system/
+
+SW/DAQtest_software_system_backup1/
+
+SW/design_1_wrapper/
+
+SW/design_1_wrapper_2/
+
+SW/design_2b_wrapper/
+
+SW/TestFreqSW/
+
+SW/TestFreqSW_3/
+
+SW/TestFreqSW_3_system/
+
+SW/TestFreqSW_3B/
+
+SW/TestFreqSW_3B_system/
