@@ -126,14 +126,29 @@ module TB_TOP;
 		repeat(5) begin
 			fork 
 				I_ARM = 1;
-				operation_0(500, 500);
-				operation_1(500, 500);
+				operation_0(250, 250);
+				operation_1(250, 250);
 			join
 
 			fork 
 				I_ARM = 0;
-				operation_0(500, 500);
-				operation_1(500, 500);
+				operation_0(250, 250);
+				operation_1(250, 250);
+			join
+		end
+		
+		// Normal Operation
+		repeat(5) begin
+			fork 
+				I_ARM = 1;
+				operation_0(250, 250);
+				operation_1(250, 250);
+			join
+
+			fork 
+				I_ARM = 0;
+				operation_0(250, 250);
+				operation_1(250, 250);
 			join
 		end
 
