@@ -65,16 +65,17 @@
 /*
  * PL-PS interrupt port ID definition
  */
-#define O_ARM			61
-#define O_SEL			62
-#define	O_A0			63
-#define O_A1			64
-#define O_Z0			65
-#define O_Z1			66
-#define O_OVERFLOW_0	67
-#define O_OVERFLOW_1	68
-#define O_READY_0		91
-#define O_READY_1		90
+#define O_READY_0		61
+#define O_READY_1		62
+#define O_ARM			63
+#define O_SEL			64
+#define	O_A0			65
+#define O_A1			66
+#define O_Z0			67
+#define O_Z1			68
+#define O_OVERFLOW_0	84
+#define O_OVERFLOW_1	85
+
 
 /*
  * check bit macro
@@ -87,8 +88,8 @@
  * ============================================================================================================================================================
  */
 
-static bool READY_0_trig = 0;
-static bool READY_1_trig = 0;
+static bool READY_0_trig;
+static bool READY_1_trig;
 
 
 /*

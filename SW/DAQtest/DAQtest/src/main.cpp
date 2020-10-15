@@ -40,8 +40,8 @@ int main()
 	}
 
     do{
-//    	if(READY_0_trig){
-    	if(checkBit(*(baseaddr_DAQ+4), 1)){
+    	if(READY_0_trig){
+//    	if(checkBit(*(baseaddr_DAQ+4), 1)){
     		count0_low 	= *(baseaddr_DAQ+1);
     		count0_high = *(baseaddr_DAQ+0);
 			count0  	= ((uint64_t) (count0_high << 32) & 0xffffffff00000000) | ((uint64_t) count0_low & 0x00000000ffffffff);
