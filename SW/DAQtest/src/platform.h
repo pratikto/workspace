@@ -73,8 +73,8 @@
 #define O_Z1			66
 #define O_OVERFLOW_0	67
 #define O_OVERFLOW_1	68
-#define O_READY_0		84
-#define O_READY_1		85
+#define O_READY_0		91
+#define O_READY_1		90
 
 /*
  * check bit macro

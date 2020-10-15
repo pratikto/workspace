@@ -44,7 +44,7 @@ int main()
     	if(checkBit(*(baseaddr_DAQ+4), 1)){
     		count0_low 	= *(baseaddr_DAQ+1);
     		count0_high = *(baseaddr_DAQ+0);
-			count0  	= ((uint64_t) (count0_low << 32) & 0xffffffff00000000) | ((uint64_t) count0_low & 0x00000000ffffffff);
+			count0  	= ((uint64_t) (count0_high << 32) & 0xffffffff00000000) | ((uint64_t) count0_low & 0x00000000ffffffff);
     		xil_printf("counter0_high :  %10u\n", count0_high);
     		xil_printf("counter0_low  :  %10u\n\r", count0_low);
 			xil_printf("counter0 :  %10u\n", count0);
