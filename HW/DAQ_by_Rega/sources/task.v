@@ -72,3 +72,34 @@ task operation_1;
 		end
 	end
 endtask
+
+    task axi_write;
+        input [31:0] awaddr;
+        input [31:0] wdata; 
+        begin
+            // *** Write address ***
+            s_axi_awaddr = awaddr;
+            s_axi_awvalid = 1;
+            #T;
+            s_axi_awvalid = 0;
+            // *** Write data ***
+            s_axi_wdata = wdata;
+            s_axi_wstrb = 4'hf;
+            s_axi_wvalid = 1; 
+            #T;
+            s_axi_wvalid = 0;
+            #T;
+        end
+    endtask
+    
+    task axi_read;
+        input [31:0] araddr;
+        begin
+            // *** Read address ***
+            s_axi_araddr = araddr;
+            s_axi_arvalid = 1;
+            #T;
+            s_axi_arvalid = 0;
+            #T;
+        end
+    endtask
