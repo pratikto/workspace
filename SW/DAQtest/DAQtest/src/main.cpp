@@ -21,9 +21,9 @@ int main()
 //    init_platform();
 
 	int status 		= XST_SUCCESS;
-	uint32_t count0_high	= 0;
-	uint32_t count0_low 	= 0;
-	uint64_t count0			= 0;
+//	uint32_t count0_high	= 0;
+//	uint32_t count0_low 	= 0;
+//	uint64_t count0			= 0;
 	u32 count1_high	= 0;
 	u32 count1_low 	= 0;
 	u64 count1		= 0;
@@ -40,16 +40,16 @@ int main()
 	}
 
     do{
-    	if(READY_0_trig){
+//    	if(READY_0_trig){
 //    	if(checkBit(*(baseaddr_DAQ+4), 1)){
-    		count0_low 	= *(baseaddr_DAQ+1);
-    		count0_high = *(baseaddr_DAQ+0);
-			count0  	= ((uint64_t) (count0_high << 32) & 0xffffffff00000000) | ((uint64_t) count0_low & 0x00000000ffffffff);
-    		xil_printf("counter0_high :  %10u\n", count0_high);
-    		xil_printf("counter0_low  :  %10u\n\r", count0_low);
-			xil_printf("counter0 :  %10u\n", count0);
-			READY_0_trig = 0;
-    	}
+//    		count0_low 	= *(baseaddr_DAQ+1);
+//    		count0_high = *(baseaddr_DAQ+0);
+//			count0  	= ((uint64_t) (count0_high << 32) & 0xffffffff00000000) | ((uint64_t) count0_low & 0x00000000ffffffff);
+//    		xil_printf("counter0_high :  %10u\n", count0_high);
+//    		xil_printf("counter0_low  :  %10u\n\r", count0_low);
+//			xil_printf("counter0 :  %10u\n", count0);
+//			READY_0_trig = 0;
+//    	}
 
 
 

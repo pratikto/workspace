@@ -184,27 +184,27 @@ interrupt_init(
 	 * O_READY_0 interrupt configuration
 	 * ============================================================================================================================================================
 	 */
-//    // set the priority of O_READY_0 to 0xA0 (highest 0xF8, lowest 0x00) and a trigger for a rising edge 0x3.
-//    XScuGic_SetPriorityTriggerType(
-//    		intr_ptr,
-//			O_READY_0,
-//			0xA0,
-//			0x3);
-//
-//    // connect the interrupt service routine O_READY_0_isr to the interrupt controller
-//    result = XScuGic_Connect(
-//    		intr_ptr,
-//			O_READY_0,
-//			(Xil_ExceptionHandler)O_READY_0_isr,
-//			(void *)&intr_ptr);
-//
-//    if (result != XST_SUCCESS) {
-//		xil_printf("O_READY_0 ISR connection failed!");
-//        return result;
-//    }
-//
-//    // enable interrupts for O_READY_0
-//    XScuGic_Enable(intr_ptr, O_READY_0);
+    // set the priority of O_READY_0 to 0xA0 (highest 0xF8, lowest 0x00) and a trigger for a rising edge 0x3.
+    XScuGic_SetPriorityTriggerType(
+    		intr_ptr,
+			O_READY_0,
+			0xA0,
+			0x3);
+
+    // connect the interrupt service routine O_READY_0_isr to the interrupt controller
+    result = XScuGic_Connect(
+    		intr_ptr,
+			O_READY_0,
+			(Xil_ExceptionHandler)O_READY_0_isr,
+			(void *)&intr_ptr);
+
+    if (result != XST_SUCCESS) {
+		xil_printf("O_READY_0 ISR connection failed!");
+        return result;
+    }
+
+    // enable interrupts for O_READY_0
+    XScuGic_Enable(intr_ptr, O_READY_0);
 
 	/*
 	 * ============================================================================================================================================================
@@ -261,8 +261,17 @@ O_ARM_isr(void *CallBackRef){
  */
 static void
 O_READY_0_isr(void *CallBackRef){
-	READY_0_trig = true;
-    xil_printf("O_READY_0 is triggered!\n\r");
+	uint32_t count0_high	= 0;
+	uint32_t count0_low 	= 0;
+	uint64_t count0			= 0;
+	count0_low 	= *(baseaddr_DAQ+1);
+	count0_high = *(baseaddr_DAQ+0);
+	count0  	= ((uint64_t) (count0_high << 32) & 0xffffffff00000000) | ((uint64_t) count0_low & 0x00000000ffffffff);
+	xil_printf("counter0_high :  %10u\n", count0_high);
+	xil_printf("counter0_low  :  %10u\n\r", count0_low);
+	xil_printf("counter0 :  %10u\n", count0);
+//	READY_0_trig = true;
+//    xil_printf("O_READY_0 is triggered!\n\r");
 }
 
 /*
@@ -270,8 +279,8 @@ O_READY_0_isr(void *CallBackRef){
  */
 static void
 O_READY_1_isr(void *CallBackRef){
-	READY_1_trig = true;
-    xil_printf("O_READY_0 is triggered!\n\r");
+//	READY_1_trig = true;
+//    xil_printf("O_READY_1 is triggered!\n\r");
 }
 
 static void

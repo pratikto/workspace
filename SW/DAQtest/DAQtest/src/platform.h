@@ -76,7 +76,6 @@
 #define O_OVERFLOW_0	84
 #define O_OVERFLOW_1	85
 
-
 /*
  * check bit macro
  */
@@ -88,8 +87,11 @@
  * ============================================================================================================================================================
  */
 
-static bool READY_0_trig;
-static bool READY_1_trig;
+/*
+ * Define global variables to interface with the interrupt service routine (ISR).
+ */
+static bool READY_0_trig = 0;
+static bool READY_1_trig = 0;
 
 
 /*
@@ -102,10 +104,6 @@ static XScuGic ScuGic;											//Interrupt Controller Instance
 static XScuGic_Config *ScuGic_cfg_ptr;
 static XScuTimer timer_processor;								//processor timer
 static Xuint32 *baseaddr_DAQ = (Xuint32 *)XPAR_DAQ_0_BASEADDR; 	//DAQ base address
-
-/*
- * Define global variables to interface with the interrupt service routine (ISR).
- */
 
 void init_platform();
 void cleanup_platform();
