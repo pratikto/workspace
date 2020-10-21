@@ -260,17 +260,17 @@ O_ARM_isr(void *CallBackRef){
  * Define an interrupt service routine for O_READY_0
  */
 static void
-O_READY_0_isr(void *CallBackRef){
-	uint32_t count0_high	= 0;
-	uint32_t count0_low 	= 0;
-	uint64_t count0			= 0;
-	count0_low 	= *(baseaddr_DAQ+1);
-	count0_high = *(baseaddr_DAQ+0);
-	count0  	= ((uint64_t) (count0_high << 32) & 0xffffffff00000000) | ((uint64_t) count0_low & 0x00000000ffffffff);
-	xil_printf("counter0_high :  %10u\n", count0_high);
-	xil_printf("counter0_low  :  %10u\n\r", count0_low);
-	xil_printf("counter0 :  %10u\n", count0);
-//	READY_0_trig = true;
+O_READY_0_isr(void *CallBackRef){\
+	//read counter 0
+	counter0[index0].low	= *(baseaddr_DAQ+1);
+	counter0[index0].high	= *(baseaddr_DAQ+0);
+	READY_0_trig = true;
+
+	// Increment index
+	index0++;
+
+	READY_0_trig = true;
+//	READY_0_trig_first = true;
 //    xil_printf("O_READY_0 is triggered!\n\r");
 }
 
@@ -279,7 +279,15 @@ O_READY_0_isr(void *CallBackRef){
  */
 static void
 O_READY_1_isr(void *CallBackRef){
-//	READY_1_trig = true;
+	//read counter 1
+	counter1[index1].low 	= *(baseaddr_DAQ+3);
+	counter1[index1].high 	= *(baseaddr_DAQ+2);
+
+	// Increment index
+	index1++;
+
+	READY_1_trig = true;
+//	READY_1_trig_first = true;
 //    xil_printf("O_READY_1 is triggered!\n\r");
 }
 

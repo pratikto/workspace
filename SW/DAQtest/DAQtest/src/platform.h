@@ -49,7 +49,7 @@
 #include "xscugic.h" 		// Processor interrupt controller device driver
 #include "xscutimer.h"		//private timer
 #include "xsdps.h"
-//#include "ff.h"
+#include "ff.h"
 #include "platform_config.h"
 #include "xil_cache.h"
 #include <string>
@@ -86,12 +86,25 @@
  * Variable definitions
  * ============================================================================================================================================================
  */
+/*
+ * Structure declarations
+ */
+struct counter{
+	uint32_t high;
+	uint32_t low;
+};
 
 /*
  * Define global variables to interface with the interrupt service routine (ISR).
  */
 static bool READY_0_trig = 0;
 static bool READY_1_trig = 0;
+//static bool READY_0_trig_first 	= 0;
+//static bool READY_1_trig_first 	= 0;
+static counter *counter0, *counter1;
+static int index0 = 0;
+static int index1 = 0;
+static const float ratio = 2.5f;
 
 
 /*

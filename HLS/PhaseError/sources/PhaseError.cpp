@@ -3,55 +3,67 @@
 
 //#include "stdafx.h"Q
 #include "PhaseError.h"
-#include <math.h>
+#include "ap_int.h"
+#include <hls_math.h>
 
 //====================================================================================================
 // Functions
 
 //---------------------------------------------------------------------------------------------------
 // PhaseError algorithm
-void PhaseError(
+float PhaseError(
 //		input
-		bool arm, bool clk, bool A[2], bool Z[2], bool sel, float ratio,
-//		output
-		float error){
+		ap_uint<32> X1, 		//Arr_A2[Floor(RefIndex(n))] --> High
+		ap_uint<32> X2, 		//Arr_A2[Floor(RefIndex(n))] --> Low
+		ap_uint<32> Y1, 		//Arr_A2[Floor(RefIndex(n)+1)] --> High
+		ap_uint<32> Y2, 		//Arr_A2[Floor(RefIndex(n)+1)] --> Low
+		ap_uint<32> A1, 		//first A reference --> High
+		ap_uint<32> A2, 		//first A reference --> Low
+		ap_uint<32> B1, 		//first A --> High
+		ap_uint<32> B2, 		//first A --> Low
+		double deltaRevIndex	//RefIndex(n) – Floor(RefIndex(n)
+		)
+{
 
-//	variable declaration
-	static bool _SCLR;
-	static bool _startCalc =0;
-	static int 	_Q[2];
-	static int *_Arr_A[3];
-	static int _i = 0, _j = 0;
-	static float _refIndex = 0;
-	static float _EstA = 0;
-	static float _offset = 0;
+	// variable declaration
+	ap_uint<64> _X;
+	ap_uint<64> _Y;
+	ap_uint<64> _A;
+	ap_uint<64> _B;
+	ap_uint<64> _offset;
+	double A, B, X, Y, Z;
+	double offset;
+	double EstA;
+	double PhaseError;
 
-//	encoder-0 counter
-	counter(clk, arm, CE, _Q[0]);
+	// concatenation
+	_X = (X1, X2);
+	_Y = (Y1, Y2);
+	_A = (A1, A2);
+	_B = (B1, B2);
 
-//	encoder-1 counter
-	counter(clk, arm, CE, _Q[1]);
+	//convert unsigned integer to double format
+	X = _X.to_double();
+	Y = _Y.to_double();
+	A = _A.to_double();
+	B = _B.to_double();
 
-	while(arm){
-		if (Z)
-			_startCalc = 1;
-		if (_startCalc){
-//			calculate reference index
-			_refIndex = _i * ratio;
-//			interpolation calculation
-			_Arr_A[3][_j] = _Arr_A[2][floor(_refIndex)] + (_Arr_A[2][floor(_refIndex) + 1] - _Arr_A[2][floor(_refIndex)]) * (_refIndex - floor(_refIndex));
-//			estimation calculation
-			_EstA = _Arr_A[3][_j] + _offset;
-//			error calculation
-			error = _Arr_A[0][_i] - _EstA;
-		}
-	}
-	_startCalc = 0;
-}
+	//calculate offset
+	offset = A - B;
 
-//---------------------------------------------------------------------------------------------------
-// counter algorithm
-void counter(bool clk, bool SCLR, bool ClkEn, int Q){
+	// interpolation calculation
+	// Arr_A2[RefIndex(n)] = Arr_A2[Floor(RefIndex(n))] + ((Arr_A2[Floor(RefIndex(n))+1] – Arr_A2[Floor(RefIndex(n))]) * (RefIndex(n) – Floor(RefIndex(n)))
+	Z = X + ((Y - X) * deltaRevIndex);
+
+	//estimation calculation
+	//EstA2[1] = Arr_A2[RefIndex(n)] + offset
+	EstA = Z + offset;
+
+	// Phase error calculation
+	// error = _Arr_A[0] - _EstA;
+	PhaseError = A - EstA;
+
+	return PhaseError;
 }
 
 //====================================================================================================
