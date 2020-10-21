@@ -24,6 +24,17 @@ float PhaseError(
 		double deltaRevIndex	//RefIndex(n) – Floor(RefIndex(n)
 		)
 {
+#pragma HLS PIPELINE
+#pragma HLS INTERFACE s_axilite bundle=bus_coprocessor port=deltaRevIndex
+#pragma HLS INTERFACE s_axilite bundle=bus_coprocessor port=B2
+#pragma HLS INTERFACE s_axilite bundle=bus_coprocessor port=B1
+#pragma HLS INTERFACE s_axilite bundle=bus_coprocessor port=A2
+#pragma HLS INTERFACE s_axilite bundle=bus_coprocessor port=A1
+#pragma HLS INTERFACE s_axilite bundle=bus_coprocessor port=Y2
+#pragma HLS INTERFACE s_axilite bundle=bus_coprocessor port=Y1
+#pragma HLS INTERFACE s_axilite bundle=bus_coprocessor port=X2
+#pragma HLS INTERFACE s_axilite bundle=bus_coprocessor port=X1
+#pragma HLS INTERFACE s_axilite bundle=bus_coprocessor port=return
 
 	// variable declaration
 	ap_uint<64> _X;
@@ -49,6 +60,7 @@ float PhaseError(
 	B = _B.to_double();
 
 	//calculate offset
+	offset_calc:
 	offset = A - B;
 
 	// interpolation calculation
