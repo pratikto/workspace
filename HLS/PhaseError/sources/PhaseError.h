@@ -3,6 +3,9 @@
 #ifndef PhaseError_h
 #define PhaseError_h
 
+#include "ap_int.h"
+#include <hls_math.h>
+
 //---------------------------------------------------------------------------------------------------
 // Definitions
 
@@ -12,13 +15,18 @@
 
 //---------------------------------------------------------------------------------------------------
 // Function declarations
-void PhaseError(
+float PhaseError(
 //		input
-		bool arm, bool clk, bool A[2], bool Z[2], bool sel, float ratio,
-//		output
-		float error);
-void counter(bool clk, bool SCLR, bool ClkEn, int Q);
-
+		ap_uint<32> X1, 		//Arr_A2[Floor(RefIndex(n))] --> High
+		ap_uint<32> X2, 		//Arr_A2[Floor(RefIndex(n))] --> Low
+		ap_uint<32> Y1, 		//Arr_A2[Floor(RefIndex(n)+1)] --> High
+		ap_uint<32> Y2, 		//Arr_A2[Floor(RefIndex(n)+1)] --> Low
+		ap_uint<32> A1, 		//first A reference --> High
+		ap_uint<32> A2, 		//first A reference --> Low
+		ap_uint<32> B1, 		//first A --> High
+		ap_uint<32> B2, 		//first A --> Low
+		double deltaRevIndex	//RefIndex(n) – Floor(RefIndex(n)
+		);
 #endif
 //=====================================================================================================
 // End of file

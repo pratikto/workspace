@@ -1,10 +1,6 @@
 //---------------------------------------------------------------------------------------------------
 // Header files
-
-//#include "stdafx.h"Q
 #include "PhaseError.h"
-#include "ap_int.h"
-#include <hls_math.h>
 
 //====================================================================================================
 // Functions
@@ -60,7 +56,6 @@ float PhaseError(
 	B = _B.to_double();
 
 	//calculate offset
-	offset_calc:
 	offset = A - B;
 
 	// interpolation calculation
