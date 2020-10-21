@@ -207,3 +207,9 @@ SW/DAQtestBD_wrapper2/
 SW/DAQtest/DAQtesBD_wrapper/
 
 SW/DAQtest/DAQtest_system/
+
+HLS/PhaseError/solution1/impl/
+
+HLS/PhaseError/solution1/syn/
+
+HLS/PhaseError/solution1/.autopilot/
