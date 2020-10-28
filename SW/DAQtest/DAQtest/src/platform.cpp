@@ -264,14 +264,50 @@ O_READY_0_isr(void *CallBackRef){\
 	//read counter 0
 	counter0[index0].low	= *(baseaddr_DAQ+1);
 	counter0[index0].high	= *(baseaddr_DAQ+0);
-	READY_0_trig = true;
 
+	//
+	sprintf(Buffer_logger, ",%u,%u,%u,,,,\n",
+			index0,
+			counter0[index0].high, counter0[index0].low);
+
+   	// Open log for writing
+	Log_File = (char *)FileName;
+	result = f_open(&file1, Log_File,FA_WRITE);
+		if (result!=0) {
+			print("failed to open log for writing\n\r");
+//			return XST_FAILURE;
+		}
+
+	// Point to the end of log
+	result = f_lseek(&file1,accum);
+		if (result!=0) {
+			print("failed to point to the end of log\n\r");
+//			return XST_FAILURE;
+		}
+
+	// Increment file EOF pointer
+	len = strlen(Buffer_logger);
+	accum=accum+len;
+
+	// Write to log
+	result = f_write(&file1, (const void*)Buffer_logger, len, &BytesWr);
+	if (result!=0) {
+		print("failed to write to log\n\r");
+//		return XST_FAILURE;
+	}
+
+	//Close file.
+	result = f_close(&file1);
+	if (result!=0) {
+		print("failed to close file\n\r");
+//		return XST_FAILURE;
+	}
 	// Increment index
 	index0++;
 
 	READY_0_trig = true;
 //	READY_0_trig_first = true;
-//    xil_printf("O_READY_0 is triggered!\n\r");
+    xil_printf("O_READY_0 is triggered!\n\r");
 }
 
 /*
@@ -283,12 +319,40 @@ O_READY_1_isr(void *CallBackRef){
 	counter1[index1].low 	= *(baseaddr_DAQ+3);
 	counter1[index1].high 	= *(baseaddr_DAQ+2);
 
+	//
+	sprintf(Buffer_logger, ",,,,%u,%u,%u,\n,",
+			index1,
+			counter1[index1].high, counter1[index1].low);
+
+	// Point to the end of log
+	result = f_lseek(&file1,accum);
+		if (result!=0) {
+//			return XST_FAILURE;
+		}
+
+	// Increment file EOF pointer
+	len = strlen(Buffer_logger);
+	accum=accum+len;
+
+	// Write to log
+	result = f_write(&file1, (const void*)Buffer_logger, len, &BytesWr);
+	if (result!=0) {
+//		return XST_FAILURE;
+	}
+
+	//Close file.
+	result = f_close(&file1);
+	if (result!=0) {
+		print("failed to close file\n\r");
+//		return XST_FAILURE;
+	}
+
 	// Increment index
 	index1++;
 
 	READY_1_trig = true;
 //	READY_1_trig_first = true;
-//    xil_printf("O_READY_1 is triggered!\n\r");
+    xil_printf("O_READY_1 is triggered!\n\r");
 }
 
 static void
