@@ -90,6 +90,11 @@
 #########
 !*.zip
 
+#########
+#HLS
+#########
+!*.app
+
 *.dwf3work
 
 HW/project_2/project_2.sim/
