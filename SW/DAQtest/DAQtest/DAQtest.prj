@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <sdkproject:SdkProject xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdkproject="http://www.xilinx.com/sdkproject" name="DAQtest" location="/home/toni/workspace/SW/DAQtest/DAQtest" platform="/home/toni/workspace/SW/DAQtest/DAQtesBD_wrapper/export/DAQtesBD_wrapper/DAQtesBD_wrapper.xpfm" platformUID="xilinx:zybo-z7-20::0.0(custom)" systemProject="DAQtest_system" sysConfig="DAQtesBD_wrapper" runtime="cpp" cpu="domain_ps7_cortexa9_0" cpuInstance="ps7_cortexa9_0" os="standalone" language="CPP" mssSignature="19fbd6fa69299b2aad198f8f4fc6a90e">
-  <configuration name="Debug" id="xilinx.gnu.armv7.exe.debug.84471011" dirty="true">
+  <configuration name="Debug" id="xilinx.gnu.armv7.exe.debug.84471011">
     <configBuildOptions xsi:type="sdkproject:SdkOptions"/>
     <lastBuildOptions xsi:type="sdkproject:SdkOptions"/>
   </configuration>

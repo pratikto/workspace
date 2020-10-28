@@ -48,8 +48,9 @@
 #include "xparameters.h" 	// Parameter definitions for processor peripherals
 #include "xscugic.h" 		// Processor interrupt controller device driver
 #include "xscutimer.h"		//private timer
-#include "xsdps.h"
-#include "ff.h"
+#include <math.h>  			//math operation
+#include "xsdps.h"			//SD card library
+#include "ff.h"				//SD card library
 #include "platform_config.h"
 #include "xil_cache.h"
 #include <string>
@@ -117,6 +118,21 @@ static XScuGic ScuGic;											//Interrupt Controller Instance
 static XScuGic_Config *ScuGic_cfg_ptr;
 static XScuTimer timer_processor;								//processor timer
 static Xuint32 *baseaddr_DAQ = (Xuint32 *)XPAR_DAQ_0_BASEADDR; 	//DAQ base address
+
+/*
+ * variable for access SD card
+ */
+static FATFS FS_instance; 				// File System instance
+static FIL file1;						// File instance
+static FRESULT result;							// FRESULT variable
+static char *FileName = "DAQlog.csv"; 	// name of the log. Filenames must be in the 8+3 format.
+static char *Log_File; 					// pointer to the log
+static char *Path = "0:/";  					//  string pointer to the logical drive number
+static unsigned int BytesWr; 					// Bytes written
+static unsigned int len=0;				// length of the string
+static unsigned int accum=0;			//  variable holding the EOF
+static char *Buffer_logger __attribute__ ((aligned(32))); // Buffer should be word aligned (multiple of 4)
+
 
 void init_platform();
 void cleanup_platform();
