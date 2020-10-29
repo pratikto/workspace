@@ -1,10 +1,10 @@
 // Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2020.1 (lin64) Build 2902540 Wed May 27 19:54:35 MDT 2020
-// Date        : Thu Oct 15 16:49:09 2020
+// Date        : Thu Oct 15 16:49:08 2020
 // Host        : Unyil running 64-bit Ubuntu 20.04.1 LTS
-// Command     : write_verilog -force -mode synth_stub
-//               /home/toni/workspace/HW/DAQtest/sources/DAQtesBD/ip/DAQtesBD_auto_pc_0/DAQtesBD_auto_pc_0_stub.v
+// Command     : write_verilog -force -mode synth_stub -rename_top DAQtesBD_auto_pc_0 -prefix
+//               DAQtesBD_auto_pc_0_ DAQtesBD_auto_pc_0_stub.v
 // Design      : DAQtesBD_auto_pc_0
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7z020clg400-1

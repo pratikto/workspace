@@ -2,10 +2,10 @@
 <Root MajorVersion="0" MinorVersion="39">
   <CompositeFile CompositeFileTopName="DAQtesBD" CanBeSetAsTop="false" CanDisplayChildGraph="true">
     <Description>Composite Fileset</Description>
-    <Generation Name="SYNTHESIS" State="GENERATED" Timestamp="1602755046"/>
-    <Generation Name="IMPLEMENTATION" State="GENERATED" Timestamp="1602755046"/>
-    <Generation Name="SIMULATION" State="GENERATED" Timestamp="1602755046"/>
-    <Generation Name="HW_HANDOFF" State="GENERATED" Timestamp="1602755046"/>
+    <Generation Name="SYNTHESIS" State="GENERATED" Timestamp="1603942934"/>
+    <Generation Name="IMPLEMENTATION" State="GENERATED" Timestamp="1603942934"/>
+    <Generation Name="SIMULATION" State="GENERATED" Timestamp="1603942934"/>
+    <Generation Name="HW_HANDOFF" State="GENERATED" Timestamp="1603942934"/>
     <FileCollection Name="SOURCES" Type="SOURCES">
       <File Name="ip/DAQtesBD_processing_system7_0_0/DAQtesBD_processing_system7_0_0.xci" Type="IP">
         <Instance HierarchyPath="processing_system7_0"/>
@@ -17,14 +17,6 @@
       </File>
       <File Name="ip/DAQtesBD_DAQ_0_0/DAQtesBD_DAQ_0_0.xci" Type="IP">
         <Instance HierarchyPath="DAQ_0"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip/DAQtesBD_auto_pc_0/DAQtesBD_auto_pc_0.xci" Type="IP">
-        <Instance HierarchyPath="ps7_0_axi_periph/s00_couplers/auto_pc"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SYNTHESIS"/>
@@ -64,6 +56,46 @@
       <File Name="sim/DAQtesBD.v" Type="Verilog">
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
         <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip/DAQtesBD_util_reduced_logic_0_0/DAQtesBD_util_reduced_logic_0_0.xci" Type="IP">
+        <Instance HierarchyPath="util_reduced_logic_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip/DAQtesBD_util_reduced_logic_0_2/DAQtesBD_util_reduced_logic_0_2.xci" Type="IP">
+        <Instance HierarchyPath="util_reduced_logic_1"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip/DAQtesBD_xlconcat_1_0/DAQtesBD_xlconcat_1_0.xci" Type="IP">
+        <Instance HierarchyPath="xlconcat_1"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip/DAQtesBD_xlconcat_2_0/DAQtesBD_xlconcat_2_0.xci" Type="IP">
+        <Instance HierarchyPath="xlconcat_2"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip/DAQtesBD_auto_pc_0/DAQtesBD_auto_pc_0.xci" Type="IP">
+        <Instance HierarchyPath="ps7_0_axi_periph/s00_couplers/auto_pc"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
       <File Name="DAQtesBD_ooc.xdc" Type="XDC">
