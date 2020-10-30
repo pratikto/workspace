@@ -100,8 +100,6 @@ struct counter{
  */
 static bool READY_0_trig = 0;
 static bool READY_1_trig = 0;
-//static bool READY_0_trig_first 	= 0;
-//static bool READY_1_trig_first 	= 0;
 static counter *counter0, *counter1;
 static int index0 = 0;
 static int index1 = 0;
@@ -125,13 +123,14 @@ static Xuint32 *baseaddr_DAQ = (Xuint32 *)XPAR_DAQ_0_BASEADDR; 	//DAQ base addre
 static FATFS FS_instance; 				// File System instance
 static FIL file1;						// File instance
 static FRESULT result;							// FRESULT variable
-static char *FileName = "DAQlog.csv"; 	// name of the log. Filenames must be in the 8+3 format.
+static char *FileName = "Count0.csv"; 	// name of the log. Filenames must be in the 8+3 format.
 static char *Log_File; 					// pointer to the log
 static char *Path = "0:/";  					//  string pointer to the logical drive number
 static unsigned int BytesWr; 					// Bytes written
 static unsigned int len=0;				// length of the string
 static unsigned int accum=0;			//  variable holding the EOF
 static char *Buffer_logger __attribute__ ((aligned(32))); // Buffer should be word aligned (multiple of 4)
+static bool writeLog;
 
 
 void init_platform();

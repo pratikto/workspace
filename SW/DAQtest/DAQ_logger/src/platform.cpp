@@ -253,6 +253,7 @@ interrupt_init(
  */
 static void
 O_ARM_isr(void *CallBackRef){
+	writeLog = true;
     xil_printf("O_ARM is triggered!\n\r");
 }
 
@@ -260,53 +261,17 @@ O_ARM_isr(void *CallBackRef){
  * Define an interrupt service routine for O_READY_0
  */
 static void
-O_READY_0_isr(void *CallBackRef){\
+O_READY_0_isr(void *CallBackRef){
 	//read counter 0
-	counter0[index0].low	= *(baseaddr_DAQ+1);
-	counter0[index0].high	= *(baseaddr_DAQ+0);
+//	counter0[index0].low	= *(baseaddr_DAQ+1);
+//	counter0[index0].high	= *(baseaddr_DAQ+0);
+//	Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (2*index0), *(baseaddr_DAQ+1));
+//	Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (2*index0 + 1), *(baseaddr_DAQ+1));
 
-	//
-	sprintf(Buffer_logger, ",%u,%u,%u,,,,\n",
-			index0,
-			counter0[index0].high, counter0[index0].low);
-
-   	// Open log for writing
-	Log_File = (char *)FileName;
-	result = f_open(&file1, Log_File,FA_WRITE);
-		if (result!=0) {
-			print("failed to open log 0 for writing\n\r");
-//			return XST_FAILURE;
-		}
-
-	// Point to the end of log
-	result = f_lseek(&file1,accum);
-		if (result!=0) {
-			print("failed to point to the end of log 0\n\r");
-//			return XST_FAILURE;
-		}
-
-	// Increment file EOF pointer
-	len = strlen(Buffer_logger);
-	accum=accum+len;
-
-	// Write to log
-	result = f_write(&file1, (const void*)Buffer_logger, len, &BytesWr);
-	if (result!=0) {
-		print("failed to write to log 0\n\r");
-//		return XST_FAILURE;
-	}
-
-	//Close file.
-	result = f_close(&file1);
-	if (result!=0) {
-		print("failed to close log 0\n\r");
-//		return XST_FAILURE;
-	}
 	// Increment index
 	index0++;
 
-	READY_0_trig = true;
-//	READY_0_trig_first = true;
+//	READY_0_trig = true;
     xil_printf("O_READY_0 is triggered!\n\r");
 }
 
@@ -316,51 +281,15 @@ O_READY_0_isr(void *CallBackRef){\
 static void
 O_READY_1_isr(void *CallBackRef){
 	//read counter 1
-	counter1[index1].low 	= *(baseaddr_DAQ+3);
-	counter1[index1].high 	= *(baseaddr_DAQ+2);
+//	counter1[index1].low 	= *(baseaddr_DAQ+3);
+//	counter1[index1].high 	= *(baseaddr_DAQ+2);
+//	Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + 5000 + (2*index0), *(baseaddr_DAQ+3));
+//	Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + 5000 + (2*index0 + 1), *(baseaddr_DAQ+2));
 
-	//
-	sprintf(Buffer_logger, ",,,,%u,%u,%u\n",
-			index1,
-			counter1[index1].high, counter1[index1].low);
-
-   	// Open log for writing
-	Log_File = (char *)FileName;
-	result = f_open(&file1, Log_File,FA_WRITE);
-		if (result!=0) {
-			print("failed to open log 1 for writing\n\r");
-//			return XST_FAILURE;
-		}
-
-	// Point to the end of log
-	result = f_lseek(&file1,accum);
-		if (result!=0) {
-			print("failed to point to the end of log 1\n\r");
-//			return XST_FAILURE;
-		}
-
-	// Increment file EOF pointer
-	len = strlen(Buffer_logger);
-	accum=accum+len;
-
-	// Write to log
-	result = f_write(&file1, (const void*)Buffer_logger, len, &BytesWr);
-	if (result!=0) {
-		print("failed to write to log 1\n\r");
-//		return XST_FAILURE;
-	}
-
-	//Close file.
-	result = f_close(&file1);
-	if (result!=0) {
-		print("failed to close log 1\n\r");
-//		return XST_FAILURE;
-	}
 	// Increment index
 	index1++;
 
-	READY_1_trig = true;
-//	READY_1_trig_first = true;
+//	READY_1_trig = true;
     xil_printf("O_READY_1 is triggered!\n\r");
 }
 
