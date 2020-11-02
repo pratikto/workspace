@@ -95,6 +95,7 @@
 #HLS
 #########
 !*.app
+!*.csv
 
 *.dwf3work
 

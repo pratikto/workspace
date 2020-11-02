@@ -138,12 +138,12 @@ int main(){
 	 */
 	static FATFS FS_instance; // File System instance
 	static FIL file0;		// File instance
-	static FIL file1;		// File instance
+//	static FIL file1;		// File instance
 	FRESULT result;			// FRESULT variable
-	static char *FileName0 = "ctr0.csv"; // name of the log
-	static char *FileName1 = "ctr1.csv"; // name of the log
+	static char *FileName0 = "DAQ.csv"; // name of the log
+//	static char *FileName1 = "ctr1.csv"; // name of the log
 	static char *Log_File0; // pointer to the log
-	static char *Log_File1; // pointer to the log
+//	static char *Log_File1; // pointer to the log
 	char *Path = "0:/";  //  string pointer to the logical drive number
 	unsigned int BytesWr; // Bytes written
 	static unsigned int len=0;			// length of the string

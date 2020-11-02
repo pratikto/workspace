@@ -9,7 +9,7 @@ int main(){
 
 	csv file;
 	file.setDir("/home/toni/workspace/HLS/PhaseError/sources/");
-	file.readFile("counter_result.csv");
+	file.readFile("DAQ.csv");
 	ap_uint<32> X1;			//Arr_A2[Floor(RefIndex(n))] --> High
 	ap_uint<32> X2; 		//Arr_A2[Floor(RefIndex(n))] --> Low
 	ap_uint<32> Y1; 		//Arr_A2[Floor(RefIndex(n)+1)] --> High
