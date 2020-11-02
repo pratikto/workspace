@@ -1,7 +1,7 @@
 //Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2020.1 (lin64) Build 2902540 Wed May 27 19:54:35 MDT 2020
-//Date        : Thu Oct 15 16:43:42 2020
+//Date        : Thu Oct 29 10:42:12 2020
 //Host        : Unyil running 64-bit Ubuntu 20.04.1 LTS
 //Command     : generate_target DAQtesBD_wrapper.bd
 //Design      : DAQtesBD_wrapper
@@ -37,7 +37,8 @@ module DAQtesBD_wrapper
     I_PROC,
     I_SEL,
     I_Z0,
-    I_Z1);
+    I_Z1,
+    Z);
   inout [14:0]DDR_addr;
   inout [2:0]DDR_ba;
   inout DDR_cas_n;
@@ -66,6 +67,7 @@ module DAQtesBD_wrapper
   input I_SEL;
   input I_Z0;
   input I_Z1;
+  input Z;
 
   wire [14:0]DDR_addr;
   wire [2:0]DDR_ba;
@@ -95,6 +97,7 @@ module DAQtesBD_wrapper
   wire I_SEL;
   wire I_Z0;
   wire I_Z1;
+  wire Z;
 
   DAQtesBD DAQtesBD_i
        (.DDR_addr(DDR_addr),
@@ -124,5 +127,6 @@ module DAQtesBD_wrapper
         .I_PROC(I_PROC),
         .I_SEL(I_SEL),
         .I_Z0(I_Z0),
-        .I_Z1(I_Z1));
+        .I_Z1(I_Z1),
+        .Z(Z));
 endmodule

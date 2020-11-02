@@ -167,6 +167,7 @@ proc create_root_design { parentCell } {
   set I_SEL [ create_bd_port -dir I I_SEL ]
   set I_Z0 [ create_bd_port -dir I I_Z0 ]
   set I_Z1 [ create_bd_port -dir I I_Z1 ]
+  set Z [ create_bd_port -dir I Z ]
 
   # Create instance: DAQ_0, and set properties
   set DAQ_0 [ create_bd_cell -type ip -vlnv user.org:user:DAQ:1.0 DAQ_0 ]
@@ -658,11 +659,33 @@ proc create_root_design { parentCell } {
   # Create instance: rst_ps7_0_200M, and set properties
   set rst_ps7_0_200M [ create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset:5.0 rst_ps7_0_200M ]
 
+  # Create instance: util_reduced_logic_0, and set properties
+  set util_reduced_logic_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:util_reduced_logic:2.0 util_reduced_logic_0 ]
+  set_property -dict [ list \
+   CONFIG.C_OPERATION {or} \
+   CONFIG.C_SIZE {2} \
+   CONFIG.LOGO_FILE {data/sym_orgate.png} \
+ ] $util_reduced_logic_0
+
+  # Create instance: util_reduced_logic_1, and set properties
+  set util_reduced_logic_1 [ create_bd_cell -type ip -vlnv xilinx.com:ip:util_reduced_logic:2.0 util_reduced_logic_1 ]
+  set_property -dict [ list \
+   CONFIG.C_OPERATION {or} \
+   CONFIG.C_SIZE {2} \
+   CONFIG.LOGO_FILE {data/sym_orgate.png} \
+ ] $util_reduced_logic_1
+
   # Create instance: xlconcat_0, and set properties
   set xlconcat_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconcat:2.1 xlconcat_0 ]
   set_property -dict [ list \
    CONFIG.NUM_PORTS {10} \
  ] $xlconcat_0
+
+  # Create instance: xlconcat_1, and set properties
+  set xlconcat_1 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconcat:2.1 xlconcat_1 ]
+
+  # Create instance: xlconcat_2, and set properties
+  set xlconcat_2 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconcat:2.1 xlconcat_2 ]
 
   # Create interface connections
   connect_bd_intf_net -intf_net processing_system7_0_DDR [get_bd_intf_ports DDR] [get_bd_intf_pins processing_system7_0/DDR]
@@ -686,12 +709,17 @@ proc create_root_design { parentCell } {
   connect_bd_net -net I_ARM_1 [get_bd_ports I_ARM] [get_bd_pins DAQ_0/I_ARM]
   connect_bd_net -net I_PROC_1 [get_bd_ports I_PROC] [get_bd_pins DAQ_0/I_PROC]
   connect_bd_net -net I_SEL_1 [get_bd_ports I_SEL] [get_bd_pins DAQ_0/I_SEL]
-  connect_bd_net -net I_Z0_1 [get_bd_ports I_Z0] [get_bd_pins DAQ_0/I_Z0]
-  connect_bd_net -net I_Z1_1 [get_bd_ports I_Z1] [get_bd_pins DAQ_0/I_Z1]
+  connect_bd_net -net I_Z0_1 [get_bd_ports I_Z0] [get_bd_pins xlconcat_1/In0]
+  connect_bd_net -net I_Z1_1 [get_bd_ports I_Z1] [get_bd_pins xlconcat_2/In0]
+  connect_bd_net -net Z_1 [get_bd_ports Z] [get_bd_pins xlconcat_1/In1] [get_bd_pins xlconcat_2/In1]
   connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_pins DAQ_0/s00_axi_aclk] [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK] [get_bd_pins ps7_0_axi_periph/ACLK] [get_bd_pins ps7_0_axi_periph/M00_ACLK] [get_bd_pins ps7_0_axi_periph/S00_ACLK] [get_bd_pins rst_ps7_0_200M/slowest_sync_clk]
   connect_bd_net -net processing_system7_0_FCLK_RESET0_N [get_bd_pins processing_system7_0/FCLK_RESET0_N] [get_bd_pins rst_ps7_0_200M/ext_reset_in]
   connect_bd_net -net rst_ps7_0_200M_peripheral_aresetn [get_bd_pins DAQ_0/s00_axi_aresetn] [get_bd_pins ps7_0_axi_periph/ARESETN] [get_bd_pins ps7_0_axi_periph/M00_ARESETN] [get_bd_pins ps7_0_axi_periph/S00_ARESETN] [get_bd_pins rst_ps7_0_200M/peripheral_aresetn]
+  connect_bd_net -net util_reduced_logic_0_Res [get_bd_pins DAQ_0/I_Z0] [get_bd_pins util_reduced_logic_0/Res]
+  connect_bd_net -net util_reduced_logic_1_Res [get_bd_pins DAQ_0/I_Z1] [get_bd_pins util_reduced_logic_1/Res]
   connect_bd_net -net xlconcat_0_dout [get_bd_pins processing_system7_0/IRQ_F2P] [get_bd_pins xlconcat_0/dout]
+  connect_bd_net -net xlconcat_1_dout [get_bd_pins util_reduced_logic_0/Op1] [get_bd_pins xlconcat_1/dout]
+  connect_bd_net -net xlconcat_2_dout [get_bd_pins util_reduced_logic_1/Op1] [get_bd_pins xlconcat_2/dout]
 
   # Create address segments
   assign_bd_address -offset 0x43C00000 -range 0x00010000 -target_address_space [get_bd_addr_spaces processing_system7_0/Data] [get_bd_addr_segs DAQ_0/s00_axi/reg0] -force

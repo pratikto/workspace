@@ -1,7 +1,7 @@
 //Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2020.1 (lin64) Build 2902540 Wed May 27 19:54:35 MDT 2020
-//Date        : Thu Oct 15 16:43:42 2020
+//Date        : Thu Oct 29 10:42:12 2020
 //Host        : Unyil running 64-bit Ubuntu 20.04.1 LTS
 //Command     : generate_target DAQtesBD.bd
 //Design      : DAQtesBD
@@ -9,7 +9,7 @@
 //--------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CORE_GENERATION_INFO = "DAQtesBD,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=DAQtesBD,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=7,numReposBlks=5,numNonXlnxBlks=1,numHierBlks=2,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=1,da_ps7_cnt=1,synth_mode=OOC_per_IP}" *) (* HW_HANDOFF = "DAQtesBD.hwdef" *) 
+(* CORE_GENERATION_INFO = "DAQtesBD,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=DAQtesBD,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=11,numReposBlks=9,numNonXlnxBlks=1,numHierBlks=2,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=1,da_ps7_cnt=1,synth_mode=OOC_per_IP}" *) (* HW_HANDOFF = "DAQtesBD.hwdef" *) 
 module DAQtesBD
    (DDR_addr,
     DDR_ba,
@@ -38,7 +38,8 @@ module DAQtesBD
     I_PROC,
     I_SEL,
     I_Z0,
-    I_Z1);
+    I_Z1,
+    Z);
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR ADDR" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME DDR, AXI_ARBITRATION_SCHEME TDM, BURST_LENGTH 8, CAN_DEBUG false, CAS_LATENCY 11, CAS_WRITE_LATENCY 11, CS_ENABLED true, DATA_MASK_ENABLED true, DATA_WIDTH 8, MEMORY_TYPE COMPONENTS, MEM_ADDR_MAP ROW_COLUMN_BANK, SLOT Single, TIMEPERIOD_PS 1250" *) inout [14:0]DDR_addr;
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR BA" *) inout [2:0]DDR_ba;
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR CAS_N" *) inout DDR_cas_n;
@@ -67,6 +68,7 @@ module DAQtesBD
   input I_SEL;
   input I_Z0;
   input I_Z1;
+  input Z;
 
   wire DAQ_0_O_A0;
   wire DAQ_0_O_A1;
@@ -85,6 +87,7 @@ module DAQtesBD
   wire I_SEL_1;
   wire I_Z0_1;
   wire I_Z1_1;
+  wire Z_1;
   wire [14:0]processing_system7_0_DDR_ADDR;
   wire [2:0]processing_system7_0_DDR_BA;
   wire processing_system7_0_DDR_CAS_N;
@@ -166,7 +169,11 @@ module DAQtesBD
   wire [3:0]ps7_0_axi_periph_M00_AXI_WSTRB;
   wire ps7_0_axi_periph_M00_AXI_WVALID;
   wire [0:0]rst_ps7_0_200M_peripheral_aresetn;
+  wire util_reduced_logic_0_Res;
+  wire util_reduced_logic_1_Res;
   wire [9:0]xlconcat_0_dout;
+  wire [1:0]xlconcat_1_dout;
+  wire [1:0]xlconcat_2_dout;
 
   assign I_A0_1 = I_A0;
   assign I_A1_1 = I_A1;
@@ -175,14 +182,15 @@ module DAQtesBD
   assign I_SEL_1 = I_SEL;
   assign I_Z0_1 = I_Z0;
   assign I_Z1_1 = I_Z1;
+  assign Z_1 = Z;
   DAQtesBD_DAQ_0_0 DAQ_0
        (.I_A0(I_A0_1),
         .I_A1(I_A1_1),
         .I_ARM(I_ARM_1),
         .I_PROC(I_PROC_1),
         .I_SEL(I_SEL_1),
-        .I_Z0(I_Z0_1),
-        .I_Z1(I_Z1_1),
+        .I_Z0(util_reduced_logic_0_Res),
+        .I_Z1(util_reduced_logic_1_Res),
         .O_A0(DAQ_0_O_A0),
         .O_A1(DAQ_0_O_A1),
         .O_ARM(DAQ_0_O_ARM),
@@ -350,6 +358,12 @@ module DAQtesBD
         .mb_debug_sys_rst(1'b0),
         .peripheral_aresetn(rst_ps7_0_200M_peripheral_aresetn),
         .slowest_sync_clk(processing_system7_0_FCLK_CLK0));
+  DAQtesBD_util_reduced_logic_0_0 util_reduced_logic_0
+       (.Op1(xlconcat_1_dout),
+        .Res(util_reduced_logic_0_Res));
+  DAQtesBD_util_reduced_logic_0_2 util_reduced_logic_1
+       (.Op1(xlconcat_2_dout),
+        .Res(util_reduced_logic_1_Res));
   DAQtesBD_xlconcat_0_0 xlconcat_0
        (.In0(DAQ_0_O_READY_0),
         .In1(DAQ_0_O_READY_1),
@@ -362,6 +376,14 @@ module DAQtesBD
         .In8(DAQ_0_O_OVERFLOW_0),
         .In9(DAQ_0_O_OVERFLOW_1),
         .dout(xlconcat_0_dout));
+  DAQtesBD_xlconcat_1_0 xlconcat_1
+       (.In0(I_Z0_1),
+        .In1(Z_1),
+        .dout(xlconcat_1_dout));
+  DAQtesBD_xlconcat_2_0 xlconcat_2
+       (.In0(I_Z1_1),
+        .In1(Z_1),
+        .dout(xlconcat_2_dout));
 endmodule
 
 module DAQtesBD_ps7_0_axi_periph_0

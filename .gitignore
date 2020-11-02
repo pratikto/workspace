@@ -76,6 +76,7 @@
 #C-files
 #########
 !*.c
+!*.cc
 !*.cpp
 !*.h
 !*.elf
@@ -218,3 +219,5 @@ HLS/PhaseError/solution1/impl/
 HLS/PhaseError/solution1/syn/
 
 HLS/PhaseError/solution1/.autopilot/
+
+SW/DAQtest_failed/

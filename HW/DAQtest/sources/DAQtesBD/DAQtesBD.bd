@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0xFA5FEC363FF0A1B1",
+      "boundary_crc": "0x5614A42F2A817AAE",
       "device": "xc7z020clg400-1",
       "name": "DAQtesBD",
       "rev_ctrl_bd_flag": "RevCtrlBdOff",
@@ -18,7 +18,11 @@
         }
       },
       "rst_ps7_0_200M": "",
-      "xlconcat_0": ""
+      "xlconcat_0": "",
+      "util_reduced_logic_0": "",
+      "util_reduced_logic_1": "",
+      "xlconcat_1": "",
+      "xlconcat_2": ""
     },
     "interface_ports": {
       "DDR": {
@@ -106,6 +110,9 @@
         "direction": "I"
       },
       "I_Z1": {
+        "direction": "I"
+      },
+      "Z": {
         "direction": "I"
       }
     },
@@ -1282,16 +1289,16 @@
               }
             },
             "interface_nets": {
-              "s00_couplers_to_auto_pc": {
-                "interface_ports": [
-                  "S_AXI",
-                  "auto_pc/S_AXI"
-                ]
-              },
               "auto_pc_to_s00_couplers": {
                 "interface_ports": [
                   "M_AXI",
                   "auto_pc/M_AXI"
+                ]
+              },
+              "s00_couplers_to_auto_pc": {
+                "interface_ports": [
+                  "S_AXI",
+                  "auto_pc/S_AXI"
                 ]
               }
             },
@@ -1364,6 +1371,38 @@
             "value": "10"
           }
         }
+      },
+      "util_reduced_logic_0": {
+        "vlnv": "xilinx.com:ip:util_reduced_logic:2.0",
+        "xci_name": "DAQtesBD_util_reduced_logic_0_0",
+        "parameters": {
+          "C_OPERATION": {
+            "value": "or"
+          },
+          "C_SIZE": {
+            "value": "2"
+          }
+        }
+      },
+      "util_reduced_logic_1": {
+        "vlnv": "xilinx.com:ip:util_reduced_logic:2.0",
+        "xci_name": "DAQtesBD_util_reduced_logic_0_2",
+        "parameters": {
+          "C_OPERATION": {
+            "value": "or"
+          },
+          "C_SIZE": {
+            "value": "2"
+          }
+        }
+      },
+      "xlconcat_1": {
+        "vlnv": "xilinx.com:ip:xlconcat:2.1",
+        "xci_name": "DAQtesBD_xlconcat_1_0"
+      },
+      "xlconcat_2": {
+        "vlnv": "xilinx.com:ip:xlconcat:2.1",
+        "xci_name": "DAQtesBD_xlconcat_2_0"
       }
     },
     "interface_nets": {
@@ -1515,16 +1554,47 @@
           "DAQ_0/I_A1"
         ]
       },
+      "util_reduced_logic_0_Res": {
+        "ports": [
+          "util_reduced_logic_0/Res",
+          "DAQ_0/I_Z0"
+        ]
+      },
+      "util_reduced_logic_1_Res": {
+        "ports": [
+          "util_reduced_logic_1/Res",
+          "DAQ_0/I_Z1"
+        ]
+      },
+      "xlconcat_2_dout": {
+        "ports": [
+          "xlconcat_2/dout",
+          "util_reduced_logic_1/Op1"
+        ]
+      },
+      "xlconcat_1_dout": {
+        "ports": [
+          "xlconcat_1/dout",
+          "util_reduced_logic_0/Op1"
+        ]
+      },
       "I_Z0_1": {
         "ports": [
           "I_Z0",
-          "DAQ_0/I_Z0"
+          "xlconcat_1/In0"
         ]
       },
       "I_Z1_1": {
         "ports": [
           "I_Z1",
-          "DAQ_0/I_Z1"
+          "xlconcat_2/In0"
+        ]
+      },
+      "Z_1": {
+        "ports": [
+          "Z",
+          "xlconcat_1/In1",
+          "xlconcat_2/In1"
         ]
       }
     },
