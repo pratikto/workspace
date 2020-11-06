@@ -20,21 +20,40 @@ int main(){
 	ap_uint<32> B2; 		//first A --> Low
 	double deltaRevIndex;	//RefIndex(n) – Floor(RefIndex(n)
 	double PhaseError;
-
+	int index0=0, index1=0;
+	/*
+	 * Structure declarations
+	 */
+	struct counter{
+		uint32_t high;
+		uint32_t low;
+	};
+	counter *ctr0, *ctr1;
 	int i=0, j=0;
 
 	for(i=0; i<file.getRow(); i++){
 		//read log
-		X1 = file.read(i,0);
-		X2 = file.read(i,1);
-		Y1 = file.read(i,2);
-		Y2 = file.read(i,3);
-		A1 = file.read(i,4);
-		A2 = file.read(i,5);
-		B1 = file.read(i,6);
-		B2 = file.read(i,7);
-		deltaRevIndex = file.read(i,8);
+		index0 = file.read(i,0);
+		if(index0 == ''){
+			index1 = file.read(i,3);
+			ctr1[index1].high = file.read(i,4);
+			ctr1[index1].low  = file.read(i,5);
+		}
+		else{
+			ctr0[index0].high = file.read(i,1);
+			ctr0[index0].low  = file.read(i,2);
+		}
+	}
 
+	A1 = ctr0[0].high;
+	A2 = ctr0[0].low;
+
+	B1 = ctr1[0].high;
+	B2 = ctr1[0].low;
+
+
+
+	for(i=0; i<file.getRow(); i++){
 		PhaseError = PhaseError(
 			//	input
 			X1, 		//Arr_A2[Floor(RefIndex(n))] --> High
