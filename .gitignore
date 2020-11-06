@@ -222,3 +222,25 @@ HLS/PhaseError/solution1/syn/
 HLS/PhaseError/solution1/.autopilot/
 
 SW/DAQtest_failed/
+
+HW/DAQ_by_rega2/DAQ_by_rega2.cache/
+
+HW/DAQ_by_rega2/DAQ_by_rega2.ip_user_files/
+
+HW/DAQ_by_rega2/DAQ_by_rega2.runs/
+
+HW/DAQ_by_rega2/DAQ_by_rega2.srcs/
+
+HW/DAQtest2/DAQtest2.cache/
+
+HW/DAQtest2/DAQtest2.hw/
+
+HW/DAQtest2/DAQtest2.ip_user_files/
+
+HW/DAQtest2/DAQtest2.runs/
+
+HW/DAQtest2/DAQtest2.srcs/
+
+HW/DAQtest2/sources/DAQlog_bsp/
+
+HW/DAQtest2/sources/DAQtest2/
