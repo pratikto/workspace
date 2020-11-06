@@ -198,28 +198,28 @@ int main(){
     		 */
     		print("Begin writing data logger to SD card!\n\r");
 
-    		// Mount SD Card and initialize device
-    		result = f_mount(&FS_instance,Path, 1);
-    		if (result != 0) {
-    			print("SD card initialization failed\n\r");
-    			return XST_FAILURE;
-    		}
+//    		// Mount SD Card and initialize device
+//    		result = f_mount(&FS_instance,Path, 1);
+//    		if (result != 0) {
+//    			print("SD card initialization failed\n\r");
+//    			return XST_FAILURE;
+//    		}
+//
+//    		// Creating new file with read/write permissions
+//    		Log_File0 = (char *)FileName0;
+//    		result = f_open(&file0, Log_File0, FA_CREATE_ALWAYS | FA_WRITE | FA_READ);
+//    		if (result!= 0) {
+//    			print("failed creating new files\n\r");
+//    			return XST_FAILURE;
+//    		}
 
-    		// Creating new file with read/write permissions
-    		Log_File0 = (char *)FileName0;
-    		result = f_open(&file0, Log_File0, FA_CREATE_ALWAYS | FA_WRITE | FA_READ);
-    		if (result!= 0) {
-    			print("failed creating new files\n\r");
-    			return XST_FAILURE;
-    		}
-
-    		sprintf(Buffer_logger, "total iter is %d!\n", Index0);
+    		sprintf(Buffer_logger, "count0 total : %d!\ncount1 total : %d!\n", Index0, Index1);
 			print(Buffer_logger);
 
 			while(count < Index0 || count < Index1){
 
 				if (count < Index0 && count < Index1){
-					sprintf(Buffer_logger, "%u,%x,%x,%u,%x,%x,\n",
+					sprintf(Buffer_logger, "%u,%u,%u,%u,%u,%u,\n",
 							count,
 							Xil_In32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*count + 0)),
 							Xil_In32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*count + 1)),
@@ -229,14 +229,14 @@ int main(){
 					);
 				}
 				else if (count < Index0 && count >= Index1){
-					sprintf(Buffer_logger, "%u,%x,%x,,,,\n",
+					sprintf(Buffer_logger, "%u,%u,%u,,,,\n",
 							count,
 							Xil_In32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*count + 0)),
 							Xil_In32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*count + 1))
 					);
 				}
 				else if (count < Index0 && count >= Index1){
-					sprintf(Buffer_logger, ",,,%u,%x,%x,\n",
+					sprintf(Buffer_logger, ",,,%u,%u,%u,\n",
 							count,
 							Xil_In32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*count + 2)),
 							Xil_In32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*count + 3))
@@ -245,21 +245,21 @@ int main(){
 
 				print(Buffer_logger);
 
-				// Point to the end of log
-				result = f_lseek(&file0,accum);
-				if (result!=0) {t
-					return XST_FAILURE;
-				}
-
-				// Increment file EOF pointer
-				len = strlen(Buffer_logger);
-				accum=accum+len;
-
-				// Write to log
-				result = f_write(&file0, (const void*)Buffer_logger, len, &BytesWr);
-				if (result!=0) {
-					return XST_FAILURE;
-				}
+//				// Point to the end of log
+//				result = f_lseek(&file0,accum);
+//				if (result!=0) {
+//					return XST_FAILURE;
+//				}
+//
+//				// Increment file EOF pointer
+//				len = strlen(Buffer_logger);
+//				accum=accum+len;
+//
+//				// Write to log
+//				result = f_write(&file0, (const void*)Buffer_logger, len, &BytesWr);
+//				if (result!=0) {
+//					return XST_FAILURE;
+//				}
 
 				count++;
 			}
@@ -321,11 +321,11 @@ int main(){
 //    			}
 //    		}
 
-    		//Close file.
-    		result = f_close(&file0);
-    		if (result!=0) {
-    			return XST_FAILURE;
-    		}
+//    		//Close file.
+//    		result = f_close(&file0);
+//    		if (result!=0) {
+//    			return XST_FAILURE;
+//    		}
 
     		print("Done writing counter 0 data to SD card!\n\r");
 
@@ -498,8 +498,8 @@ O_READY_0_isr(void *CallBackRef){
 //	counter0[Index0].high	= *(baseaddr_DAQ+0);
 //	Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 0), counter0[Index0].high);
 //	Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 1), counter0[Index0].low);
-//	Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0), *(baseaddr_DAQ+1));
-//	Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 1), *(baseaddr_DAQ+0));
+//	Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 0), *(baseaddr_DAQ+0));
+//	Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 1), *(baseaddr_DAQ+1));
 
 	// Increment index
 //	Index0++;
@@ -518,8 +518,8 @@ O_READY_1_isr(void *CallBackRef){
 //	counter1[Index1].high 	= *(baseaddr_DAQ+2);
 //	Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 2), counter1[Index1].high);
 //	Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 3), counter1[Index1].low);
-//	Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 2), *(baseaddr_DAQ+3));
-//	Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 3), *(baseaddr_DAQ+2));
+//	Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 2), *(baseaddr_DAQ+2));
+//	Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 3), *(baseaddr_DAQ+3));
 	// Increment index
 //	Index1++;
 
