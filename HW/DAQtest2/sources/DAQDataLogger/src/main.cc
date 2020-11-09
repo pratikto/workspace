@@ -3,7 +3,7 @@
  *============================================================================================================================================================
  */
 #include <stdio.h>
-#include "platform.h"
+//#include "platform.h"
 #include "xil_printf.h"
 /*
  * Several BSP (and standard C) header files need to be included
@@ -55,8 +55,8 @@
  * Structure declarations
  */
 struct counter{
-	u32 high;
-	u32 low;
+	u64 high;
+	u64 low;
 	u64 value;
 };
 
@@ -65,7 +65,7 @@ struct counter{
  */
 bool READY_0_trig;
 bool READY_1_trig;
-struct counter counter0, counter1;
+counter counter0, counter1;
 int Index0;
 int Index1;
 const float ratio = 2.5f;
@@ -152,7 +152,7 @@ int main(){
 	char *Buffer_logger __attribute__ ((aligned(32))); // Buffer should be word aligned (multiple of 4)
 
 
-    init_platform();
+//    init_platform();
 
 	/*
 	 * Setup the interrupt
@@ -169,27 +169,27 @@ int main(){
 
 	while(true){
 		//
-		if(READY_0_trig){
-			//save counter 0 to DDR
-			Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 0), *(baseaddr_DAQ+0));
-			Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 1), *(baseaddr_DAQ+1));
-
-			//increment counter 0 index
-			Index0++;
-
-			READY_0_trig = false;
-		}
-
-		if(READY_1_trig){
-			//save counter 1 to DDR
-			Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index1 + 2), *(baseaddr_DAQ+2));
-			Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index1 + 3), *(baseaddr_DAQ+3));
-
-			//increment counter 0 index
-			Index1++;
-
-			READY_1_trig = false;
-		}
+//		if(READY_0_trig){
+//			//save counter 0 to DDR
+////			Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 0), *(baseaddr_DAQ+0));
+////			Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 1), *(baseaddr_DAQ+1));
+//
+//			//increment counter 0 index
+//			Index0++;
+//
+//			READY_0_trig = false;
+//		}
+//
+//		if(READY_1_trig){
+//			//save counter 1 to DDR
+////			Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index1 + 2), *(baseaddr_DAQ+2));
+////			Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index1 + 3), *(baseaddr_DAQ+3));
+//
+//			//increment counter 0 index
+//			Index1++;
+//
+//			READY_1_trig = false;
+//		}
 
     	//check O_ARM on AXI register
     	if (!checkBit(*(baseaddr_DAQ+4), 5) && writeLog){
@@ -219,54 +219,58 @@ int main(){
 
 			while(count < Index0 || count < Index1){
 
-				if (count < Index0 && count < Index1){
+				if (count <= Index0 && count <= Index1){
 
 					counter0.high 	= Xil_In32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*count + 0));
 					counter0.low  	= Xil_In32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*count + 1));
-					counter0.value	= ((u64) (counter0.high << 32) & 0xffffffff00000000) + counter0.low;
+//					counter0.value	= ((u64) (counter0.high << 32) & 0xffffffff00000000) | counter0.low;
 					counter1.high 	= Xil_In32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*count + 2));
 					counter1.low  	= Xil_In32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*count + 3));
-					counter1.value	= ((u64) (counter1.high << 32) & 0xffffffff00000000) + counter1.low;
+//					counter1.value	= ((u64) (counter1.high << 32) & 0xffffffff00000000) + counter1.low;
 
-					sprintf(Buffer_logger, "%u,%u,%u,%u,%u,%u,%u,%u,\n",
+//					sprintf(Buffer_logger, "%u,%u,%u,%u,%u,%u,%u,%u,\n",
+					sprintf(Buffer_logger, "%u,%u,%u,%u,%u\n",
 							count,
 							counter0.high,
 							counter0.low,
-							counter0.value,
+//							counter0.value,
 //							Xil_In32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*count + 0)),
 //							Xil_In32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*count + 1)),
-							count,
+//							count,
 							counter1.high,
-							counter1.low,
-							counter1.value
+							counter1.low
+//							counter1.value
 //							Xil_In32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*count + 2)),
 //							Xil_In32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*count + 3))
 					);
 				}
-				else if (count < Index0 && count >= Index1){
+				else if (count <= Index0 && count > Index1){
 					counter0.high 	= Xil_In32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*count + 0));
 					counter0.low  	= Xil_In32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*count + 1));
-					counter0.value	= ((u64) (counter0.high << 32) & 0xffffffff00000000) + counter0.low;
+//					counter0.value	= ((u64) (counter0.high << 32) & 0xffffffff00000000) | counter0.low;
 
-					sprintf(Buffer_logger, "%u,%u,%u,%u,,,,\n",
+//					sprintf(Buffer_logger, "%u,%u,%u,%u,,,,\n",
+					sprintf(Buffer_logger, "%u,%u,%u,,,\n",
 							count,
 							counter0.high,
-							counter0.low,
-							counter0.value
+							counter0.low
+//							counter0.value
 //							Xil_In32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*count + 0)),
 //							Xil_In32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*count + 1))
 					);
 				}
-				else if (count < Index0 && count >= Index1){
+				else if (count > Index0 && count <= Index1){
 					counter1.high 	= Xil_In32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*count + 2));
 					counter1.low  	= Xil_In32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*count + 3));
-					counter1.value	= ((u64) (counter1.high << 32) & 0xffffffff00000000) + counter1.low;
+//					counter1.value	= ((u64) (counter1.high >> 32) & 0xffffffff00000000) + counter1.low;
 
-					sprintf(Buffer_logger, ",,,%u,%u,%u,%u,\n",
+//					sprintf(Buffer_logger, ",,,,%u,%u,%u,%u,\n",
+					sprintf(Buffer_logger, "%u,,,%u,%u,\n",
+
 							count,
 							counter1.high,
-							counter1.low,
-							counter1.value
+							counter1.low
+//							counter1.value
 //							Xil_In32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*count + 2)),
 //							Xil_In32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*count + 3))
 					);
@@ -471,13 +475,13 @@ O_READY_0_isr(void *CallBackRef){
 //	counter0[Index0].high	= *(baseaddr_DAQ+0);
 //	Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 0), counter0[Index0].high);
 //	Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 1), counter0[Index0].low);
-//	Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 0), *(baseaddr_DAQ+0));
-//	Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 1), *(baseaddr_DAQ+1));
+	Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 0), *(baseaddr_DAQ+0));
+	Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 1), *(baseaddr_DAQ+1));
 
 	// Increment index
-//	Index0++;
+	Index0++;
 
-	READY_0_trig = true;
+//	READY_0_trig = true;
 //    print("O_READY_0 is triggered!\n\r");
 }
 
@@ -491,12 +495,12 @@ O_READY_1_isr(void *CallBackRef){
 //	counter1[Index1].high 	= *(baseaddr_DAQ+2);
 //	Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 2), counter1[Index1].high);
 //	Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 3), counter1[Index1].low);
-//	Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 2), *(baseaddr_DAQ+2));
-//	Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 3), *(baseaddr_DAQ+3));
+	Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 2), *(baseaddr_DAQ+2));
+	Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 3), *(baseaddr_DAQ+3));
 	// Increment index
-//	Index1++;
+	Index1++;
 
-	READY_1_trig = true;
+//	READY_1_trig = true;
 //    print("O_READY_1 is triggered!\n\r");
 }
 

@@ -240,3 +240,10 @@ HW/DAQtest2/DAQtest2.ip_user_files/
 HW/DAQtest2/DAQtest2.runs/
 
 HW/DAQtest2/DAQtest2.srcs/
+HW/DAQtest2/sources/DataLogger_bsp_fail/
+
+HW/DAQtest2/sources/DataLoggerfail/
+
+HW/DAQtest2/sources/DAQtest2_wrapper_hw_platform_1faill/
+
+HW/DAQtest2/sources/standalone_bsp_0/
