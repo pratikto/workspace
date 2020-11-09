@@ -18,7 +18,7 @@
     <Option Name="CompiledLibDirRiviera" Val="$PCACHEDIR/compile_simlib/riviera"/>
     <Option Name="CompiledLibDirActivehdl" Val="$PCACHEDIR/compile_simlib/activehdl"/>
     <Option Name="BoardPart" Val="digilentinc.com:zybo-z7-20:part0:1.0"/>
-    <Option Name="ActiveSimSet" Val="sim_1"/>
+    <Option Name="ActiveSimSet" Val="enc_sim"/>
     <Option Name="DefaultLib" Val="xil_defaultlib"/>
     <Option Name="ProjectType" Val="Default"/>
     <Option Name="IPRepoPath" Val="$PSRCDIR/sources_1/imports/sources"/>
@@ -33,7 +33,7 @@
     <Option Name="DSAVendor" Val="xilinx"/>
     <Option Name="DSABoardId" Val="zybo-z7-20"/>
     <Option Name="DSANumComputeUnits" Val="60"/>
-    <Option Name="WTXSimLaunchSim" Val="0"/>
+    <Option Name="WTXSimLaunchSim" Val="1"/>
     <Option Name="WTModelSimLaunchSim" Val="0"/>
     <Option Name="WTQuestaLaunchSim" Val="0"/>
     <Option Name="WTIesLaunchSim" Val="0"/>
@@ -57,53 +57,40 @@
   <FileSets Version="1" Minor="31">
     <FileSet Name="sources_1" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
       <Filter Type="Srcs"/>
-      <File Path="$PSRCDIR/sources_1/imports/sources/DAQ_S00_AXI.v">
+      <File Path="$PPRDIR/sources/DAQ_S00_AXI.v">
         <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/sources/DAQ_S00_AXI.v"/>
-          <Attr Name="ImportTime" Val="1602399837"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/imports/sources/ENC_CNT.v">
+      <File Path="$PPRDIR/sources/ENC_CNT.v">
         <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/sources/ENC_CNT.v"/>
-          <Attr Name="ImportTime" Val="1602406340"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/imports/sources/ENC_TOP.v">
+      <File Path="$PPRDIR/sources/ENC_TOP.v">
         <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/sources/ENC_TOP.v"/>
-          <Attr Name="ImportTime" Val="1602082949"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/imports/sources/MUX_2TO1.v">
+      <File Path="$PPRDIR/sources/MUX_2TO1.v">
         <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/sources/MUX_2TO1.v"/>
-          <Attr Name="ImportTime" Val="1602082949"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/imports/sources/DAQ.v">
+      <File Path="$PPRDIR/sources/DAQ.v">
         <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/sources/DAQ.v"/>
-          <Attr Name="ImportTime" Val="1602399837"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/sources/component.xml">
-        <FileInfo SFType="IPXACT"/>
       </File>
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
@@ -124,6 +111,30 @@
         <Option Name="TopModule" Val="DAQ"/>
         <Option Name="TopLib" Val="xil_defaultlib"/>
         <Option Name="TopAutoSet" Val="TRUE"/>
+        <Option Name="TransportPathDelay" Val="0"/>
+        <Option Name="TransportIntDelay" Val="0"/>
+        <Option Name="SrcSet" Val="sources_1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="enc_sim" Type="SimulationSrcs" RelSrcDir="$PSRCDIR/enc_sim">
+      <Filter Type="Srcs"/>
+      <File Path="$PPRDIR/sources/task.v">
+        <FileInfo SFType="VHeader">
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/sources/TB_TOP.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <Config>
+        <Option Name="DesignMode" Val="RTL"/>
+        <Option Name="TopModule" Val="TB_TOP"/>
+        <Option Name="TopLib" Val="xil_defaultlib"/>
         <Option Name="TransportPathDelay" Val="0"/>
         <Option Name="TransportIntDelay" Val="0"/>
         <Option Name="SrcSet" Val="sources_1"/>

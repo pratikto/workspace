@@ -17,8 +17,6 @@
 		// Users to add ports here
         //input clock for pulse measurements
 //        input 	CLK,
-        //input to select using ARM or from processor
-        input   I_PROC, 
         //arm signal to start measurements
         input 	I_ARM,
         //select encoder reference
@@ -37,9 +35,6 @@
         output		O_A1,
         output		O_Z0,
         output		O_Z1,
-        //counter result, only send through AXI
-//        output[63:0]	O_CNT_A0,
-//        output[63:0]	O_CNT_A1,
         //interrupt output
         output			O_OVERFLOW_0,
         output			O_OVERFLOW_1,
@@ -72,38 +67,43 @@
 		output wire  s00_axi_rvalid,
 		input wire  s00_axi_rready
 	);
+	
+	//	//DAQ couter-0 and countr-1 wire
+        wire[63:0]     O_CNT_A0;
+        wire[63:0]     O_CNT_A1;
+	
 // Instantiation of Axi Bus Interface S00_AXI
 	DAQ_S00_AXI # ( 
 		.C_S_AXI_DATA_WIDTH(C_S00_AXI_DATA_WIDTH),
 		.C_S_AXI_ADDR_WIDTH(C_S00_AXI_ADDR_WIDTH)
 	) DAQ_S00_AXI_inst (
 	        //input clock for pulse measurements
-		.CLK            (s00_axi_aclk),
+//		.CLK            (s00_axi_aclk),
 		//input to select using ARM or from processor
-        .I_PROC   (I_PROC), 
+//        .I_PROC   (I_PROC), 
 		//arm signal to start measurements
-        .I_ARM          (I_ARM),
-        .I_SEL          (I_SEL),
-        .I_A0           (I_A0),
-        .I_A1           (I_A1),
-        .I_Z0           (I_Z0),
-        .I_Z1           (I_Z1),
+        .I_ARM          (O_ARM),
+        .I_SEL          (O_SEL),
+        .I_A0           (O_A0),
+        .I_A1           (O_A1),
+        .I_Z0           (O_Z0),
+        .I_Z1           (O_Z1),
         //arm signal to start measurements
-        .O_ARM 	        (O_ARM),
+//        .O_ARM 	        (O_ARM),
         //selector output
-        .O_SEL          (O_SEL),    
-        .O_A0           (O_A0),
-        .O_A1           (O_A1),
-        .O_Z0           (O_Z0),
-        .O_Z1           (O_Z1),
-        //result counter
-//        .O_CNT_A0       (O_CNT_A0),
-//        .O_CNT_A1       (O_CNT_A1),
+//        .O_SEL          (O_SEL),    
+//        .O_A0           (O_A0),
+//        .O_A1           (O_A1),
+//        .O_Z0           (O_Z0),
+//        .O_Z1           (O_Z1),
+                //result counter
+        .I_CNT_A0       (O_CNT_A0),
+        .I_CNT_A1       (O_CNT_A1),
         //interrupt output
-        .O_OVERFLOW_0   (O_OVERFLOW_0),  
-        .O_OVERFLOW_1   (O_OVERFLOW_1),
-        .O_READY_0      (O_READY_0),
-        .O_READY_1      (O_READY_1),
+        .I_OVERFLOW_0   (O_OVERFLOW_0),  
+        .I_OVERFLOW_1   (O_OVERFLOW_1),
+        .I_READY_0      (O_READY_0),
+        .I_READY_1      (O_READY_1),
         
 		.S_AXI_ACLK(s00_axi_aclk),
 		.S_AXI_ARESETN(s00_axi_aresetn),
@@ -129,7 +129,32 @@
 	);
 
 	// Add user logic here
-
+    ENC_TOP ENC_DAQ(
+        //input clock for pulse measurements
+        .CLK            (s00_axi_aclk),
+        //arm signal to start measurements
+        .I_ARM          (I_ARM),
+        .I_SEL          (I_SEL),
+        .I_A0           (I_A0),
+        .I_A1           (I_A1),
+        .I_Z0           (I_Z0),
+        .I_Z1           (I_Z1),
+    
+        .O_ARM          (O_ARM),
+        .O_SEL          (O_SEL),
+        .O_A0           (O_A0),
+        .O_A1           (O_A1),
+        .O_Z0           (O_Z0),
+        .O_Z1           (O_Z1),
+        //result counter
+        .O_CNT_A0       (O_CNT_A0),
+        .O_CNT_A1       (O_CNT_A1),
+        //interrupt output
+        .O_OVERFLOW_0   (O_OVERFLOW_0),  
+        .O_OVERFLOW_1   (O_OVERFLOW_1),
+        .O_READY_0      (O_READY_0),
+        .O_READY_1      (O_READY_1)
+    );
 	// User logic ends
 
 	endmodule
