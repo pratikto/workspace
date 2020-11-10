@@ -15,7 +15,33 @@
 	)
 	(
 		// Users to add ports here
-
+        //arm signal to start measurements
+        input  I_ARM,
+        //select encoder reference
+        input     I_SEL,
+        //input from encoder
+        input     I_A0,
+        input     I_A1,
+        input     I_Z0,
+        input     I_Z1,
+        //arm signal to start measurements
+//        output     O_ARM,
+        //selector output
+//        output         O_SEL,
+        //output from encoder
+//        output        O_A0,
+//        output        O_A1,
+//        output        O_Z0,
+//        output        O_Z1,
+        //counter result, only send through AXI
+        input [63:0]    I_CNT_A0,
+        input [63:0]    I_CNT_A1,
+        //interrupt output
+        input            I_OVERFLOW_0,
+        input            I_OVERFLOW_1,
+        input            I_READY_0,
+        input            I_READY_1,
+        input            sel,
 		// User ports ends
 		// Do not modify the ports beyond this line
 
@@ -34,6 +60,9 @@
 		// TREADY indicates that the slave can accept a transfer in the current cycle.
 		input wire  M_AXIS_TREADY
 	);
+	
+	wire w_I_READY;
+	
 	// Total number of output data                                                 
 	localparam NUMBER_OF_OUTPUT_WORDS = 8;                                               
 	                                                                                     
@@ -222,7 +251,15 @@
 	    end                                              
 
 	// Add user logic here
-
+	// Add user logic here
+    
+    //arm Multiplexer
+    mux_2to1 mux0( 
+        .select (sel), 
+        .d      ({I_READY_0, I_READY_1}), 
+        .q      (w_I_READY) 
+    ); 
+    
 	// User logic ends
 
 	endmodule

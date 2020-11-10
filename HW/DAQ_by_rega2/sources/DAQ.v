@@ -71,16 +71,24 @@
 		output wire  s00_axi_rvalid,
 		input wire  s00_axi_rready,
 		
-		// Ports of Axi Master Bus Interface M00_AXIS
-        input wire  m00_axis_aclk,
-        input wire  m00_axis_aresetn,
-        output wire  m00_axis_tvalid,
-        output wire [C_M00_AXIS_TDATA_WIDTH-1 : 0] m00_axis_tdata,
-        output wire [(C_M00_AXIS_TDATA_WIDTH/8)-1 : 0] m00_axis_tstrb,
-        output wire  m00_axis_tlast,
-        input wire  m00_axis_tready
-	);
-	
+		// Ports of Axi Master Bus Interface M00_AXIS for CNT0
+        input wire  m00_axis_0_aclk,
+        input wire  m00_axis_0_aresetn,
+        output wire  m00_axis_0_tvalid,
+        output wire [C_M00_AXIS_TDATA_WIDTH-1 : 0] m00_axis_0_tdata,
+        output wire [(C_M00_AXIS_TDATA_WIDTH/8)-1 : 0] m00_axis_0_tstrb,
+        output wire  m00_axis_0_tlast,
+        input wire  m00_axis_0_tready,
+
+		// Ports of Axi Master Bus Interface M00_AXIS for CNT0
+        input wire  m00_axis_1_aclk,
+        input wire  m00_axis_1_aresetn,
+        output wire  m00_axis_1_tvalid,
+        output wire [C_M00_AXIS_TDATA_WIDTH-1 : 0] m00_axis_1_tdata,
+        output wire [(C_M00_AXIS_TDATA_WIDTH/8)-1 : 0] m00_axis_1_tstrb,
+        output wire  m00_axis_1_tlast,
+        input wire  m00_axis_1_tready
+	);	
 	//	//DAQ couter-0 and countr-1 wire
         wire[63:0]     O_CNT_A0;
         wire[63:0]     O_CNT_A1;
@@ -145,16 +153,66 @@
 	DAQ_M00_AXIS # ( 
 		.C_M_AXIS_TDATA_WIDTH(C_M00_AXIS_TDATA_WIDTH),
 		.C_M_START_COUNT(C_M00_AXIS_START_COUNT)
-	) DAQ_M00_AXIS_inst (
-		.M_AXIS_ACLK(m00_axis_aclk),
-		.M_AXIS_ARESETN(m00_axis_aresetn),
-		.M_AXIS_TVALID(m00_axis_tvalid),
-		.M_AXIS_TDATA(m00_axis_tdata),
-		.M_AXIS_TSTRB(m00_axis_tstrb),
-		.M_AXIS_TLAST(m00_axis_tlast),
-		.M_AXIS_TREADY(m00_axis_tready)
+	) DAQ_M00_AXIS_0_inst (
+        //arm signal to start measurements
+        .I_ARM          (O_ARM),
+        .I_SEL          (O_SEL),
+        .I_A0           (O_A0),
+        .I_A1           (O_A1),
+        .I_Z0           (O_Z0),
+        .I_Z1           (O_Z1),
+        //result counter
+        .I_CNT_A0       (O_CNT_A0),
+        .I_CNT_A1       (O_CNT_A1),
+        //interrupt output
+        .I_OVERFLOW_0   (O_OVERFLOW_0),  
+        .I_OVERFLOW_1   (O_OVERFLOW_1),
+        .I_READY_0      (O_READY_0),
+        .I_READY_1      (O_READY_1),
+        //selector
+        .sel      (1'b0),        
+        
+		.M_AXIS_ACLK(m00_axis_0_aclk),
+		.M_AXIS_ARESETN(m00_axis_0_aresetn),
+		.M_AXIS_TVALID(m00_axis_0_tvalid),
+		.M_AXIS_TDATA(m00_axis_0_tdata),
+		.M_AXIS_TSTRB(m00_axis_0_tstrb),
+		.M_AXIS_TLAST(m00_axis_0_tlast),
+		.M_AXIS_TREADY(m00_axis_0_tready)
 	);
 	
+// Instantiation of Axi Bus Interface M00_AXIS
+        DAQ_M00_AXIS # ( 
+            .C_M_AXIS_TDATA_WIDTH(C_M00_AXIS_TDATA_WIDTH),
+            .C_M_START_COUNT(C_M00_AXIS_START_COUNT)
+        ) DAQ_M00_AXIS_1_inst (
+            //arm signal to start measurements
+            .I_ARM          (O_ARM),
+            .I_SEL          (O_SEL),
+            .I_A0           (O_A0),
+            .I_A1           (O_A1),
+            .I_Z0           (O_Z0),
+            .I_Z1           (O_Z1),
+            //result counter
+            .I_CNT_A0       (O_CNT_A0),
+            .I_CNT_A1       (O_CNT_A1),
+            //interrupt output
+            .I_OVERFLOW_0   (O_OVERFLOW_0),  
+            .I_OVERFLOW_1   (O_OVERFLOW_1),
+            .I_READY_0      (O_READY_0),
+            .I_READY_1      (O_READY_1),
+             //selector
+            .sel      (1'b1),
+
+            .M_AXIS_ACLK(m00_axis_1_aclk),
+            .M_AXIS_ARESETN(m00_axis_1_aresetn),
+            .M_AXIS_TVALID(m00_axis_1_tvalid),
+            .M_AXIS_TDATA(m00_axis_1_tdata),
+            .M_AXIS_TSTRB(m00_axis_1_tstrb),
+            .M_AXIS_TLAST(m00_axis_1_tlast),
+            .M_AXIS_TREADY(m00_axis_1_tready)
+        );
+        	
 	// Add user logic here
     ENC_TOP ENC_DAQ(
         //input clock for pulse measurements
