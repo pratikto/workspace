@@ -48,11 +48,11 @@
 
 
 // IP VLNV: xilinx.com:ip:util_reduced_logic:2.0
-// IP Revision: 3
+// IP Revision: 4
 
-(* X_CORE_INFO = "util_reduced_logic_v2_0_3_util_reduced_logic,Vivado 2017.4.1" *)
-(* CHECK_LICENSE_TYPE = "DAQtest2_util_reduced_logic_0_0,util_reduced_logic_v2_0_3_util_reduced_logic,{}" *)
-(* CORE_GENERATION_INFO = "DAQtest2_util_reduced_logic_0_0,util_reduced_logic_v2_0_3_util_reduced_logic,{x_ipProduct=Vivado 2017.4.1,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=util_reduced_logic,x_ipVersion=2.0,x_ipCoreRevision=3,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_OPERATION=or,C_SIZE=2}" *)
+(* X_CORE_INFO = "util_reduced_logic_v2_0_4_util_reduced_logic,Vivado 2018.3" *)
+(* CHECK_LICENSE_TYPE = "DAQtest2_util_reduced_logic_0_0,util_reduced_logic_v2_0_4_util_reduced_logic,{}" *)
+(* CORE_GENERATION_INFO = "DAQtest2_util_reduced_logic_0_0,util_reduced_logic_v2_0_4_util_reduced_logic,{x_ipProduct=Vivado 2018.3,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=util_reduced_logic,x_ipVersion=2.0,x_ipCoreRevision=4,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_OPERATION=or,C_SIZE=2}" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module DAQtest2_util_reduced_logic_0_0 (
   Op1,
@@ -62,7 +62,7 @@ module DAQtest2_util_reduced_logic_0_0 (
 input wire [1 : 0] Op1;
 output wire Res;
 
-  util_reduced_logic_v2_0_3_util_reduced_logic #(
+  util_reduced_logic_v2_0_4_util_reduced_logic #(
     .C_OPERATION("or"),
     .C_SIZE(2)
   ) inst (

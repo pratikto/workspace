@@ -1,61 +1,61 @@
 {
-   ExpandedHierarchyInLayout: "",
-   guistr: "# # String gsaved with Nlview 6.6.11  2017-06-12 bk=1.3860 VDI=40 GEI=35 GUI=JA:1.6
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 6.8.11  2018-08-07 bk=1.4403 VDI=40 GEI=35 GUI=JA:9.0 TLS
 #  -string -flagsOSRD
 preplace port I_Z0 -pg 1 -y 940 -defaultsOSRD
-preplace port DDR -pg 1 -y 670 -defaultsOSRD
+preplace port DDR -pg 1 -y 680 -defaultsOSRD
 preplace port I_Z1 -pg 1 -y 1050 -defaultsOSRD
 preplace port I_SEL -pg 1 -y 890 -defaultsOSRD
-preplace port I_A0 -pg 1 -y 830 -defaultsOSRD
-preplace port I_A1 -pg 1 -y 850 -defaultsOSRD
-preplace port I_PROC -pg 1 -y 870 -defaultsOSRD
-preplace port FIXED_IO -pg 1 -y 690 -defaultsOSRD
-preplace port I_ARM -pg 1 -y 810 -defaultsOSRD
+preplace port I_A0 -pg 1 -y 850 -defaultsOSRD
+preplace port I_A1 -pg 1 -y 870 -defaultsOSRD
+preplace port I_PROC -pg 1 -y 20 -defaultsOSRD
+preplace port FIXED_IO -pg 1 -y 700 -defaultsOSRD
+preplace port I_ARM -pg 1 -y 830 -defaultsOSRD
 preplace portBus Z -pg 1 -y 1070 -defaultsOSRD
 preplace inst xlconcat_0 -pg 1 -lvl 1 -y 160 -defaultsOSRD
-preplace inst xlconcat_1 -pg 1 -lvl 2 -y 950 -defaultsOSRD
-preplace inst rst_ps7_0_200M -pg 1 -lvl 2 -y 510 -defaultsOSRD
-preplace inst xlconcat_2 -pg 1 -lvl 2 -y 1060 -defaultsOSRD
+preplace inst xlconcat_1 -pg 1 -lvl 2 -y 940 -defaultsOSRD
 preplace inst util_reduced_logic_0 -pg 1 -lvl 3 -y 950 -defaultsOSRD
+preplace inst rst_ps7_0_200M -pg 1 -lvl 2 -y 500 -defaultsOSRD
+preplace inst xlconcat_2 -pg 1 -lvl 2 -y 1060 -defaultsOSRD
 preplace inst util_reduced_logic_1 -pg 1 -lvl 3 -y 1060 -defaultsOSRD
 preplace inst ps7_0_axi_periph -pg 1 -lvl 3 -y 460 -defaultsOSRD
-preplace inst DAQ_0 -pg 1 -lvl 4 -y 500 -defaultsOSRD
-preplace inst processing_system7_0 -pg 1 -lvl 2 -y 720 -defaultsOSRD
-preplace netloc processing_system7_0_DDR 1 2 3 NJ 670 NJ 670 NJ
-preplace netloc util_reduced_logic_1_Res 1 3 1 1220
-preplace netloc DAQ_0_O_Z1 1 0 5 60 340 NJ 340 840J 300 NJ 300 1530
-preplace netloc I_Z0_1 1 0 2 NJ 940 NJ
-preplace netloc DAQ_0_O_A0 1 0 5 90 20 NJ 20 NJ 20 NJ 20 1570
-preplace netloc DAQ_0_O_A1 1 0 5 80 300 310J 190 NJ 190 NJ 190 1560
-preplace netloc processing_system7_0_M_AXI_GP0 1 2 1 880
-preplace netloc rst_ps7_0_200M_peripheral_aresetn 1 2 2 860 330 1170J
-preplace netloc processing_system7_0_FCLK_RESET0_N 1 1 2 410 400 830
-preplace netloc xlconcat_1_dout 1 2 1 NJ
-preplace netloc DAQ_0_O_READY_0 1 0 5 40 310 330J 230 NJ 230 NJ 230 1590
+preplace inst DAQ_0 -pg 1 -lvl 4 -y 510 -defaultsOSRD
+preplace inst processing_system7_0 -pg 1 -lvl 2 -y 730 -defaultsOSRD
+preplace netloc processing_system7_0_DDR 1 2 3 830J 690 NJ 690 1600J
+preplace netloc util_reduced_logic_1_Res 1 3 1 1230
+preplace netloc DAQ_0_O_Z1 1 0 5 90 340 350J 320 830J 300 NJ 300 1570
+preplace netloc I_Z0_1 1 0 2 40J 930 NJ
+preplace netloc DAQ_0_O_A0 1 0 5 40 10 NJ 10 NJ 10 NJ 10 1610
+preplace netloc DAQ_0_O_A1 1 0 5 110 310 310J 240 NJ 240 NJ 240 1600
+preplace netloc processing_system7_0_M_AXI_GP0 1 2 1 860
+preplace netloc rst_ps7_0_200M_peripheral_aresetn 1 2 2 840 310 1190J
+preplace netloc processing_system7_0_FCLK_RESET0_N 1 1 2 410 840 840
+preplace netloc xlconcat_1_dout 1 2 1 830J
+preplace netloc DAQ_0_O_READY_0 1 0 5 20 850 NJ 850 NJ 850 NJ 850 1560
 preplace netloc I_Z1_1 1 0 2 NJ 1050 NJ
-preplace netloc DAQ_0_O_READY_1 1 0 5 50 320 350J 240 NJ 240 NJ 240 1580
-preplace netloc xlconcat_0_dout 1 1 1 360
-preplace netloc processing_system7_0_FIXED_IO 1 2 3 NJ 690 NJ 690 NJ
-preplace netloc util_reduced_logic_0_Res 1 3 1 1190
-preplace netloc DAQ_0_O_OVERFLOW_0 1 0 5 90 330 320J 210 NJ 210 NJ 210 1610
-preplace netloc rst_ps7_0_200M_interconnect_aresetn 1 2 1 870
-preplace netloc I_A1_1 1 0 4 30J 380 NJ 380 850J 340 1160J
-preplace netloc DAQ_0_O_OVERFLOW_1 1 0 5 70 350 340J 220 NJ 220 NJ 220 1600
-preplace netloc processing_system7_0_FCLK_CLK0 1 1 3 420 420 850 580 1210J
-preplace netloc Z_1 1 0 2 NJ 1070 370
-preplace netloc I_A0_1 1 0 4 50J 390 380J 310 NJ 310 1190J
-preplace netloc I_SEL_1 1 0 4 80J 410 370J 280 NJ 280 1210J
-preplace netloc I_ARM_1 1 0 4 70J 400 400J 320 NJ 320 1200J
-preplace netloc I_PROC_1 1 0 4 90J 420 390J 290 NJ 290 1220J
-preplace netloc ps7_0_axi_periph_M00_AXI 1 3 1 1180
+preplace netloc DAQ_0_O_READY_1 1 0 5 50 320 320J 250 NJ 250 NJ 250 1620
+preplace netloc xlconcat_0_dout 1 1 1 340
+preplace netloc processing_system7_0_FIXED_IO 1 2 3 NJ 700 NJ 700 NJ
+preplace netloc util_reduced_logic_0_Res 1 3 1 1220
+preplace netloc DAQ_0_O_OVERFLOW_0 1 0 5 80 610 NJ 610 NJ 610 1160J 710 1580
+preplace netloc rst_ps7_0_200M_interconnect_aresetn 1 2 1 820
+preplace netloc I_A1_1 1 0 4 0J 580 370J 290 NJ 290 1220J
+preplace netloc DAQ_0_O_OVERFLOW_1 1 0 5 100 600 NJ 600 NJ 600 1170J 720 1570
+preplace netloc processing_system7_0_FCLK_CLK0 1 1 3 400 620 850 320 1180J
+preplace netloc Z_1 1 0 2 NJ 1070 360
+preplace netloc I_A0_1 1 0 4 -10J 570 380J 330 NJ 330 1200J
+preplace netloc I_SEL_1 1 0 4 10J 590 360J 280 NJ 280 1230J
+preplace netloc I_ARM_1 1 0 4 -20J 560 390J 340 NJ 340 1210J
+preplace netloc I_PROC_1 1 0 1 N
+preplace netloc ps7_0_axi_periph_M00_AXI 1 3 1 1160
 preplace netloc xlconcat_2_dout 1 2 1 NJ
-preplace netloc DAQ_0_O_Z0 1 0 5 30 370 NJ 370 820J 250 NJ 250 1540
-preplace netloc DAQ_0_O_SEL 1 0 5 20 360 NJ 360 830J 260 NJ 260 1520
-preplace netloc DAQ_0_O_ARM 1 0 5 80 10 NJ 10 NJ 10 NJ 10 1550
-levelinfo -pg 1 0 210 620 1020 1370 1630 -top 0 -bot 1120
-",
+preplace netloc DAQ_0_O_Z0 1 0 5 70 350 NJ 350 820J 260 NJ 260 1580
+preplace netloc DAQ_0_O_SEL 1 0 5 60 330 330J 300 810J 270 NJ 270 1560
+preplace netloc DAQ_0_O_ARM 1 0 5 30 0 NJ 0 NJ 0 NJ 0 1590
+levelinfo -pg 1 -40 210 610 1010 1410 1640 -top -10 -bot 1130
+"
 }
 {
-   da_axi4_cnt: "1",
-   da_ps7_cnt: "1",
+   "da_axi4_cnt":"1",
+   "da_ps7_cnt":"1"
 }

@@ -1,7 +1,7 @@
-// Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
+// Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
-// Tool Version: Vivado v.2017.4.1 (lin64) Build 2117270 Tue Jan 30 15:31:13 MST 2018
-// Date        : Fri Nov  6 20:15:28 2020
+// Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
+// Date        : Sun Nov 15 00:39:57 2020
 // Host        : Unyil running 64-bit Ubuntu 20.04.1 LTS
 // Command     : write_verilog -force -mode funcsim -rename_top DAQtest2_util_reduced_logic_0_1 -prefix
 //               DAQtest2_util_reduced_logic_0_1_ DAQtest2_util_reduced_logic_0_0_sim_netlist.v
@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CHECK_LICENSE_TYPE = "DAQtest2_util_reduced_logic_0_0,util_reduced_logic_v2_0_3_util_reduced_logic,{}" *) (* DowngradeIPIdentifiedWarnings = "yes" *) (* X_CORE_INFO = "util_reduced_logic_v2_0_3_util_reduced_logic,Vivado 2017.4.1" *) 
+(* CHECK_LICENSE_TYPE = "DAQtest2_util_reduced_logic_0_0,util_reduced_logic_v2_0_4_util_reduced_logic,{}" *) (* DowngradeIPIdentifiedWarnings = "yes" *) (* X_CORE_INFO = "util_reduced_logic_v2_0_4_util_reduced_logic,Vivado 2018.3" *) 
 (* NotValidForBitStream *)
 module DAQtest2_util_reduced_logic_0_1
    (Op1,
@@ -26,8 +26,8 @@ module DAQtest2_util_reduced_logic_0_1
   LUT2 #(
     .INIT(4'hE)) 
     Res_INST_0
-       (.I0(Op1[1]),
-        .I1(Op1[0]),
+       (.I0(Op1[0]),
+        .I1(Op1[1]),
         .O(Res));
 endmodule
 `ifndef GLBL

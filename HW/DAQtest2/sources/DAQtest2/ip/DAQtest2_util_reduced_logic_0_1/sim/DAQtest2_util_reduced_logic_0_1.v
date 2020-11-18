@@ -48,7 +48,7 @@
 
 
 // IP VLNV: xilinx.com:ip:util_reduced_logic:2.0
-// IP Revision: 3
+// IP Revision: 4
 
 `timescale 1ns/1ps
 
@@ -61,7 +61,7 @@ module DAQtest2_util_reduced_logic_0_1 (
 input wire [1 : 0] Op1;
 output wire Res;
 
-  util_reduced_logic_v2_0_3_util_reduced_logic #(
+  util_reduced_logic_v2_0_4_util_reduced_logic #(
     .C_OPERATION("or"),
     .C_SIZE(2)
   ) inst (

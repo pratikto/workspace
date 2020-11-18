@@ -1,10 +1,10 @@
-// Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
+// Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
-// Tool Version: Vivado v.2017.4.1 (lin64) Build 2117270 Tue Jan 30 15:31:13 MST 2018
-// Date        : Fri Nov  6 20:18:22 2020
+// Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
+// Date        : Sun Nov 15 00:41:07 2020
 // Host        : Unyil running 64-bit Ubuntu 20.04.1 LTS
-// Command     : write_verilog -force -mode synth_stub
-//               /home/toni/workspace/HW/DAQtest2/sources/DAQtest2/ip/DAQtest2_auto_pc_0/DAQtest2_auto_pc_0_stub.v
+// Command     : write_verilog -force -mode synth_stub -rename_top DAQtest2_auto_pc_0 -prefix
+//               DAQtest2_auto_pc_0_ DAQtest2_auto_pc_0_stub.v
 // Design      : DAQtest2_auto_pc_0
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7z020clg400-1
@@ -13,7 +13,7 @@
 // This empty module with port declaration file causes synthesis tools to infer a black box for IP.
 // The synthesis directives are for Synopsys Synplify support to prevent IO buffer insertion.
 // Please paste the declaration into a Verilog source file or add the file as an additional source.
-(* X_CORE_INFO = "axi_protocol_converter_v2_1_15_axi_protocol_converter,Vivado 2017.4.1" *)
+(* X_CORE_INFO = "axi_protocol_converter_v2_1_18_axi_protocol_converter,Vivado 2018.3" *)
 module DAQtest2_auto_pc_0(aclk, aresetn, s_axi_awid, s_axi_awaddr, 
   s_axi_awlen, s_axi_awsize, s_axi_awburst, s_axi_awlock, s_axi_awcache, s_axi_awprot, 
   s_axi_awqos, s_axi_awvalid, s_axi_awready, s_axi_wid, s_axi_wdata, s_axi_wstrb, s_axi_wlast, 
