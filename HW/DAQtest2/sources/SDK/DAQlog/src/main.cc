@@ -171,8 +171,9 @@ int main(){
 
 		if(READY_0_trig){
 			//save counter 0 to DDR
-			Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 0), *(baseaddr_DAQ+0));	//high
-			Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 1), *(baseaddr_DAQ+1));	//low
+			Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 0), *(baseaddr_DAQ+0));
+//			Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 1), 9999u);
+			Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index0 + 1), *(baseaddr_DAQ+1));
 
 			//increment counter 0 index
 			Index0++;
@@ -182,8 +183,9 @@ int main(){
 
 		if(READY_1_trig){
 			//save counter 1 to DDR
-			Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index1 + 2), *(baseaddr_DAQ+2));	//high
-			Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index1 + 3), *(baseaddr_DAQ+3));	//low
+			Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index1 + 2), *(baseaddr_DAQ+2));
+//			Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index1 + 3), 9999u);
+			Xil_Out32(XPAR_PS7_DDR_0_S_AXI_BASEADDR + (4*Index1 + 3), *(baseaddr_DAQ+3));
 
 			//increment counter 0 index
 			Index1++;
