@@ -1,7 +1,7 @@
 
 `timescale 1 ns / 1 ps
 
-	module myip_v1_0 #
+	module DAQ #
 	(
 		// Users to add parameters here
 
@@ -57,10 +57,10 @@
 		input wire  m00_axis_tready
 	);
 // Instantiation of Axi Bus Interface S00_AXI
-	myip_v1_0_S00_AXI # ( 
+	DAQ_S00_AXI # ( 
 		.C_S_AXI_DATA_WIDTH(C_S00_AXI_DATA_WIDTH),
 		.C_S_AXI_ADDR_WIDTH(C_S00_AXI_ADDR_WIDTH)
-	) myip_v1_0_S00_AXI_inst (
+	) DAQ_S00_AXI_inst (
 		.S_AXI_ACLK(s00_axi_aclk),
 		.S_AXI_ARESETN(s00_axi_aresetn),
 		.S_AXI_AWADDR(s00_axi_awaddr),
@@ -85,10 +85,10 @@
 	);
 
 // Instantiation of Axi Bus Interface M00_AXIS
-	myip_v1_0_M00_AXIS # ( 
+	DAQ_M00_AXIS # ( 
 		.C_M_AXIS_TDATA_WIDTH(C_M00_AXIS_TDATA_WIDTH),
 		.C_M_START_COUNT(C_M00_AXIS_START_COUNT)
-	) myip_v1_0_M00_AXIS_inst (
+	) DAQ_M00_AXIS_inst (
 		.M_AXIS_ACLK(m00_axis_aclk),
 		.M_AXIS_ARESETN(m00_axis_aresetn),
 		.M_AXIS_TVALID(m00_axis_tvalid),

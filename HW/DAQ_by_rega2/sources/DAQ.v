@@ -20,7 +20,7 @@
 	(
 		// Users to add ports here
         //input clock for pulse measurements
-//        input 	CLK,
+        input 	ENC_CLK,
         //arm signal to start measurements
         input 	I_ARM,
         //select encoder reference
@@ -33,20 +33,18 @@
         //arm signal to start measurements
 	    output 	O_ARM,
         //selector output
-        output	 	O_SEL,
+        output	O_SEL,
         //output from encoder
-        output		O_A0,
-        output		O_A1,
-        output		O_Z0,
-        output		O_Z1,
+        output	O_A0,
+        output	O_A1,
+        output	O_Z0,
+        output	O_Z1,
         //interrupt output
-        output			O_OVERFLOW_0,
-        output			O_OVERFLOW_1,
-        output			O_READY_0,
-        output			O_READY_1,
+        output	O_OVERFLOW_0,
+        output	O_OVERFLOW_1,
+        output	O_READY_0,
+        output	O_READY_1,
 		// User ports ends
-		// Do not modify the ports beyond this line
-
 
 		// Ports of Axi Slave Bus Interface S00_AXI
 		input wire  s00_axi_aclk,
@@ -80,7 +78,7 @@
         output wire  m00_axis_tlast,
         input wire  m00_axis_tready,
 
-		// Ports of Axi Master Bus Interface M00_AXIS for CNT0
+		// Ports of Axi Master Bus Interface M01_AXIS for CNT1
         input wire  m01_axis_aclk,
         input wire  m01_axis_aresetn,
         output wire  m01_axis_tvalid,
@@ -89,7 +87,7 @@
         output wire  m01_axis_tlast,
         input wire  m01_axis_tready
 	);	
-	//	//DAQ couter-0 and countr-1 wire
+	//	//DAQ couter-0 and counter-1 wire
         wire[63:0]     O_CNT_A0;
         wire[63:0]     O_CNT_A1;
 	
@@ -98,10 +96,6 @@
 		.C_S_AXI_DATA_WIDTH(C_S00_AXI_DATA_WIDTH),
 		.C_S_AXI_ADDR_WIDTH(C_S00_AXI_ADDR_WIDTH)
 	) DAQ_S00_AXI_inst (
-	        //input clock for pulse measurements
-//		.CLK            (s00_axi_aclk),
-		//input to select using ARM or from processor
-//        .I_PROC   (I_PROC), 
 		//arm signal to start measurements
         .I_ARM          (O_ARM),
         .I_SEL          (O_SEL),
@@ -109,15 +103,13 @@
         .I_A1           (O_A1),
         .I_Z0           (O_Z0),
         .I_Z1           (O_Z1),
-        //arm signal to start measurements
-//        .O_ARM 	        (O_ARM),
         //selector output
 //        .O_SEL          (O_SEL),    
 //        .O_A0           (O_A0),
 //        .O_A1           (O_A1),
 //        .O_Z0           (O_Z0),
 //        .O_Z1           (O_Z1),
-                //result counter
+        //result counter
         .I_CNT_A0       (O_CNT_A0),
         .I_CNT_A1       (O_CNT_A1),
         //interrupt output
@@ -151,22 +143,22 @@
 
 // Instantiation of Axi Bus Interface M00_AXIS
 	DAQ_M00_AXIS # ( 
-		.C_M_AXIS_TDATA_WIDTH(C_M00_AXIS_TDATA_WIDTH),
-		.C_M_START_COUNT(C_M00_AXIS_START_COUNT)
+		.C_M_AXIS_TDATA_WIDTH(C_M00_AXIS_TDATA_WIDTH)
+//		.C_M_START_COUNT(C_M00_AXIS_START_COUNT)
 	) DAQ_M00_AXIS_inst (
         //arm signal to start measurements
-        .I_ARM          (O_ARM),
-        .I_SEL          (O_SEL),
-        .I_A0           (O_A0),
-        .I_A1           (O_A1),
-        .I_Z0           (O_Z0),
-        .I_Z1           (O_Z1),
+        // .I_ARM          (O_ARM),
+        // .I_SEL          (O_SEL),
+        // .I_A0           (O_A0),
+        // .I_A1           (O_A1),
+        // .I_Z0           (O_Z0),
+        // .I_Z1           (O_Z1),
         //result counter
         .I_CNT_A0       (O_CNT_A0),
         .I_CNT_A1       (O_CNT_A1),
         //interrupt output
-        .I_OVERFLOW_0   (O_OVERFLOW_0),  
-        .I_OVERFLOW_1   (O_OVERFLOW_1),
+        // .I_OVERFLOW_0   (O_OVERFLOW_0),  
+        // .I_OVERFLOW_1   (O_OVERFLOW_1),
         .I_READY_0      (O_READY_0),
         .I_READY_1      (O_READY_1),
         //selector
@@ -183,22 +175,22 @@
 	
 // Instantiation of Axi Bus Interface M00_AXIS
         DAQ_M00_AXIS # ( 
-            .C_M_AXIS_TDATA_WIDTH(C_M00_AXIS_TDATA_WIDTH),
-            .C_M_START_COUNT(C_M00_AXIS_START_COUNT)
+            .C_M_AXIS_TDATA_WIDTH(C_M00_AXIS_TDATA_WIDTH)
+//            .C_M_START_COUNT(C_M00_AXIS_START_COUNT)
         ) DAQ_M01_AXIS_inst (
             //arm signal to start measurements
-            .I_ARM          (O_ARM),
-            .I_SEL          (O_SEL),
-            .I_A0           (O_A0),
-            .I_A1           (O_A1),
-            .I_Z0           (O_Z0),
-            .I_Z1           (O_Z1),
+            // .I_ARM          (O_ARM),
+            // .I_SEL          (O_SEL),
+            // .I_A0           (O_A0),
+            // .I_A1           (O_A1),
+            // .I_Z0           (O_Z0),
+            // .I_Z1           (O_Z1),
             //result counter
             .I_CNT_A0       (O_CNT_A0),
             .I_CNT_A1       (O_CNT_A1),
             //interrupt output
-            .I_OVERFLOW_0   (O_OVERFLOW_0),  
-            .I_OVERFLOW_1   (O_OVERFLOW_1),
+            // .I_OVERFLOW_0   (O_OVERFLOW_0),  
+            // .I_OVERFLOW_1   (O_OVERFLOW_1),
             .I_READY_0      (O_READY_0),
             .I_READY_1      (O_READY_1),
              //selector
@@ -216,7 +208,7 @@
 	// Add user logic here
     ENC_TOP ENC_DAQ(
         //input clock for pulse measurements
-        .CLK            (s00_axi_aclk),
+        .CLK            (ENC_CLK),
         //arm signal to start measurements
         .I_ARM          (I_ARM),
         .I_SEL          (I_SEL),

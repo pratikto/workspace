@@ -109,15 +109,7 @@
 		// Read ready. This signal indicates that the master can
     		// accept the read data and response information.
 		input wire  S_AXI_RREADY
-	);
-	
-//	//DAQ couter-0 and countr-1 wire
-//    wire[63:0]	 O_CNT_A0;
-//    wire[63:0]	 O_CNT_A1;
-//    //arm signal to start measurements
-//	wire 	     w_ARM;
-//    //selector output
-//    wire	 	 w_SEL;
+	); 
 
 	// AXI4LITE signals
 	reg [C_S_AXI_ADDR_WIDTH-1 : 0] 	axi_awaddr;
@@ -481,54 +473,6 @@
 
     
 	// Add user logic here
-	
-//	//arm Multiplexer
-//    mux_2to1 mux0( 
-//        .select (I_PROC), 
-//        .d      ({slv_reg4[5], I_ARM}), 
-//        .q      (w_ARM) 
-//    ); 
-    
-//    // Multiplexer
-//    mux_2to1 mux1( 
-//        .select (I_PROC), 
-//        .d      ({slv_reg4[4], I_SEL}), 
-//        .q      (w_SEL) 
-//    ); 
-        
-//     assign w_ARM = w_mux_arm;
-//     assign w_sel = w_mux_sel;
-     
-	//arm and sel can be triggered from Zynq and input port
-//    assign w_arm = I_ARM | slv_reg5[0];
-//    assign w_sel = I_sel | slv_reg5[1];
-	
-//    ENC_TOP ENC_DAQ(
-//        //input clock for pulse measurements
-//		.CLK            (CLK),
-//		//arm signal to start measurements
-//        .I_ARM          (w_ARM),
-//        .I_SEL          (w_SEL),
-//        .I_A0           (I_A0),
-//        .I_A1           (I_A1),
-//        .I_Z0           (I_Z0),
-//        .I_Z1           (I_Z1),
-    
-//        .O_ARM          (O_ARM),
-//        .O_SEL          (O_SEL),
-//        .O_A0           (O_A0),
-//        .O_A1           (O_A1),
-//        .O_Z0           (O_Z0),
-//        .O_Z1           (O_Z1),
-//        //result counter
-//        .O_CNT_A0       (O_CNT_A0),
-//        .O_CNT_A1       (O_CNT_A1),
-//        //interrupt output
-//        .O_OVERFLOW_0   (O_OVERFLOW_0),  
-//        .O_OVERFLOW_1   (O_OVERFLOW_1),
-//        .O_READY_0      (O_READY_0),
-//        .O_READY_1      (O_READY_1)
-//	);
 
 	// User logic ends
 

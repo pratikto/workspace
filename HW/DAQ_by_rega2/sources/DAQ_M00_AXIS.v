@@ -4,26 +4,35 @@
 	module DAQ_M00_AXIS #
 	(
 		// Users to add parameters here
-
+		// Define the states of state machine                                                
+		// The control state machine oversees the writing of input streaming data to the FIFO,
+		// and outputs the streaming data from the FIFO                                      
+		parameter [1:0] IDLE = 2'b00,        // This is the initial/idle state               
+		                                                                                     
+		                // INIT_TRANSACTION  = 2'b10, // This state initializes the counter, once   
+		                //                 // the counter reaches NUMBER_OF_OUTPUT_WORDS count,        
+		                //                 // the state machine changes state to SEND_STREAM     
+		                SEND_STREAM   = 2'b01, // In this state the                          
+		                                     // stream data is output through M_AXIS_TDATA   
 		// User parameters ends
 		// Do not modify the parameters beyond this line
 
 		// Width of S_AXIS address bus. The slave accepts the read and write addresses of width C_M_AXIS_TDATA_WIDTH.
-		parameter integer C_M_AXIS_TDATA_WIDTH	= 32,
+		parameter integer C_M_AXIS_TDATA_WIDTH	= 32
 		// Start count is the number of clock cycles the master will wait before initiating/issuing any transaction.
-		parameter integer C_M_START_COUNT	= 32
+		// parameter integer C_M_START_COUNT	= 32
 	)
 	(
-		// Users to add ports here
-        //arm signal to start measurements
-        input  I_ARM,
-        //select encoder reference
-        input     I_SEL,
-        //input from encoder
-        input     I_A0,
-        input     I_A1,
-        input     I_Z0,
-        input     I_Z1,
+		// // Users to add ports here
+  //       //arm signal to start measurements
+  //       input  I_ARM,
+  //       //select encoder reference
+  //       input     I_SEL,
+  //       //input from encoder
+  //       input     I_A0,
+  //       input     I_A1,
+  //       input     I_Z0,
+  //       input     I_Z1,
         //arm signal to start measurements
 //        output     O_ARM,
         //selector output
@@ -37,8 +46,8 @@
         input [63:0]    I_CNT_A0,
         input [63:0]    I_CNT_A1,
         //interrupt output
-        input            I_OVERFLOW_0,
-        input            I_OVERFLOW_1,
+        // input            I_OVERFLOW_0,
+        // input            I_OVERFLOW_1,
         input            I_READY_0,
         input            I_READY_1,
         input            sel,
@@ -61,10 +70,16 @@
 		input wire  M_AXIS_TREADY
 	);
 	
-	wire w_I_READY;
-	
+	//multiplexer wire
+	wire           w_I_READY;
+	wire [63 : 0]  w_I_CNT;
+
+	//register to save counter value in 32 bit
+	reg [C_M_AXIS_TDATA_WIDTH-1 : 0] 	reg_counter_high;
+	reg [C_M_AXIS_TDATA_WIDTH-1 : 0] 	reg_counter_low;
+
 	// Total number of output data                                                 
-	localparam NUMBER_OF_OUTPUT_WORDS = 8;                                               
+	localparam NUMBER_OF_OUTPUT_WORDS = 2;                                               
 	                                                                                     
 	// function called clogb2 that returns an integer which has the                      
 	// value of the ceiling of the log base 2.                                           
@@ -76,21 +91,11 @@
 	endfunction                                                                          
 	                                                                                     
 	// WAIT_COUNT_BITS is the width of the wait counter.                                 
-	localparam integer WAIT_COUNT_BITS = clogb2(C_M_START_COUNT-1);                      
+//	localparam integer WAIT_COUNT_BITS = clogb2(C_M_START_COUNT-1);                      
 	                                                                                     
 	// bit_num gives the minimum number of bits needed to address 'depth' size of FIFO.  
 	localparam bit_num  = clogb2(NUMBER_OF_OUTPUT_WORDS);                                
 	                                                                                     
-	// Define the states of state machine                                                
-	// The control state machine oversees the writing of input streaming data to the FIFO,
-	// and outputs the streaming data from the FIFO                                      
-	parameter [1:0] IDLE = 2'b00,        // This is the initial/idle state               
-	                                                                                     
-	                INIT_COUNTER  = 2'b01, // This state initializes the counter, once   
-	                                // the counter reaches C_M_START_COUNT count,        
-	                                // the state machine changes state to SEND_STREAM     
-	                SEND_STREAM   = 2'b10; // In this state the                          
-	                                     // stream data is output through M_AXIS_TDATA   
 	// State variable                                                                    
 	reg [1:0] mst_exec_state;                                                            
 	// Example design FIFO read pointer                                                  
@@ -98,7 +103,7 @@
 
 	// AXI Stream internal signals
 	//wait counter. The master waits for the user defined number of clock cycles before initiating a transfer.
-	reg [WAIT_COUNT_BITS-1 : 0] 	count;
+	// reg [WAIT_COUNT_BITS-1 : 0] 	count;
 	//streaming data valid
 	wire  	axis_tvalid;
 	//streaming data valid delayed by one clock cycle
@@ -129,7 +134,7 @@
 	  // Synchronous reset (active low)                                       
 	    begin                                                                 
 	      mst_exec_state <= IDLE;                                             
-	      count    <= 0;                                                      
+//	      count    <= 0;                                                      
 	    end                                                                   
 	  else                                                                    
 	    case (mst_exec_state)                                                 
@@ -139,26 +144,36 @@
 	        // presence of valid streaming data                               
 	        //if ( count == 0 )                                                 
 	        //  begin                                                           
-	            mst_exec_state  <= INIT_COUNTER;                              
+	            // mst_exec_state  <= INIT_TRANSACTION;                              
 	        //  end                                                             
 	        //else                                                              
 	        //  begin                                                           
 	        //    mst_exec_state  <= IDLE;                                      
-	        //  end                                                             
+	        //  end            
+	        if (w_I_READY) 
+	        	begin
+	            	mst_exec_state   <= SEND_STREAM;
+	        		reg_counter_high <= w_I_CNT[63:32];
+	        		reg_counter_low	 <= w_I_CNT[31:0];
+	        	end
+	        else 
+	        	begin
+	               	mst_exec_state  <= IDLE;                                           	
+	            end                                                 
 	                                                                          
-	      INIT_COUNTER:                                                       
-	        // The slave starts accepting tdata when                          
-	        // there tvalid is asserted to mark the                           
-	        // presence of valid streaming data                               
-	        if ( count == C_M_START_COUNT - 1 )                               
-	          begin                                                           
-	            mst_exec_state  <= SEND_STREAM;                               
-	          end                                                             
-	        else                                                              
-	          begin                                                           
-	            count <= count + 1;                                           
-	            mst_exec_state  <= INIT_COUNTER;                              
-	          end                                                             
+	      // INIT_TRANSACTION:                                                       
+	      //   // The slave starts accepting tdata when                          
+	      //   // there tvalid is asserted to mark the                           
+	      //   // presence of valid streaming data                               
+	      //   if ( count == NUMBER_OF_OUTPUT_WORDS - 1 )                               
+	      //     begin                                                           
+	      //       mst_exec_state  <= SEND_STREAM;                               
+	      //     end                                                             
+	      //   else                                                              
+	      //     begin                                                           
+	      //       count <= count + 1;                                           
+	      //       mst_exec_state  <= INIT_TRANSACTION;                              
+	      //     end                                                             
 	                                                                          
 	      SEND_STREAM:                                                        
 	        // The example design streaming master functionality starts       
@@ -242,24 +257,25 @@
 	    begin                                            
 	      if(!M_AXIS_ARESETN)                            
 	        begin                                        
-	          stream_data_out <= 1;                      
+	          stream_data_out <= 0;                      
 	        end                                          
 	      else if (tx_en)// && M_AXIS_TSTRB[byte_index]  
-	        begin                                        
-	          stream_data_out <= read_pointer + 32'b1;   
+	        begin
+	        	if (read_pointer == 0) 
+	        		begin
+	        	   		stream_data_out <= reg_counter_high;                                       	
+	        	    end
+	        	else 
+	        		begin
+	        	       	stream_data_out <= reg_counter_low;
+	        		end                                        
 	        end                                          
 	    end                                              
 
 	// Add user logic here
-	// Add user logic here
     
-    //arm Multiplexer
-    mux_2to1 mux0( 
-        .select (sel), 
-        .d      ({I_READY_0, I_READY_1}), 
-        .q      (w_I_READY) 
-    ); 
-    
-	// User logic ends
+    //Multiplexer    
+    assign w_I_READY = (sel) ? I_READY_0 : I_READY_1;
+    assign w_I_CNT   = (sel) ? I_CNT_A0  : I_CNT_A1;
 
 	endmodule
