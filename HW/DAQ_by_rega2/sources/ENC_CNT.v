@@ -1,13 +1,14 @@
 module ENC_CNT(
-	input 	CLK,
-	input 	I_ARM,
+	input 			CLK,
+	input 			I_ARM,
 	// input 	I_SEL,	// only be used whem SEL RESET is implemented
-	input 	I_A,
-	input 	I_Z,
+	input 			I_A,
+	input 			I_Z,
 
 	output[63:0]	O_CNT,
 	output			O_OVERFLOW,
-	output			O_READY
+	output			O_READY,
+	output 			O_VALID
 );
 
 parameter 	P_STM_IDLE 		= 2'b01,
@@ -23,6 +24,9 @@ reg			r_overflow;		// overflow status
 
 // Ready Signal
 assign O_READY = w_stm_active & r_ready ;
+
+// Valid Signal
+assign O_VALID = w_stm_active;
 
 always @(negedge I_ARM or posedge CLK) begin
 	if ( I_ARM == 0 )

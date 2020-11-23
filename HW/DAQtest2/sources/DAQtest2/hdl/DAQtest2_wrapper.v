@@ -1,7 +1,7 @@
-//Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
+//Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
-//Tool Version: Vivado v.2017.4.1 (lin64) Build 2117270 Tue Jan 30 15:31:13 MST 2018
-//Date        : Fri Nov  6 20:13:17 2020
+//Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
+//Date        : Sun Nov 15 01:09:25 2020
 //Host        : Unyil running 64-bit Ubuntu 20.04.1 LTS
 //Command     : generate_target DAQtest2_wrapper.bd
 //Design      : DAQtest2_wrapper

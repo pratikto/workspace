@@ -48,13 +48,13 @@
 
 
 // IP VLNV: user.org:user:DAQ:1.0
-// IP Revision: 2
+// IP Revision: 3
 
-(* X_CORE_INFO = "DAQ,Vivado 2017.4.1" *)
+(* X_CORE_INFO = "DAQ,Vivado 2018.3" *)
 (* CHECK_LICENSE_TYPE = "DAQtest2_DAQ_0_0,DAQ,{}" *)
+(* IP_DEFINITION_SOURCE = "package_project" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module DAQtest2_DAQ_0_0 (
-  I_PROC,
   I_ARM,
   I_SEL,
   I_A0,
@@ -91,10 +91,23 @@ module DAQtest2_DAQ_0_0 (
   s00_axi_rdata,
   s00_axi_rresp,
   s00_axi_rvalid,
-  s00_axi_rready
+  s00_axi_rready,
+  m00_axis_aclk,
+  m00_axis_aresetn,
+  m00_axis_tvalid,
+  m00_axis_tdata,
+  m00_axis_tstrb,
+  m00_axis_tlast,
+  m00_axis_tready,
+  m01_axis_aclk,
+  m01_axis_aresetn,
+  m01_axis_tvalid,
+  m01_axis_tdata,
+  m01_axis_tstrb,
+  m01_axis_tlast,
+  m01_axis_tready
 );
 
-input wire I_PROC;
 input wire I_ARM;
 input wire I_SEL;
 input wire I_A0;
@@ -111,10 +124,10 @@ output wire O_OVERFLOW_0;
 output wire O_OVERFLOW_1;
 output wire O_READY_0;
 output wire O_READY_1;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME s00_axi_aclk, ASSOCIATED_BUSIF s00_axi, ASSOCIATED_RESET s00_axi_aresetn, FREQ_HZ 200000000, PHASE 0.000, CLK_DOMAIN DAQtest2_processing_system7_0_0_FCLK_CLK0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME s00_axi_aclk, ASSOCIATED_BUSIF s00_axi, ASSOCIATED_RESET s00_axi_aresetn, FREQ_HZ 200000000, PHASE 0.000, CLK_DOMAIN DAQtest2_processing_system7_0_0_FCLK_CLK0, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 s00_axi_aclk CLK" *)
 input wire s00_axi_aclk;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME s00_axi_aresetn, POLARITY ACTIVE_LOW" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME s00_axi_aresetn, POLARITY ACTIVE_LOW, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 s00_axi_aresetn RST" *)
 input wire s00_axi_aresetn;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s00_axi AWADDR" *)
@@ -153,15 +166,51 @@ output wire [31 : 0] s00_axi_rdata;
 output wire [1 : 0] s00_axi_rresp;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s00_axi RVALID" *)
 output wire s00_axi_rvalid;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME s00_axi, DATA_WIDTH 32, PROTOCOL AXI4LITE, FREQ_HZ 200000000, ID_WIDTH 0, ADDR_WIDTH 5, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 1, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 0, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 1, PHASE 0.000, CLK_DOMAIN DAQtest2_processing_system7_0_0_FCLK_CLK0, NUM_READ_THREADS 4, NUM_WRITE_THREADS 4, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME s00_axi, DATA_WIDTH 32, PROTOCOL AXI4LITE, FREQ_HZ 200000000, ID_WIDTH 0, ADDR_WIDTH 5, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 1, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 0, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 1, PHASE 0.000, CLK_DOMAIN DAQtest2_processing_system7_0_0_FCLK_CLK0, NUM_READ_THREA\
+DS 4, NUM_WRITE_THREADS 4, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s00_axi RREADY" *)
 input wire s00_axi_rready;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME m00_axis_aclk, ASSOCIATED_BUSIF m00_axis, ASSOCIATED_RESET m00_axis_aresetn, FREQ_HZ 200000000, PHASE 0.000, CLK_DOMAIN DAQtest2_processing_system7_0_0_FCLK_CLK0, INSERT_VIP 0" *)
+(* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 m00_axis_aclk CLK" *)
+input wire m00_axis_aclk;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME m00_axis_aresetn, POLARITY ACTIVE_LOW, INSERT_VIP 0" *)
+(* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 m00_axis_aresetn RST" *)
+input wire m00_axis_aresetn;
+(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m00_axis TVALID" *)
+output wire m00_axis_tvalid;
+(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m00_axis TDATA" *)
+output wire [31 : 0] m00_axis_tdata;
+(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m00_axis TSTRB" *)
+output wire [3 : 0] m00_axis_tstrb;
+(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m00_axis TLAST" *)
+output wire m00_axis_tlast;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME m00_axis, TDATA_NUM_BYTES 4, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 1, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 200000000, PHASE 0.000, CLK_DOMAIN DAQtest2_processing_system7_0_0_FCLK_CLK0, LAYERED_METADATA undef, INSERT_VIP 0" *)
+(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m00_axis TREADY" *)
+input wire m00_axis_tready;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME m01_axis_aclk, ASSOCIATED_BUSIF m01_axis, ASSOCIATED_RESET m01_axis_aresetn, FREQ_HZ 200000000, PHASE 0.000, CLK_DOMAIN DAQtest2_processing_system7_0_0_FCLK_CLK0, INSERT_VIP 0" *)
+(* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 m01_axis_aclk CLK" *)
+input wire m01_axis_aclk;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME m01_axis_aresetn, POLARITY ACTIVE_LOW, INSERT_VIP 0" *)
+(* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 m01_axis_aresetn RST" *)
+input wire m01_axis_aresetn;
+(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m01_axis TVALID" *)
+output wire m01_axis_tvalid;
+(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m01_axis TDATA" *)
+output wire [31 : 0] m01_axis_tdata;
+(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m01_axis TSTRB" *)
+output wire [3 : 0] m01_axis_tstrb;
+(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m01_axis TLAST" *)
+output wire m01_axis_tlast;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME m01_axis, TDATA_NUM_BYTES 4, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 1, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 200000000, PHASE 0.000, CLK_DOMAIN DAQtest2_processing_system7_0_0_FCLK_CLK0, LAYERED_METADATA undef, INSERT_VIP 0" *)
+(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m01_axis TREADY" *)
+input wire m01_axis_tready;
 
   DAQ #(
     .C_S00_AXI_DATA_WIDTH(32),
-    .C_S00_AXI_ADDR_WIDTH(5)
+    .C_S00_AXI_ADDR_WIDTH(5),
+    .C_M00_AXIS_TDATA_WIDTH(32),
+    .C_M00_AXIS_START_COUNT(32)
   ) inst (
-    .I_PROC(I_PROC),
     .I_ARM(I_ARM),
     .I_SEL(I_SEL),
     .I_A0(I_A0),
@@ -198,6 +247,20 @@ input wire s00_axi_rready;
     .s00_axi_rdata(s00_axi_rdata),
     .s00_axi_rresp(s00_axi_rresp),
     .s00_axi_rvalid(s00_axi_rvalid),
-    .s00_axi_rready(s00_axi_rready)
+    .s00_axi_rready(s00_axi_rready),
+    .m00_axis_aclk(m00_axis_aclk),
+    .m00_axis_aresetn(m00_axis_aresetn),
+    .m00_axis_tvalid(m00_axis_tvalid),
+    .m00_axis_tdata(m00_axis_tdata),
+    .m00_axis_tstrb(m00_axis_tstrb),
+    .m00_axis_tlast(m00_axis_tlast),
+    .m00_axis_tready(m00_axis_tready),
+    .m01_axis_aclk(m01_axis_aclk),
+    .m01_axis_aresetn(m01_axis_aresetn),
+    .m01_axis_tvalid(m01_axis_tvalid),
+    .m01_axis_tdata(m01_axis_tdata),
+    .m01_axis_tstrb(m01_axis_tstrb),
+    .m01_axis_tlast(m01_axis_tlast),
+    .m01_axis_tready(m01_axis_tready)
   );
 endmodule

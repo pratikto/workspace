@@ -1,7 +1,7 @@
-//Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
+//Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
-//Tool Version: Vivado v.2017.4.1 (lin64) Build 2117270 Tue Jan 30 15:31:13 MST 2018
-//Date        : Fri Nov  6 20:13:17 2020
+//Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
+//Date        : Sun Nov 15 01:09:25 2020
 //Host        : Unyil running 64-bit Ubuntu 20.04.1 LTS
 //Command     : generate_target DAQtest2.bd
 //Design      : DAQtest2
@@ -188,7 +188,6 @@ module DAQtest2
        (.I_A0(I_A0_1),
         .I_A1(I_A1_1),
         .I_ARM(I_ARM_1),
-        .I_PROC(I_PROC_1),
         .I_SEL(I_SEL_1),
         .I_Z0(util_reduced_logic_0_Res),
         .I_Z1(util_reduced_logic_1_Res),
@@ -202,6 +201,12 @@ module DAQtest2
         .O_SEL(DAQ_0_O_SEL),
         .O_Z0(DAQ_0_O_Z0),
         .O_Z1(DAQ_0_O_Z1),
+        .m00_axis_aclk(processing_system7_0_FCLK_CLK0),
+        .m00_axis_aresetn(rst_ps7_0_200M_peripheral_aresetn),
+        .m00_axis_tready(1'b1),
+        .m01_axis_aclk(processing_system7_0_FCLK_CLK0),
+        .m01_axis_aresetn(rst_ps7_0_200M_peripheral_aresetn),
+        .m01_axis_tready(1'b1),
         .s00_axi_aclk(processing_system7_0_FCLK_CLK0),
         .s00_axi_araddr(ps7_0_axi_periph_M00_AXI_ARADDR[4:0]),
         .s00_axi_aresetn(rst_ps7_0_200M_peripheral_aresetn),

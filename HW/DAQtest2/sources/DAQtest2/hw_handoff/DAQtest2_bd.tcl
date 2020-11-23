@@ -20,7 +20,7 @@ set script_folder [_tcl::get_script_folder]
 ################################################################
 # Check if script is running in correct Vivado version.
 ################################################################
-set scripts_vivado_version 2017.4
+set scripts_vivado_version 2018.3
 set current_vivado_version [version -short]
 
 if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
@@ -169,11 +169,6 @@ proc create_root_design { parentCell } {
 
   # Create instance: DAQ_0, and set properties
   set DAQ_0 [ create_bd_cell -type ip -vlnv user.org:user:DAQ:1.0 DAQ_0 ]
-
-  set_property -dict [ list \
-   CONFIG.NUM_READ_OUTSTANDING {1} \
-   CONFIG.NUM_WRITE_OUTSTANDING {1} \
- ] [get_bd_intf_pins /DAQ_0/s00_axi]
 
   # Create instance: processing_system7_0, and set properties
   set processing_system7_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:processing_system7:5.5 processing_system7_0 ]
@@ -711,15 +706,15 @@ proc create_root_design { parentCell } {
   connect_bd_net -net I_A0_1 [get_bd_ports I_A0] [get_bd_pins DAQ_0/I_A0]
   connect_bd_net -net I_A1_1 [get_bd_ports I_A1] [get_bd_pins DAQ_0/I_A1]
   connect_bd_net -net I_ARM_1 [get_bd_ports I_ARM] [get_bd_pins DAQ_0/I_ARM]
-  connect_bd_net -net I_PROC_1 [get_bd_ports I_PROC] [get_bd_pins DAQ_0/I_PROC]
+  connect_bd_net -net I_PROC_1 [get_bd_ports I_PROC]
   connect_bd_net -net I_SEL_1 [get_bd_ports I_SEL] [get_bd_pins DAQ_0/I_SEL]
   connect_bd_net -net I_Z0_1 [get_bd_ports I_Z0] [get_bd_pins xlconcat_1/In0]
   connect_bd_net -net I_Z1_1 [get_bd_ports I_Z1] [get_bd_pins xlconcat_2/In0]
   connect_bd_net -net Z_1 [get_bd_ports Z] [get_bd_pins xlconcat_1/In1] [get_bd_pins xlconcat_2/In1]
-  connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_pins DAQ_0/s00_axi_aclk] [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK] [get_bd_pins ps7_0_axi_periph/ACLK] [get_bd_pins ps7_0_axi_periph/M00_ACLK] [get_bd_pins ps7_0_axi_periph/S00_ACLK] [get_bd_pins rst_ps7_0_200M/slowest_sync_clk]
+  connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_pins DAQ_0/m00_axis_aclk] [get_bd_pins DAQ_0/m01_axis_aclk] [get_bd_pins DAQ_0/s00_axi_aclk] [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK] [get_bd_pins ps7_0_axi_periph/ACLK] [get_bd_pins ps7_0_axi_periph/M00_ACLK] [get_bd_pins ps7_0_axi_periph/S00_ACLK] [get_bd_pins rst_ps7_0_200M/slowest_sync_clk]
   connect_bd_net -net processing_system7_0_FCLK_RESET0_N [get_bd_pins processing_system7_0/FCLK_RESET0_N] [get_bd_pins rst_ps7_0_200M/ext_reset_in]
   connect_bd_net -net rst_ps7_0_200M_interconnect_aresetn [get_bd_pins ps7_0_axi_periph/ARESETN] [get_bd_pins rst_ps7_0_200M/interconnect_aresetn]
-  connect_bd_net -net rst_ps7_0_200M_peripheral_aresetn [get_bd_pins DAQ_0/s00_axi_aresetn] [get_bd_pins ps7_0_axi_periph/M00_ARESETN] [get_bd_pins ps7_0_axi_periph/S00_ARESETN] [get_bd_pins rst_ps7_0_200M/peripheral_aresetn]
+  connect_bd_net -net rst_ps7_0_200M_peripheral_aresetn [get_bd_pins DAQ_0/m00_axis_aresetn] [get_bd_pins DAQ_0/m01_axis_aresetn] [get_bd_pins DAQ_0/s00_axi_aresetn] [get_bd_pins ps7_0_axi_periph/M00_ARESETN] [get_bd_pins ps7_0_axi_periph/S00_ARESETN] [get_bd_pins rst_ps7_0_200M/peripheral_aresetn]
   connect_bd_net -net util_reduced_logic_0_Res [get_bd_pins DAQ_0/I_Z0] [get_bd_pins util_reduced_logic_0/Res]
   connect_bd_net -net util_reduced_logic_1_Res [get_bd_pins DAQ_0/I_Z1] [get_bd_pins util_reduced_logic_1/Res]
   connect_bd_net -net xlconcat_0_dout [get_bd_pins processing_system7_0/IRQ_F2P] [get_bd_pins xlconcat_0/dout]
@@ -733,6 +728,7 @@ proc create_root_design { parentCell } {
   # Restore current instance
   current_bd_instance $oldCurInst
 
+  validate_bd_design
   save_bd_design
 }
 # End of create_root_design()
