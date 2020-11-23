@@ -96,6 +96,7 @@
 #########
 !*.app
 !*.csv
+!*.m
 
 *.dwf3work
 
@@ -263,3 +264,7 @@ HW/DAQtest2/sources/coba/
 HW/DAQtest2/sources/DAQDataLogger/
 
 HW/DAQtest2/sources/DAQtest2_wrapper_hw_platform_2/
+
+HW/DAQtest2/sources/webtalk/
+
+HW/DAQ_by_rega2/DAQ_by_rega2.sim/
