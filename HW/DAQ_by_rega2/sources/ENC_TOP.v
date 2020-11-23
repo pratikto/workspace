@@ -26,7 +26,9 @@ module ENC_TOP(
 	output	O_OVERFLOW_0,
 	output	O_OVERFLOW_1,
 	output	O_READY_0,
-	output	O_READY_1
+	output	O_READY_1,
+	output	O_VALID_0,
+	output	O_VALID_1
 );
 
 wire[63:0] 	w_cnt_a0;
@@ -34,8 +36,10 @@ wire[63:0] 	w_cnt_a1;
 wire		w_overflow_0;
 wire		w_overflow_1;
 wire        w_cnt_z; 
-wire		w_ready0;
-wire		w_ready1;
+wire		w_ready_0;
+wire		w_ready_1;
+wire		w_valid_0;
+wire		w_valid_1;
 
 //Multiplexer  
 mux_2to1 mux0( 
@@ -53,22 +57,27 @@ assign O_Z1 	= I_Z1;
 assign O_ARM 	= I_ARM;
 
 // Ready Signals
-assign O_READY_0 = w_ready0;
-assign O_READY_1 = w_ready1;
+assign O_READY_0 = w_ready_0;
+assign O_READY_1 = w_ready_1;
+
+// Valid Signals
+assign O_VALID_0 = w_valid_0;
+assign O_VALID_1 = w_valid_1;
 
 // Encoder 0
 assign O_CNT_A0			= w_cnt_a0;
 assign O_OVERFLOW_0		= w_overflow_0;
 
 ENC_CNT ENC_CNT0(
-	.CLK	(CLK),
-	.I_ARM	(I_ARM),
+	.CLK		(CLK),
+	.I_ARM		(I_ARM),
 	// .I_SEL	(I_SEL),	// only be used when SEL RESET is implemented
-	.I_A	(I_A0),
-	.I_Z	(w_cnt_z),
-	.O_CNT	(w_cnt_a0),
+	.I_A		(I_A0),
+	.I_Z		(w_cnt_z),
+	.O_CNT		(w_cnt_a0),
 	.O_OVERFLOW (w_overflow_0),
-	.O_READY	(w_ready0)
+	.O_READY	(w_ready_0),
+	.O_VALID	(w_valid_0)	
 );
 
 // Encoder 1
@@ -82,7 +91,8 @@ ENC_CNT ENC_CNT1(
 	.I_Z	(w_cnt_z),
 	.O_CNT	(w_cnt_a1),
 	.O_OVERFLOW (w_overflow_1),
-	.O_READY	(w_ready1)
+	.O_READY	(w_ready_1),
+	.O_VALID	(w_valid_1)
 );
 
 endmodule

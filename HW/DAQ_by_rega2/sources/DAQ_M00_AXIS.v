@@ -18,42 +18,36 @@
 		// Do not modify the parameters beyond this line
 
 		// Width of S_AXIS address bus. The slave accepts the read and write addresses of width C_M_AXIS_TDATA_WIDTH.
-		parameter integer C_M_AXIS_TDATA_WIDTH	= 32
+		parameter integer C_M_AXIS_TDATA_WIDTH	= 32,
 		// Start count is the number of clock cycles the master will wait before initiating/issuing any transaction.
 		// parameter integer C_M_START_COUNT	= 32
+		// Total number of output data                                                 
+		parameter NUMBER_OF_OUTPUT_WORDS = 2 
 	)
 	(
 		// // Users to add ports here
-  //       //arm signal to start measurements
-  //       input  I_ARM,
-  //       //select encoder reference
-  //       input     I_SEL,
-  //       //input from encoder
-  //       input     I_A0,
-  //       input     I_A1,
-  //       input     I_Z0,
-  //       input     I_Z1,
-        //arm signal to start measurements
-//        output     O_ARM,
-        //selector output
-//        output         O_SEL,
-        //output from encoder
-//        output        O_A0,
-//        output        O_A1,
-//        output        O_Z0,
-//        output        O_Z1,
         //counter result, only send through AXI
-        input [63:0]    I_CNT_A0,
-        input [63:0]    I_CNT_A1,
+        // input [63:0]    I_CNT_A0,
+        // input [63:0]    I_CNT_A1,
+        input [63:0]    I_CNT,
+
+		//register to save counter value in 32 bit
+		 output [C_M_AXIS_TDATA_WIDTH-1 : 0] 	O_counter_high,
+		 output [C_M_AXIS_TDATA_WIDTH-1 : 0] 	O_counter_low,       
+        
         //interrupt output
         // input            I_OVERFLOW_0,
         // input            I_OVERFLOW_1,
-        input            I_READY_0,
-        input            I_READY_1,
-        input            sel,
+        // input            I_READY_0,
+        // input            I_READY_1,
+        input            I_READY,
+        input            I_VALID,
+        // input            sel,
+		
 		// User ports ends
 		// Do not modify the ports beyond this line
-
+	    // Example design FIFO read pointer                                                  
+	    output reg [4:0] read_pointer,
 		// Global ports
 		input wire  M_AXIS_ACLK,
 		// 
@@ -70,16 +64,13 @@
 		input wire  M_AXIS_TREADY
 	);
 	
-	//multiplexer wire
-	wire           w_I_READY;
-	wire [63 : 0]  w_I_CNT;
+	// //multiplexer wire
+	// wire           w_I_READY;
+	// wire [63 : 0]  w_I_CNT;
 
 	//register to save counter value in 32 bit
 	reg [C_M_AXIS_TDATA_WIDTH-1 : 0] 	reg_counter_high;
-	reg [C_M_AXIS_TDATA_WIDTH-1 : 0] 	reg_counter_low;
-
-	// Total number of output data                                                 
-	localparam NUMBER_OF_OUTPUT_WORDS = 2;                                               
+	reg [C_M_AXIS_TDATA_WIDTH-1 : 0] 	reg_counter_low;                                              
 	                                                                                     
 	// function called clogb2 that returns an integer which has the                      
 	// value of the ceiling of the log base 2.                                           
@@ -94,12 +85,12 @@
 //	localparam integer WAIT_COUNT_BITS = clogb2(C_M_START_COUNT-1);                      
 	                                                                                     
 	// bit_num gives the minimum number of bits needed to address 'depth' size of FIFO.  
-	localparam bit_num  = clogb2(NUMBER_OF_OUTPUT_WORDS);                                
+//	localparam bit_num  = clogb2(NUMBER_OF_OUTPUT_WORDS);                                
 	                                                                                     
 	// State variable                                                                    
 	reg [1:0] mst_exec_state;                                                            
-	// Example design FIFO read pointer                                                  
-	reg [bit_num-1:0] read_pointer;                                                      
+//	// Example design FIFO read pointer                                                  
+//	reg [bit_num-1:0] read_pointer;                                                      
 
 	// AXI Stream internal signals
 	//wait counter. The master waits for the user defined number of clock cycles before initiating a transfer.
@@ -141,25 +132,17 @@
 	      IDLE:                                                               
 	        // The slave starts accepting tdata when                          
 	        // there tvalid is asserted to mark the                           
-	        // presence of valid streaming data                               
-	        //if ( count == 0 )                                                 
-	        //  begin                                                           
-	            // mst_exec_state  <= INIT_TRANSACTION;                              
-	        //  end                                                             
-	        //else                                                              
-	        //  begin                                                           
-	        //    mst_exec_state  <= IDLE;                                      
-	        //  end            
-	        if (w_I_READY) 
-	        	begin
-	            	mst_exec_state   <= SEND_STREAM;
-	        		reg_counter_high <= w_I_CNT[63:32];
-	        		reg_counter_low	 <= w_I_CNT[31:0];
-	        	end
-	        else 
-	        	begin
-	               	mst_exec_state  <= IDLE;                                           	
-	            end                                                 
+	        // presence of valid streaming data                                       
+ 	        if (I_READY) 
+ 	        	begin
+ //	        		 reg_counter_high <= w_I_CNT[63:32];
+ //	        		 reg_counter_low	 <= w_I_CNT[31:0];
+ 	            	mst_exec_state   <= SEND_STREAM;
+ 	        	end
+ 	        else 
+ 	        	begin
+ 	               	mst_exec_state  <= IDLE;                                           	
+ 	            end                                                 
 	                                                                          
 	      // INIT_TRANSACTION:                                                       
 	      //   // The slave starts accepting tdata when                          
@@ -194,8 +177,9 @@
 	//tvalid generation
 	//axis_tvalid is asserted when the control state machine's state is SEND_STREAM and
 	//number of output streaming data is less than the NUMBER_OF_OUTPUT_WORDS.
-	assign axis_tvalid = ((mst_exec_state == SEND_STREAM) && (read_pointer < NUMBER_OF_OUTPUT_WORDS));
-	                                                                                               
+	// assign axis_tvalid = (mst_exec_state == SEND_STREAM); // && (read_pointer < NUMBER_OF_OUTPUT_WORDS));
+	assign axis_tvalid = I_VALID;
+
 	// AXI tlast generation                                                                        
 	// axis_tlast is asserted number of output streaming data is NUMBER_OF_OUTPUT_WORDS-1          
 	// (0 to NUMBER_OF_OUTPUT_WORDS-1)                                                             
@@ -225,26 +209,40 @@
 	begin                                                                            
 	  if(!M_AXIS_ARESETN)                                                            
 	    begin                                                                        
-	      read_pointer <= 0;                                                         
+	      read_pointer <= 8'd0;                                                         
 	      tx_done <= 1'b0;                                                           
 	    end                                                                          
-	  else                                                                           
-	    if (read_pointer <= NUMBER_OF_OUTPUT_WORDS-1)                                
-	      begin                                                                      
-	        if (tx_en)                                                               
-	          // read pointer is incremented after every read from the FIFO          
-	          // when FIFO read signal is enabled.                                   
-	          begin                                                                  
-	            read_pointer <= read_pointer + 1;                                    
-	            tx_done <= 1'b0;                                                     
-	          end                                                                    
-	      end                                                                        
-	    else if (read_pointer == NUMBER_OF_OUTPUT_WORDS)                             
-	      begin                                                                      
-	        // tx_done is asserted when NUMBER_OF_OUTPUT_WORDS numbers of streaming data
-	        // has been out.                                                         
-	        tx_done <= 1'b1;                                                         
-	      end                                                                        
+	  else 
+	  	// if ((mst_exec_state == SEND_STREAM) && tx_en) 
+	  		// begin
+	  	    	if (read_pointer >= 8'd2) 
+	  	    		begin
+	  	    			read_pointer <= 8'd0;
+	  	    			tx_done <= 1'b1;
+	  	    		end	
+	  	    	else
+	  	    		begin
+	  	    			read_pointer <= read_pointer + 1'b1; 
+	  	    			tx_done <= 1'b0;
+	  	    		end
+	  		// end                                                                          
+	    // if (read_pointer <= NUMBER_OF_OUTPUT_WORDS-1)                                
+	    //   begin                                                                      
+	    //     if ((tx_en) && (mst_exec_state == SEND_STREAM));                                                               
+	    //       // read pointer is incremented after every read from the FIFO          
+	    //       // when FIFO read signal is enabled.                                   
+	    //       begin                                                                  
+	    //         read_pointer <= read_pointer + 1'b1;                                    
+	    //         tx_done <= 1'b0;                                                     
+	    //       end                                                                    
+	    //   end                                                                        
+	    // else if (read_pointer == NUMBER_OF_OUTPUT_WORDS)                             
+	    //   begin                                                                      
+	    //     // tx_done is asserted when NUMBER_OF_OUTPUT_WORDS numbers of streaming data
+	    //     // has been out.                                                         
+	    //     tx_done <= 1'b1;  
+	    //     read_pointer <= 0;                                                       
+	    //   end                                                                        
 	end                                                                              
 
 
@@ -261,21 +259,22 @@
 	        end                                          
 	      else if (tx_en)// && M_AXIS_TSTRB[byte_index]  
 	        begin
-	        	if (read_pointer == 0) 
+	        	if (read_pointer == 1) 
 	        		begin
-	        	   		stream_data_out <= reg_counter_high;                                       	
+	        	   		stream_data_out <= read_pointer;                                       	
 	        	    end
+	        	else if (read_pointer == 2)
+		        	begin
+		        		stream_data_out <= read_pointer;
+		        	end
 	        	else 
 	        		begin
-	        	       	stream_data_out <= reg_counter_low;
+	        	       	stream_data_out <= read_pointer;
 	        		end                                        
 	        end                                          
 	    end                                              
 
-	// Add user logic here
-    
-    //Multiplexer    
-    assign w_I_READY = (sel) ? I_READY_0 : I_READY_1;
-    assign w_I_CNT   = (sel) ? I_CNT_A0  : I_CNT_A1;
+    assign O_counter_high = I_CNT[63:32];
+    assign O_counter_low  = I_CNT[31:0];
 
 	endmodule
