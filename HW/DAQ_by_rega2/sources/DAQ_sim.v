@@ -44,8 +44,8 @@ module DAQ_sim();
     wire[31:0]  O_CNT_A1_high;
     wire[31:0]	O_CNT_A1_low;
     
-    reg [4:0] pointer_0;
-    reg [4:0] pointer_1;
+//    reg [4:0] pointer_0;
+//    reg [4:0] pointer_1;
 	// Ports of Axi Master Bus Interface M00_AXIS for CNT0
     // wire  m00_axis_aclk;
     // wire  m00_axis_aresetn;

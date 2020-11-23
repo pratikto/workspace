@@ -175,7 +175,7 @@
         // .I_CNT_A1       (O_CNT_A1),
         .O_counter_high     (O_CNT_A0_high),
         .O_counter_low      (O_CNT_A0_low),
-        .read_pointer       (pointer_0),
+//        .read_pointer       (pointer_0),
         //interrupt output
         // .I_OVERFLOW_0   (O_OVERFLOW_0),  
         // .I_OVERFLOW_1   (O_OVERFLOW_1),
@@ -213,7 +213,7 @@
             // .I_READY_0      (O_READY_0),
             .I_READY            (O_READY_1),
             .I_VALID            (O_VALID_1),
-            .read_pointer       (pointer_1),
+//            .read_pointer       (pointer_1),
             // .I_READY_1      (O_READY_1),
              //selector
             // .sel      (1'b0),
