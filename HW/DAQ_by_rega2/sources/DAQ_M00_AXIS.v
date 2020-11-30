@@ -18,26 +18,14 @@
 		// Do not modify the parameters beyond this line
 
 		// Width of S_AXIS address bus. The slave accepts the read and write addresses of width C_M_AXIS_TDATA_WIDTH.
-		parameter integer C_M_AXIS_TDATA_WIDTH	= 32,
-
-		// Total number of output data                                                 
-		parameter NUMBER_OF_OUTPUT_WORDS = 2 
+		parameter integer C_M_AXIS_TDATA_WIDTH	= 32
 	)
 	(
 		// // Users to add ports here
         //counter result, only send through AXI
-        input [63:0]    I_CNT,
-
-		//register to save counter value in 32 bit
-		output [C_M_AXIS_TDATA_WIDTH-1 : 0] 	O_counter_high,
-		output [C_M_AXIS_TDATA_WIDTH-1 : 0] 	O_counter_low,       
-        output O_word_sel,
+        input [63:0]     I_CNT,
 
         //interrupt output
-        // input            I_OVERFLOW_0,
-        // input            I_OVERFLOW_1,
-        // input            I_READY_0,
-        // input            I_READY_1,
         input            I_READY,
         input            I_VALID,
 		
@@ -59,48 +47,16 @@
 		// TREADY indicates that the slave can accept a transfer in the current cycle.
 		input wire  M_AXIS_TREADY
 	);
-
-	// //register to save counter value in 32 bit
-	// reg [C_M_AXIS_TDATA_WIDTH-1 : 0] 	reg_counter_high;
-	// reg [C_M_AXIS_TDATA_WIDTH-1 : 0] 	reg_counter_low;                                              
-	                                                                                     	                                                                                     
+                                    	                                                                                     
 	// State variable                                                                    
 	reg [1:0] state, nextstate;                                                            
                                                    
 
 	// AXI Stream internal signals
-	//streaming data valid
-	// wire  	axis_tvalid;
-	//streaming data valid delayed by one clock cycle
-//	reg  	axis_tvalid_delay;
-	//Last of the streaming data 
-	// wire  	axis_tlast;
-	//Last of the streaming data delayed by one clock cycle
-//	reg  	axis_tlast_delay;
-	//FIFO implementation signals
-//	reg [C_M_AXIS_TDATA_WIDTH-1 : 0] 	stream_data_out;
 	wire  	tx_en;
-	//The master has issued all the streaming data stored in FIFO
-	// reg  	tx_done;
-
-	// reg    r_word_sel;
-	// reg    r_tdata_load;
-	
-	// wire w_word_sel;
-	// wire w_tdata_load;	
-	
-	// wire [C_M_AXIS_TDATA_WIDTH-1 : 0]  w_counter_high;
-	// wire [C_M_AXIS_TDATA_WIDTH-1 : 0]  w_counter_low;
 	wire [C_M_AXIS_TDATA_WIDTH-1 : 0]  w_stream_data_out;
 	
 	// I/O Connections assignments
-	// assign w_word_sel = r_word_sel;
-	// assign O_word_sel = r_word_sel;
-	// assign w_tdata_load = r_tdata_load;
- //    assign w_counter_high = I_CNT[63:32];
- //    assign O_counter_high = w_counter_high;
- //    assign w_counter_low  = I_CNT[31:0];
- //    assign O_counter_low  = w_counter_low;
 	assign w_stream_data_out = I_CNT; //(r_word_sel) ? w_counter_high : w_counter_low;    
 	assign tx_en = I_VALID && M_AXIS_TREADY;                                      
     assign M_AXIS_TDATA = w_stream_data_out;   
@@ -129,29 +85,17 @@
 
 			s0 :
 				if (I_READY && tx_en) begin
-					// r_word_sel <= 1'b0;
-					// r_tdata_load <= 1'b1;
 					nextstate <= s1;
 				end
 				else begin 
-					// r_word_sel <= 1'b1;
-					// r_tdata_load <= 1'b0;
 					nextstate <= s0;
 				end
 
 			s1 :
-			 //    begin
-				// r_word_sel <= 1'b1;
-				// r_tdata_load <= 1'b1;
-				// nextstate <= s1;
-    //             end
 				if (tx_en) begin
-					// r_tdata_load <= 1'b1;
-					// r_word_sel <= 1'b0;
 					nextstate <= s0;
 				end
 				else begin
-					// r_tdata_load <= 1'b0; 
 					nextstate <= s0;
 				end
 		                                                            
