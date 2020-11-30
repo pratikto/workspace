@@ -268,3 +268,13 @@ HW/DAQtest2/sources/DAQtest2_wrapper_hw_platform_2/
 HW/DAQtest2/sources/webtalk/
 
 HW/DAQ_by_rega2/DAQ_by_rega2.sim/
+
+HLS/add/solution1/.autopilot/
+
+HLS/add/solution1/impl/
+
+HLS/add/solution1/syn/
+
+HLS/add/solution1/sdx.tcl
+
+HLS/add/.vivado_hls_log_all.xml

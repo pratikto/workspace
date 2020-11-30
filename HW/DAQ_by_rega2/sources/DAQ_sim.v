@@ -6,7 +6,7 @@ module DAQ_sim();
 	parameter integer C_S00_AXI_ADDR_WIDTH	= 5;
 		
 	// Parameters of Axi Master Bus Interface M00_AXIS
-    parameter integer C_M00_AXIS_TDATA_WIDTH    = 32;
+    parameter integer C_M00_AXIS_TDATA_WIDTH    = 64;
     parameter integer C_M00_AXIS_START_COUNT    = 32;
 
 	reg 		CLK;
@@ -38,11 +38,11 @@ module DAQ_sim();
 	// DAQ couter-0 and counter-1 result
 	wire[63:0]	O_CNT_A0;
 	wire[63:0]	O_CNT_A1;
-    // DAQ couter-0 and counter-1 result
-    wire[31:0]  O_CNT_A0_high;
-    wire[31:0]  O_CNT_A0_low;
-    wire[31:0]  O_CNT_A1_high;
-    wire[31:0]	O_CNT_A1_low;
+    // // DAQ couter-0 and counter-1 result
+    // wire[31:0]  O_CNT_A0_high;
+    // wire[31:0]  O_CNT_A0_low;
+    // wire[31:0]  O_CNT_A1_high;
+    // wire[31:0]	O_CNT_A1_low;
     
 //    reg [4:0] pointer_0;
 //    reg [4:0] pointer_1;
@@ -221,10 +221,10 @@ module DAQ_sim();
         //result counter
        	.O_CNT_A0       (O_CNT_A0),
        	.O_CNT_A1       (O_CNT_A1),
-     	.O_CNT_A0_high 	(O_CNT_A0_high),
-        .O_CNT_A0_low   (O_CNT_A0_low),
-      	.O_CNT_A1_high 	(O_CNT_A1_high),
-        .O_CNT_A1_low   (O_CNT_A1_low),
+//     	.O_CNT_A0_high 	(O_CNT_A0_high),
+//        .O_CNT_A0_low   (O_CNT_A0_low),
+//      	.O_CNT_A1_high 	(O_CNT_A1_high),
+//        .O_CNT_A1_low   (O_CNT_A1_low),
         //interrupt output
         .O_OVERFLOW_0   (O_OVERFLOW_0),  
         .O_OVERFLOW_1   (O_OVERFLOW_1),

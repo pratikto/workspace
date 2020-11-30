@@ -14,7 +14,7 @@
 		parameter integer C_S00_AXI_ADDR_WIDTH	= 5,
 		
 		// Parameters of Axi Master Bus Interface M00_AXIS
-        parameter integer C_M00_AXIS_TDATA_WIDTH    = 32,
+        parameter integer C_M00_AXIS_TDATA_WIDTH    = 64,
         parameter integer C_M00_AXIS_START_COUNT    = 32
 	)
 	(
@@ -49,14 +49,6 @@
         // DAQ couter-0 and counter-1 result
         output[63:0]    O_CNT_A0,
         output[63:0]    O_CNT_A1,
-        // DAQ couter-0 and counter-1 result
-        output[31:0]    O_CNT_A0_high,
-        output[31:0]    O_CNT_A0_low,
-        output[31:0]    O_CNT_A1_high,
-        output[31:0]    O_CNT_A1_low,
-
-        output [4:0] pointer_0,
-        output [4:0] pointer_1,
         
 		// User ports ends
 
@@ -101,19 +93,9 @@
         output wire  m01_axis_tlast,
         input wire  m01_axis_tready
 	);	
-	//	//DAQ couter-0 and counter-1 wire
-        // wire[63:0]     O_CNT_A0;
-        // wire[63:0]     O_CNT_A1;
 
-    // wire[63:0]  w_cnt_a0;
-    // wire[63:0]  w_cnt_a1;
-    // wire        w_overflow_0;
-    // wire        w_overflow_1;
+    //selected Z wire reference
     wire        w_cnt_z; 
-    // wire        w_ready_0;
-    // wire        w_ready_1;
-    // wire        w_valid_0;
-    // wire        w_valid_1;
 	
 // Instantiation of Axi Bus Interface S00_AXI
 	DAQ_S00_AXI # ( 
@@ -170,23 +152,11 @@
 		.C_M_AXIS_TDATA_WIDTH(C_M00_AXIS_TDATA_WIDTH)
 //		.C_M_START_COUNT(C_M00_AXIS_START_COUNT)
 	) DAQ_M00_AXIS_inst (
-        //result counter
-        // .I_CNT_A0       (O_CNT_A0),
-        // .I_CNT_A1       (O_CNT_A1),
-        .O_counter_high     (O_CNT_A0_high),
-        .O_counter_low      (O_CNT_A0_low),
-//        .read_pointer       (pointer_0),
-        //interrupt output
-        // .I_OVERFLOW_0   (O_OVERFLOW_0),  
-        // .I_OVERFLOW_1   (O_OVERFLOW_1),
-        // .I_READY_0      (O_READY_0),
-        // .I_READY_1      (O_READY_1),
+        //from counter
         .I_CNT              (O_CNT_A0),
         .I_READY            (O_READY_0),
-        .I_VALID            (O_VALID_0),
-        //selector
-        // .sel      (1'b1),        
-        
+        .I_VALID            (O_VALID_0),     
+        //AXIS master port
 		.M_AXIS_ACLK(m00_axis_aclk),
 		.M_AXIS_ARESETN(m00_axis_aresetn),
 		.M_AXIS_TVALID(m00_axis_tvalid),
@@ -201,23 +171,11 @@
             .C_M_AXIS_TDATA_WIDTH(C_M00_AXIS_TDATA_WIDTH)
 //            .C_M_START_COUNT(C_M00_AXIS_START_COUNT)
         ) DAQ_M01_AXIS_inst (
-            //result counter
-            // .I_CNT_A0       (O_CNT_A0),
-            // .I_CNT_A1       (O_CNT_A1),
+            //from counter
             .I_CNT              (O_CNT_A1),
-            .O_counter_high     (O_CNT_A1_high),
-            .O_counter_low      (O_CNT_A1_low),
-            //interrupt output
-            // .I_OVERFLOW_0   (O_OVERFLOW_0),  
-            // .I_OVERFLOW_1   (O_OVERFLOW_1),
-            // .I_READY_0      (O_READY_0),
             .I_READY            (O_READY_1),
             .I_VALID            (O_VALID_1),
-//            .read_pointer       (pointer_1),
-            // .I_READY_1      (O_READY_1),
-             //selector
-            // .sel      (1'b0),
-
+            //AXIS master port    
             .M_AXIS_ACLK(m01_axis_aclk),
             .M_AXIS_ARESETN(m01_axis_aresetn),
             .M_AXIS_TVALID(m01_axis_tvalid),
@@ -228,41 +186,9 @@
         );
         	
 	// // Add user logic here
- //    ENC_TOP ENC_DAQ(
- //        //input clock for pulse measurements
- //        .CLK            (ENC_CLK),
- //        //arm signal to start measurements
- //        .I_ARM          (I_ARM),
- //        .I_SEL          (I_SEL),
- //        .I_A0           (I_A0),
- //        .I_A1           (I_A1),
- //        .I_Z0           (I_Z0),
- //        .I_Z1           (I_Z1),
-    
- //        .O_ARM          (O_ARM),
- //        .O_SEL          (O_SEL),
- //        .O_A0           (O_A0),
- //        .O_A1           (O_A1),
- //        .O_Z0           (O_Z0),
- //        .O_Z1           (O_Z1),
- //        //result counter
- //        .O_CNT_A0       (O_CNT_A0),
- //        .O_CNT_A1       (O_CNT_A1),
- //        //interrupt output
- //        .O_OVERFLOW_0   (O_OVERFLOW_0),  
- //        .O_OVERFLOW_1   (O_OVERFLOW_1),
- //        .O_READY_0      (O_READY_0),
- //        .O_READY_1      (O_READY_1),
- //        .O_VALID_0      (O_VALID_0),
- //        .O_VALID_1      (O_VALID_1)
- //    );
 	
         //Multiplexer for Z signal
         assign w_cnt_z = (I_SEL) ? I_Z1 : I_Z0;   
-        //Multiplexer for Ready signal 
-        // assign w_I_READY = (sel) ? I_READY_0 : I_READY_1;
-        // //Multiplexer for counter value
-        // assign w_I_CNT   = (sel) ? I_CNT_A0  : I_CNT_A1;
         
         // Bypassing input signal
         assign O_SEL    = I_SEL;
@@ -271,18 +197,6 @@
         assign O_Z0     = I_Z0;
         assign O_Z1     = I_Z1;
         assign O_ARM    = I_ARM;
-
-        // // Ready Signals
-        // assign O_READY_0 = w_ready_0;
-        // assign O_READY_1 = w_ready_1;
-
-        // // Valid Signals
-        // assign O_VALID_0 = w_valid_0;
-        // assign O_VALID_1 = w_valid_1;
-
-        // // Encoder 0
-        // assign O_CNT_A0         = w_cnt_a0;
-        // assign O_OVERFLOW_0     = w_overflow_0;
 
         ENC_CNT ENC_CNT0(
             .CLK        (ENC_CLK),
@@ -296,9 +210,6 @@
             .O_VALID    (O_VALID_0) 
         );
 
-        // Encoder 1
-        // assign O_CNT_A1         = w_cnt_a1;
-        // assign O_OVERFLOW_1     = w_overflow_1;
         ENC_CNT ENC_CNT1(
             .CLK    (ENC_CLK),
             .I_ARM  (I_ARM),
