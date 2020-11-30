@@ -14,7 +14,7 @@
 		parameter integer C_S00_AXI_ADDR_WIDTH	= 5,
 		
 		// Parameters of Axi Master Bus Interface M00_AXIS
-        parameter integer C_M00_AXIS_TDATA_WIDTH    = 32,
+        parameter integer C_M00_AXIS_TDATA_WIDTH    = 64,
         parameter integer C_M00_AXIS_START_COUNT    = 32
 	)
 	(

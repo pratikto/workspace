@@ -7,12 +7,12 @@
 		// Define the states of state machine                                                
 		// The control state machine oversees the writing of input streaming data to the FIFO,
 		// and outputs the streaming data from the FIFO                                      
-		parameter [1:0] //IDLE = 2'b00,        // This is the initial/idle state               
+		parameter [1:0] s0 = 2'b00,        // This is the initial s0 state               
 		                                                                                     
-		                SEND_WORD1  = 2'b01, // This state initializes the counter, once   
+		                s1  = 2'b01, // This state initializes the counter, once   
 		                //                 // the counter reaches NUMBER_OF_OUTPUT_WORDS count,        
-		                //                 // the state machine changes state to SEND_WORD2     
-		                SEND_WORD2   = 2'b10, // In this state the                          
+		                //                 // the state machine changes state to s2     
+		                s2   = 2'b10, // In this state the                          
 		                                     // stream data is output through M_AXIS_TDATA   
 		// User parameters ends
 		// Do not modify the parameters beyond this line
@@ -26,8 +26,6 @@
 	(
 		// // Users to add ports here
         //counter result, only send through AXI
-        // input [63:0]    I_CNT_A0,
-        // input [63:0]    I_CNT_A1,
         input [63:0]    I_CNT,
 
 		//register to save counter value in 32 bit
@@ -62,9 +60,9 @@
 		input wire  M_AXIS_TREADY
 	);
 
-	//register to save counter value in 32 bit
-	reg [C_M_AXIS_TDATA_WIDTH-1 : 0] 	reg_counter_high;
-	reg [C_M_AXIS_TDATA_WIDTH-1 : 0] 	reg_counter_low;                                              
+	// //register to save counter value in 32 bit
+	// reg [C_M_AXIS_TDATA_WIDTH-1 : 0] 	reg_counter_high;
+	// reg [C_M_AXIS_TDATA_WIDTH-1 : 0] 	reg_counter_low;                                              
 	                                                                                     	                                                                                     
 	// State variable                                                                    
 	reg [1:0] state, nextstate;                                                            
@@ -85,35 +83,42 @@
 	//The master has issued all the streaming data stored in FIFO
 	// reg  	tx_done;
 
-	reg    r_word_sel;
-	reg    r_tdata_load;
+	// reg    r_word_sel;
+	// reg    r_tdata_load;
 	
-	wire w_word_sel;
-	wire w_tdata_load;	
+	// wire w_word_sel;
+	// wire w_tdata_load;	
 	
-	wire [C_M_AXIS_TDATA_WIDTH-1 : 0]  w_counter_high;
-	wire [C_M_AXIS_TDATA_WIDTH-1 : 0]  w_counter_low;
+	// wire [C_M_AXIS_TDATA_WIDTH-1 : 0]  w_counter_high;
+	// wire [C_M_AXIS_TDATA_WIDTH-1 : 0]  w_counter_low;
 	wire [C_M_AXIS_TDATA_WIDTH-1 : 0]  w_stream_data_out;
 	
 	// I/O Connections assignments
-	assign w_word_sel = r_word_sel;
-	assign O_word_sel = r_word_sel;
-	assign w_tdata_load = r_tdata_load;
-    assign w_counter_high = I_CNT[63:32];
-    assign O_counter_high = w_counter_high;
-    assign w_counter_low  = I_CNT[31:0];
-    assign O_counter_low  = w_counter_low;
-	assign w_stream_data_out = (r_word_sel) ? w_counter_high : w_counter_low;    
+	// assign w_word_sel = r_word_sel;
+	// assign O_word_sel = r_word_sel;
+	// assign w_tdata_load = r_tdata_load;
+ //    assign w_counter_high = I_CNT[63:32];
+ //    assign O_counter_high = w_counter_high;
+ //    assign w_counter_low  = I_CNT[31:0];
+ //    assign O_counter_low  = w_counter_low;
+	assign w_stream_data_out = I_CNT; //(r_word_sel) ? w_counter_high : w_counter_low;    
 	assign tx_en = I_VALID && M_AXIS_TREADY;                                      
     assign M_AXIS_TDATA = w_stream_data_out;   
-	assign M_AXIS_TVALID= I_VALID;
-	assign M_AXIS_TLAST	= r_word_sel;
-	assign M_AXIS_TSTRB	= {(C_M_AXIS_TDATA_WIDTH/8){1'b1}};
+	assign M_AXIS_TVALID= I_READY;
+	// When a component does not support TLAST signaling and the topology or functionality 
+	// within the interconnect is unknown, then the TLAST signal must default to HIGH. This
+	// ensures that transfers do not get delayed indefinitely in the interconnect by components
+	// that use TLAST signaling to force a buffer draining operation.
+	assign M_AXIS_TLAST	= 1'b1;
+	// • when TKEEP is absent, TKEEP defaults to all bits HIGH
+	// • when TSTRB is absent, TSTRB = TKEEP
+	// • when TSTRB and TKEEP are absent, TSTRB and TKEEP default to all bits HIGH.
+	assign M_AXIS_TSTRB	= 8'hFF;
 
     // always block to update state
 	always @(posedge M_AXIS_ACLK or negedge M_AXIS_ARESETN) 
 		if (M_AXIS_ARESETN)
-	 		state <= SEND_WORD1;
+	 		state <= s1;
 		else
 	 		state <= nextstate; 
 
@@ -122,48 +127,36 @@
 	begin         
 		case (state)
 
-			SEND_WORD1 :
+			s0 :
 				if (I_READY && tx_en) begin
-					r_word_sel <= 1'b0;
-					r_tdata_load <= 1'b1;
-					nextstate <= SEND_WORD2;
+					// r_word_sel <= 1'b0;
+					// r_tdata_load <= 1'b1;
+					nextstate <= s1;
 				end
 				else begin 
-					r_word_sel <= 1'b1;
-					r_tdata_load <= 1'b0;
-					nextstate <= SEND_WORD1;
+					// r_word_sel <= 1'b1;
+					// r_tdata_load <= 1'b0;
+					nextstate <= s0;
 				end
 
-			SEND_WORD2 :
+			s1 :
 			 //    begin
 				// r_word_sel <= 1'b1;
 				// r_tdata_load <= 1'b1;
-				// nextstate <= SEND_WORD1;
+				// nextstate <= s1;
     //             end
 				if (tx_en) begin
-					r_tdata_load <= 1'b1;
-					r_word_sel <= 1'b0;
-					nextstate <= SEND_WORD1;
+					// r_tdata_load <= 1'b1;
+					// r_word_sel <= 1'b0;
+					nextstate <= s0;
 				end
 				else begin
-					r_tdata_load <= 1'b0; 
-					nextstate <= SEND_WORD1;
+					// r_tdata_load <= 1'b0; 
+					nextstate <= s0;
 				end
 		                                                            
 			default : 
-				nextstate = SEND_WORD1;
+				nextstate = s0;
 		endcase                                                                       
-	end                                                                       
-
-
-	// //tvalid generation
-	// //axis_tvalid is asserted when the control state machine's state is SEND_WORD2 and
-	// //number of output streaming data is less than the NUMBER_OF_OUTPUT_WORDS.
-	// assign axis_tvalid = I_VALID;
-
-	// // AXI tlast generation                                                                        
-	// // axis_tlast is asserted number of output streaming data is NUMBER_OF_OUTPUT_WORDS-1          
-	// // (0 to NUMBER_OF_OUTPUT_WORDS-1)                                                             
-	// assign axis_tlast = r_word_sel;                                                                                                                                                                                                                                                                                         
-
-	endmodule
+	end                                                                                                                                                                                                                                                                                                                                                          
+endmodule
