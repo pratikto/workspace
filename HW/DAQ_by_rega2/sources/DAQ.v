@@ -47,8 +47,8 @@
         output	O_VALID_0,
         output	O_VALID_1,
         // DAQ couter-0 and counter-1 result
-        output[63:0]    O_CNT_A0,
-        output[63:0]    O_CNT_A1,
+//        output[63:0]    O_CNT_A0,
+//        output[63:0]    O_CNT_A1,
         
 		// User ports ends
 
@@ -96,6 +96,8 @@
 
     //selected Z wire reference
     wire        w_cnt_z; 
+    wire[63:0]  O_CNT_A0;
+    wire[63:0]  O_CNT_A1;
 	
 // Instantiation of Axi Bus Interface S00_AXI
 	DAQ_S00_AXI # ( 
@@ -109,12 +111,6 @@
         .I_A1           (O_A1),
         .I_Z0           (O_Z0),
         .I_Z1           (O_Z1),
-        //selector output
-//        .O_SEL          (O_SEL),    
-//        .O_A0           (O_A0),
-//        .O_A1           (O_A1),
-//        .O_Z0           (O_Z0),
-//        .O_Z1           (O_Z1),
         //result counter
         .I_CNT_A0       (O_CNT_A0),
         .I_CNT_A1       (O_CNT_A1),

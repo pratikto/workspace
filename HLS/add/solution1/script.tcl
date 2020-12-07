@@ -10,8 +10,9 @@ add_files add/solution1/sources/add.h
 open_solution "solution1"
 set_part {xc7z020clg400-1} -tool vivado
 create_clock -period 10 -name default
+config_export -format ip_catalog -rtl verilog
 #source "./add/solution1/directives.tcl"
 #csim_design
 csynth_design
 #cosim_design
-export_design -format ip_catalog
+export_design -flow impl -rtl verilog -format ip_catalog

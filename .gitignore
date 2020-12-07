@@ -278,3 +278,11 @@ HLS/add/solution1/syn/
 HLS/add/solution1/sdx.tcl
 
 HLS/add/.vivado_hls_log_all.xml
+
+HW/DAQtest3/DAQtest3.cache/
+
+HW/DAQtest3/DAQtest3.ip_user_files/
+
+HW/DAQtest3/DAQtest3.runs/
+
+open_hardware_AHRS_coprocessor/

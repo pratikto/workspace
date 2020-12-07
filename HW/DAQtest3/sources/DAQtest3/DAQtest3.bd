@@ -9,7 +9,6 @@
       "validated": "true"
     },
     "design_tree": {
-      "DAQ_0": "",
       "processing_system7_0": "",
       "ps7_0_axi_periph": {
         "xbar": "",
@@ -23,6 +22,7 @@
       "rst_ps7_0_250M": "",
       "xlconcat_0": "",
       "xlconstant_0": "",
+      "DAQ_0": "",
       "add_0": ""
     },
     "interface_ports": {
@@ -106,10 +106,6 @@
       }
     },
     "components": {
-      "DAQ_0": {
-        "vlnv": "user.org:user:DAQ:1.0",
-        "xci_name": "DAQtest3_DAQ_0_0"
-      },
       "processing_system7_0": {
         "vlnv": "xilinx.com:ip:processing_system7:5.5",
         "xci_name": "DAQtest3_processing_system7_0_0",
@@ -1497,34 +1493,16 @@
           }
         },
         "interface_nets": {
-          "m01_couplers_to_ps7_0_axi_periph": {
-            "interface_ports": [
-              "M01_AXI",
-              "m01_couplers/M_AXI"
-            ]
-          },
-          "xbar_to_m00_couplers": {
-            "interface_ports": [
-              "xbar/M00_AXI",
-              "m00_couplers/S_AXI"
-            ]
-          },
           "xbar_to_m01_couplers": {
             "interface_ports": [
               "xbar/M01_AXI",
               "m01_couplers/S_AXI"
             ]
           },
-          "s00_couplers_to_xbar": {
+          "m01_couplers_to_ps7_0_axi_periph": {
             "interface_ports": [
-              "s00_couplers/M_AXI",
-              "xbar/S00_AXI"
-            ]
-          },
-          "xbar_to_m02_couplers": {
-            "interface_ports": [
-              "xbar/M02_AXI",
-              "m02_couplers/S_AXI"
+              "M01_AXI",
+              "m01_couplers/M_AXI"
             ]
           },
           "m02_couplers_to_ps7_0_axi_periph": {
@@ -1533,16 +1511,34 @@
               "m02_couplers/M_AXI"
             ]
           },
-          "m00_couplers_to_ps7_0_axi_periph": {
+          "xbar_to_m02_couplers": {
             "interface_ports": [
-              "M00_AXI",
-              "m00_couplers/M_AXI"
+              "xbar/M02_AXI",
+              "m02_couplers/S_AXI"
+            ]
+          },
+          "s00_couplers_to_xbar": {
+            "interface_ports": [
+              "s00_couplers/M_AXI",
+              "xbar/S00_AXI"
             ]
           },
           "ps7_0_axi_periph_to_s00_couplers": {
             "interface_ports": [
               "S00_AXI",
               "s00_couplers/S_AXI"
+            ]
+          },
+          "m00_couplers_to_ps7_0_axi_periph": {
+            "interface_ports": [
+              "M00_AXI",
+              "m00_couplers/M_AXI"
+            ]
+          },
+          "xbar_to_m00_couplers": {
+            "interface_ports": [
+              "xbar/M00_AXI",
+              "m00_couplers/S_AXI"
             ]
           }
         },
@@ -1599,34 +1595,20 @@
           }
         }
       },
+      "DAQ_0": {
+        "vlnv": "user.org:user:DAQ:1.0",
+        "xci_name": "DAQtest3_DAQ_0_0"
+      },
       "add_0": {
         "vlnv": "xilinx.com:hls:add:1.0",
         "xci_name": "DAQtest3_add_0_0"
       }
     },
     "interface_nets": {
-      "ps7_0_axi_periph_M02_AXI": {
-        "interface_ports": [
-          "ps7_0_axi_periph/M02_AXI",
-          "add_0/s_axi_AXI4lite_bus"
-        ]
-      },
       "ps7_0_axi_periph_M00_AXI": {
         "interface_ports": [
           "ps7_0_axi_periph/M00_AXI",
           "DAQ_0/s00_axi"
-        ]
-      },
-      "processing_system7_0_DDR": {
-        "interface_ports": [
-          "DDR",
-          "processing_system7_0/DDR"
-        ]
-      },
-      "DAQ_0_m01_axis": {
-        "interface_ports": [
-          "DAQ_0/m01_axis",
-          "add_0/B_in_V"
         ]
       },
       "DAQ_0_m00_axis": {
@@ -1635,16 +1617,34 @@
           "add_0/A_in_V"
         ]
       },
+      "processing_system7_0_M_AXI_GP0": {
+        "interface_ports": [
+          "processing_system7_0/M_AXI_GP0",
+          "ps7_0_axi_periph/S00_AXI"
+        ]
+      },
       "processing_system7_0_FIXED_IO": {
         "interface_ports": [
           "FIXED_IO",
           "processing_system7_0/FIXED_IO"
         ]
       },
-      "processing_system7_0_M_AXI_GP0": {
+      "DAQ_0_m01_axis": {
         "interface_ports": [
-          "processing_system7_0/M_AXI_GP0",
-          "ps7_0_axi_periph/S00_AXI"
+          "DAQ_0/m01_axis",
+          "add_0/B_in_V"
+        ]
+      },
+      "processing_system7_0_DDR": {
+        "interface_ports": [
+          "DDR",
+          "processing_system7_0/DDR"
+        ]
+      },
+      "ps7_0_axi_periph_M02_AXI": {
+        "interface_ports": [
+          "ps7_0_axi_periph/M02_AXI",
+          "add_0/s_axi_AXI4lite_bus"
         ]
       }
     },
@@ -1680,15 +1680,15 @@
           "processing_system7_0/M_AXI_GP0_ACLK",
           "ps7_0_axi_periph/S00_ACLK",
           "rst_ps7_0_250M/slowest_sync_clk",
-          "DAQ_0/s00_axi_aclk",
           "ps7_0_axi_periph/M00_ACLK",
           "ps7_0_axi_periph/ACLK",
           "ps7_0_axi_periph/M01_ACLK",
+          "ps7_0_axi_periph/M02_ACLK",
           "DAQ_0/ENC_CLK",
+          "DAQ_0/s00_axi_aclk",
           "DAQ_0/m00_axis_aclk",
           "DAQ_0/m01_axis_aclk",
-          "add_0/ap_clk",
-          "ps7_0_axi_periph/M02_ACLK"
+          "add_0/ap_clk"
         ]
       },
       "processing_system7_0_FCLK_RESET0_N": {
@@ -1701,28 +1701,28 @@
         "ports": [
           "rst_ps7_0_250M/peripheral_aresetn",
           "ps7_0_axi_periph/S00_ARESETN",
-          "DAQ_0/s00_axi_aresetn",
           "ps7_0_axi_periph/M00_ARESETN",
           "ps7_0_axi_periph/ARESETN",
           "ps7_0_axi_periph/M01_ARESETN",
+          "ps7_0_axi_periph/M02_ARESETN",
+          "DAQ_0/s00_axi_aresetn",
           "DAQ_0/m00_axis_aresetn",
           "DAQ_0/m01_axis_aresetn",
-          "add_0/ap_rst_n",
-          "ps7_0_axi_periph/M02_ARESETN"
+          "add_0/ap_rst_n"
         ]
       },
       "DAQ_0_O_READY_0": {
         "ports": [
           "DAQ_0/O_READY_0",
           "xlconcat_0/In8",
-          "add_0/A_ready"
+          "add_0/A_ready_in"
         ]
       },
       "DAQ_0_O_READY_1": {
         "ports": [
           "DAQ_0/O_READY_1",
           "xlconcat_0/In9",
-          "add_0/B_ready"
+          "add_0/B_ready_in"
         ]
       },
       "DAQ_0_O_ARM": {

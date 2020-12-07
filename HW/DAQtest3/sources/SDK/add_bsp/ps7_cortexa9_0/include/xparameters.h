@@ -36,16 +36,16 @@
 
 /* Definitions for peripheral ADD_0 */
 #define XPAR_ADD_0_DEVICE_ID 0
-#define XPAR_ADD_0_S_AXI_AXILITES_BASEADDR 0x43C10000
-#define XPAR_ADD_0_S_AXI_AXILITES_HIGHADDR 0x43C1FFFF
+#define XPAR_ADD_0_S_AXI_AXI4LITE_BUS_BASEADDR 0x43C10000
+#define XPAR_ADD_0_S_AXI_AXI4LITE_BUS_HIGHADDR 0x43C1FFFF
 
 
 /******************************************************************/
 
 /* Canonical definitions for peripheral ADD_0 */
 #define XPAR_XADD_0_DEVICE_ID XPAR_ADD_0_DEVICE_ID
-#define XPAR_XADD_0_S_AXI_AXILITES_BASEADDR 0x43C10000
-#define XPAR_XADD_0_S_AXI_AXILITES_HIGHADDR 0x43C1FFFF
+#define XPAR_XADD_0_S_AXI_AXI4LITE_BUS_BASEADDR 0x43C10000
+#define XPAR_XADD_0_S_AXI_AXI4LITE_BUS_HIGHADDR 0x43C1FFFF
 
 
 /******************************************************************/
@@ -285,6 +285,16 @@
 #define XPAR_XQSPIPS_0_QSPI_MODE 0
 #define XPAR_XQSPIPS_0_QSPI_BUS_WIDTH 2
 
+
+/******************************************************************/
+
+/* Definitions for Fabric interrupts connected to ps7_scugic_0 */
+#define XPAR_FABRIC_ADD_0_INTERRUPT_INTR 88U
+
+/******************************************************************/
+
+/* Canonical definitions for Fabric interrupts connected to ps7_scugic_0 */
+#define XPAR_FABRIC_ADD_0_VEC_ID XPAR_FABRIC_ADD_0_INTERRUPT_INTR
 
 /******************************************************************/
 

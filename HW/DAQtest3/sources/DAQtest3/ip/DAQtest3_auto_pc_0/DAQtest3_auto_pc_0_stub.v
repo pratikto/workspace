@@ -1,7 +1,7 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
-// Date        : Mon Nov 30 11:32:35 2020
+// Date        : Mon Nov 30 22:02:33 2020
 // Host        : Unyil running 64-bit Ubuntu 18.04.5 LTS
 // Command     : write_verilog -force -mode synth_stub -rename_top DAQtest3_auto_pc_0 -prefix
 //               DAQtest3_auto_pc_0_ DAQtest3_auto_pc_0_stub.v

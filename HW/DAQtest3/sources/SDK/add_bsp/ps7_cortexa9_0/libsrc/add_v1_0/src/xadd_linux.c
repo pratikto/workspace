@@ -1,5 +1,5 @@
 // ==============================================================
-// File generated on Mon Nov 30 11:10:07 WIB 2020
+// File generated on Tue Dec 01 20:04:35 WIB 2020
 // Vivado(TM) HLS - High-Level Synthesis from C, C++ and SystemC v2018.3 (64-bit)
 // SW Build 2405991 on Thu Dec  6 23:36:41 MST 2018
 // IP Build 2404404 on Fri Dec  7 01:43:56 MST 2018
@@ -125,9 +125,9 @@ int XAdd_Initialize(XAdd *InstancePtr, const char* InstanceName) {
         return XST_OPEN_DEVICE_FAILED;
     }
 
-    // NOTE: slave interface 'Axilites' should be mapped to uioX/map0
-    InstancePtr->Axilites_BaseAddress = (u32)mmap(NULL, InfoPtr->maps[0].size, PROT_READ|PROT_WRITE, MAP_SHARED, InfoPtr->uio_fd, 0 * getpagesize());
-    assert(InstancePtr->Axilites_BaseAddress);
+    // NOTE: slave interface 'Axi4lite_bus' should be mapped to uioX/map0
+    InstancePtr->Axi4lite_bus_BaseAddress = (u32)mmap(NULL, InfoPtr->maps[0].size, PROT_READ|PROT_WRITE, MAP_SHARED, InfoPtr->uio_fd, 0 * getpagesize());
+    assert(InstancePtr->Axi4lite_bus_BaseAddress);
 
     InstancePtr->IsReady = XIL_COMPONENT_IS_READY;
 
@@ -140,7 +140,7 @@ int XAdd_Release(XAdd *InstancePtr) {
     assert(InstancePtr != NULL);
     assert(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
 
-    munmap((void*)InstancePtr->Axilites_BaseAddress, InfoPtr->maps[0].size);
+    munmap((void*)InstancePtr->Axi4lite_bus_BaseAddress, InfoPtr->maps[0].size);
 
     close(InfoPtr->uio_fd);
 

@@ -36,8 +36,8 @@ module DAQ_sim();
 	wire		O_VALID_0;
 	wire		O_VALID_1;
 	// DAQ couter-0 and counter-1 result
-	wire[63:0]	O_CNT_A0;
-	wire[63:0]	O_CNT_A1;
+//	wire[63:0]	O_CNT_A0;
+//	wire[63:0]	O_CNT_A1;
     // // DAQ couter-0 and counter-1 result
     // wire[31:0]  O_CNT_A0_high;
     // wire[31:0]  O_CNT_A0_low;
@@ -219,8 +219,8 @@ module DAQ_sim();
         .O_Z0           (O_Z0),
         .O_Z1           (O_Z1),
         //result counter
-       	.O_CNT_A0       (O_CNT_A0),
-       	.O_CNT_A1       (O_CNT_A1),
+//       	.O_CNT_A0       (O_CNT_A0),
+//       	.O_CNT_A1       (O_CNT_A1),
 //     	.O_CNT_A0_high 	(O_CNT_A0_high),
 //        .O_CNT_A0_low   (O_CNT_A0_low),
 //      	.O_CNT_A1_high 	(O_CNT_A1_high),

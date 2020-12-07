@@ -1,5 +1,5 @@
 // ==============================================================
-// File generated on Mon Nov 30 18:05:14 WIB 2020
+// File generated on Tue Dec 01 20:04:35 WIB 2020
 // Vivado(TM) HLS - High-Level Synthesis from C, C++ and SystemC v2018.3 (64-bit)
 // SW Build 2405991 on Thu Dec  6 23:36:41 MST 2018
 // IP Build 2404404 on Fri Dec  7 01:43:56 MST 2018
@@ -8,7 +8,7 @@
 `timescale 1ns/1ps
 module add_AXI4lite_bus_s_axi
 #(parameter
-    C_S_AXI_ADDR_WIDTH = 6,
+    C_S_AXI_ADDR_WIDTH = 7,
     C_S_AXI_DATA_WIDTH = 32
 )(
     // axi4 lite slave signals
@@ -40,7 +40,9 @@ module add_AXI4lite_bus_s_axi
     input  wire                          ap_idle,
     output wire [63:0]                   A_out_V,
     output wire [63:0]                   B_out_V,
-    output wire [63:0]                   C_out_V
+    output wire [63:0]                   C_out_V,
+    output wire [0:0]                    A_ready_out,
+    output wire [0:0]                    B_ready_out
 );
 //------------------------Address Info-------------------
 // 0x00 : Control signals
@@ -76,31 +78,43 @@ module add_AXI4lite_bus_s_axi
 // 0x2c : Data signal of C_out_V
 //        bit 31~0 - C_out_V[63:32] (Read/Write)
 // 0x30 : reserved
+// 0x34 : Data signal of A_ready_out
+//        bit 0  - A_ready_out[0] (Read/Write)
+//        others - reserved
+// 0x38 : reserved
+// 0x3c : Data signal of B_ready_out
+//        bit 0  - B_ready_out[0] (Read/Write)
+//        others - reserved
+// 0x40 : reserved
 // (SC = Self Clear, COR = Clear on Read, TOW = Toggle on Write, COH = Clear on Handshake)
 
 //------------------------Parameter----------------------
 localparam
-    ADDR_AP_CTRL        = 6'h00,
-    ADDR_GIE            = 6'h04,
-    ADDR_IER            = 6'h08,
-    ADDR_ISR            = 6'h0c,
-    ADDR_A_OUT_V_DATA_0 = 6'h10,
-    ADDR_A_OUT_V_DATA_1 = 6'h14,
-    ADDR_A_OUT_V_CTRL   = 6'h18,
-    ADDR_B_OUT_V_DATA_0 = 6'h1c,
-    ADDR_B_OUT_V_DATA_1 = 6'h20,
-    ADDR_B_OUT_V_CTRL   = 6'h24,
-    ADDR_C_OUT_V_DATA_0 = 6'h28,
-    ADDR_C_OUT_V_DATA_1 = 6'h2c,
-    ADDR_C_OUT_V_CTRL   = 6'h30,
-    WRIDLE              = 2'd0,
-    WRDATA              = 2'd1,
-    WRRESP              = 2'd2,
-    WRRESET             = 2'd3,
-    RDIDLE              = 2'd0,
-    RDDATA              = 2'd1,
-    RDRESET             = 2'd2,
-    ADDR_BITS         = 6;
+    ADDR_AP_CTRL            = 7'h00,
+    ADDR_GIE                = 7'h04,
+    ADDR_IER                = 7'h08,
+    ADDR_ISR                = 7'h0c,
+    ADDR_A_OUT_V_DATA_0     = 7'h10,
+    ADDR_A_OUT_V_DATA_1     = 7'h14,
+    ADDR_A_OUT_V_CTRL       = 7'h18,
+    ADDR_B_OUT_V_DATA_0     = 7'h1c,
+    ADDR_B_OUT_V_DATA_1     = 7'h20,
+    ADDR_B_OUT_V_CTRL       = 7'h24,
+    ADDR_C_OUT_V_DATA_0     = 7'h28,
+    ADDR_C_OUT_V_DATA_1     = 7'h2c,
+    ADDR_C_OUT_V_CTRL       = 7'h30,
+    ADDR_A_READY_OUT_DATA_0 = 7'h34,
+    ADDR_A_READY_OUT_CTRL   = 7'h38,
+    ADDR_B_READY_OUT_DATA_0 = 7'h3c,
+    ADDR_B_READY_OUT_CTRL   = 7'h40,
+    WRIDLE                  = 2'd0,
+    WRDATA                  = 2'd1,
+    WRRESP                  = 2'd2,
+    WRRESET                 = 2'd3,
+    RDIDLE                  = 2'd0,
+    RDDATA                  = 2'd1,
+    RDRESET                 = 2'd2,
+    ADDR_BITS         = 7;
 
 //------------------------Local signal-------------------
     reg  [1:0]                    wstate = WRRESET;
@@ -126,6 +140,8 @@ localparam
     reg  [63:0]                   int_A_out_V = 'b0;
     reg  [63:0]                   int_B_out_V = 'b0;
     reg  [63:0]                   int_C_out_V = 'b0;
+    reg  [0:0]                    int_A_ready_out = 'b0;
+    reg  [0:0]                    int_B_ready_out = 'b0;
 
 //------------------------Instantiation------------------
 
@@ -251,6 +267,12 @@ always @(posedge ACLK) begin
                 ADDR_C_OUT_V_DATA_1: begin
                     rdata <= int_C_out_V[63:32];
                 end
+                ADDR_A_READY_OUT_DATA_0: begin
+                    rdata <= int_A_ready_out[0:0];
+                end
+                ADDR_B_READY_OUT_DATA_0: begin
+                    rdata <= int_B_ready_out[0:0];
+                end
             endcase
         end
     end
@@ -258,11 +280,13 @@ end
 
 
 //------------------------Register logic-----------------
-assign interrupt = int_gie & (|int_isr);
-assign ap_start  = int_ap_start;
-assign A_out_V   = int_A_out_V;
-assign B_out_V   = int_B_out_V;
-assign C_out_V   = int_C_out_V;
+assign interrupt   = int_gie & (|int_isr);
+assign ap_start    = int_ap_start;
+assign A_out_V     = int_A_out_V;
+assign B_out_V     = int_B_out_V;
+assign C_out_V     = int_C_out_V;
+assign A_ready_out = int_A_ready_out;
+assign B_ready_out = int_B_ready_out;
 // int_ap_start
 always @(posedge ACLK) begin
     if (ARESET)
@@ -416,6 +440,26 @@ always @(posedge ACLK) begin
     else if (ACLK_EN) begin
         if (w_hs && waddr == ADDR_C_OUT_V_DATA_1)
             int_C_out_V[63:32] <= (WDATA[31:0] & wmask) | (int_C_out_V[63:32] & ~wmask);
+    end
+end
+
+// int_A_ready_out[0:0]
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_A_ready_out[0:0] <= 0;
+    else if (ACLK_EN) begin
+        if (w_hs && waddr == ADDR_A_READY_OUT_DATA_0)
+            int_A_ready_out[0:0] <= (WDATA[31:0] & wmask) | (int_A_ready_out[0:0] & ~wmask);
+    end
+end
+
+// int_B_ready_out[0:0]
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_B_ready_out[0:0] <= 0;
+    else if (ACLK_EN) begin
+        if (w_hs && waddr == ADDR_B_READY_OUT_DATA_0)
+            int_B_ready_out[0:0] <= (WDATA[31:0] & wmask) | (int_B_ready_out[0:0] & ~wmask);
     end
 end
 

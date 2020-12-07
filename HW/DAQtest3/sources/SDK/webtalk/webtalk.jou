@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Webtalk v2018.3 (64-bit)
+# SW Build 2405991 on Thu Dec  6 23:36:41 MST 2018
+# 
+# Start of session at: Mon Nov 30 18:15:59 2020
+# Process ID: 4088
+# Current directory: /home/toni/workspace/HW/DAQtest3/sources/SDK/webtalk
+# Command line: wbtcv -mode batch -source sdk_webtalk.tcl
+# Log file: /home/toni/workspace/HW/DAQtest3/sources/SDK/webtalk/webtalk.log
+# Journal file: /home/toni/workspace/HW/DAQtest3/sources/SDK/webtalk/webtalk.jou
+#-----------------------------------------------------------
+source sdk_webtalk.tcl

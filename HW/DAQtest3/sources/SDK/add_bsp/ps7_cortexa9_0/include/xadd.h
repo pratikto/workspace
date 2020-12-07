@@ -1,5 +1,5 @@
 // ==============================================================
-// File generated on Mon Nov 30 11:10:07 WIB 2020
+// File generated on Tue Dec 01 20:04:35 WIB 2020
 // Vivado(TM) HLS - High-Level Synthesis from C, C++ and SystemC v2018.3 (64-bit)
 // SW Build 2405991 on Thu Dec  6 23:36:41 MST 2018
 // IP Build 2404404 on Fri Dec  7 01:43:56 MST 2018
@@ -40,12 +40,12 @@ typedef uint32_t u32;
 #else
 typedef struct {
     u16 DeviceId;
-    u32 Axilites_BaseAddress;
+    u32 Axi4lite_bus_BaseAddress;
 } XAdd_Config;
 #endif
 
 typedef struct {
-    u32 Axilites_BaseAddress;
+    u32 Axi4lite_bus_BaseAddress;
     u32 IsReady;
 } XAdd;
 
@@ -80,9 +80,31 @@ int XAdd_Initialize(XAdd *InstancePtr, const char* InstanceName);
 int XAdd_Release(XAdd *InstancePtr);
 #endif
 
+void XAdd_Start(XAdd *InstancePtr);
+u32 XAdd_IsDone(XAdd *InstancePtr);
+u32 XAdd_IsIdle(XAdd *InstancePtr);
+u32 XAdd_IsReady(XAdd *InstancePtr);
+void XAdd_EnableAutoRestart(XAdd *InstancePtr);
+void XAdd_DisableAutoRestart(XAdd *InstancePtr);
 
-void XAdd_Set_C_V(XAdd *InstancePtr, u64 Data);
-u64 XAdd_Get_C_V(XAdd *InstancePtr);
+void XAdd_Set_A_out_V(XAdd *InstancePtr, u64 Data);
+u64 XAdd_Get_A_out_V(XAdd *InstancePtr);
+void XAdd_Set_B_out_V(XAdd *InstancePtr, u64 Data);
+u64 XAdd_Get_B_out_V(XAdd *InstancePtr);
+void XAdd_Set_C_out_V(XAdd *InstancePtr, u64 Data);
+u64 XAdd_Get_C_out_V(XAdd *InstancePtr);
+void XAdd_Set_A_ready_out(XAdd *InstancePtr, u32 Data);
+u32 XAdd_Get_A_ready_out(XAdd *InstancePtr);
+void XAdd_Set_B_ready_out(XAdd *InstancePtr, u32 Data);
+u32 XAdd_Get_B_ready_out(XAdd *InstancePtr);
+
+void XAdd_InterruptGlobalEnable(XAdd *InstancePtr);
+void XAdd_InterruptGlobalDisable(XAdd *InstancePtr);
+void XAdd_InterruptEnable(XAdd *InstancePtr, u32 Mask);
+void XAdd_InterruptDisable(XAdd *InstancePtr, u32 Mask);
+void XAdd_InterruptClear(XAdd *InstancePtr, u32 Mask);
+u32 XAdd_InterruptGetEnabled(XAdd *InstancePtr);
+u32 XAdd_InterruptGetStatus(XAdd *InstancePtr);
 
 #ifdef __cplusplus
 }

@@ -7,7 +7,7 @@
 
 `timescale 1 ns / 1 ps 
 
-(* CORE_GENERATION_INFO="add,hls_ip_2018_3,{HLS_INPUT_TYPE=cxx,HLS_INPUT_FLOAT=0,HLS_INPUT_FIXED=1,HLS_INPUT_PART=xc7z020clg400-1,HLS_INPUT_CLOCK=10.000000,HLS_INPUT_ARCH=others,HLS_SYN_CLOCK=0.000000,HLS_SYN_LAT=0,HLS_SYN_TPT=none,HLS_SYN_MEM=0,HLS_SYN_DSP=0,HLS_SYN_FF=251,HLS_SYN_LUT=454,HLS_VERSION=2018_3}" *)
+(* CORE_GENERATION_INFO="add,hls_ip_2018_3,{HLS_INPUT_TYPE=cxx,HLS_INPUT_FLOAT=0,HLS_INPUT_FIXED=1,HLS_INPUT_PART=xc7z020clg400-1,HLS_INPUT_CLOCK=10.000000,HLS_INPUT_ARCH=others,HLS_SYN_CLOCK=0.000000,HLS_SYN_LAT=0,HLS_SYN_TPT=none,HLS_SYN_MEM=0,HLS_SYN_DSP=0,HLS_SYN_FF=265,HLS_SYN_LUT=458,HLS_VERSION=2018_3}" *)
 
 module add (
         ap_clk,
@@ -18,8 +18,8 @@ module add (
         B_in_V_TDATA,
         B_in_V_TVALID,
         B_in_V_TREADY,
-        A_ready,
-        B_ready,
+        A_ready_in,
+        B_ready_in,
         s_axi_AXI4lite_bus_AWVALID,
         s_axi_AXI4lite_bus_AWREADY,
         s_axi_AXI4lite_bus_AWADDR,
@@ -42,7 +42,7 @@ module add (
 
 parameter    ap_ST_fsm_state1 = 1'd1;
 parameter    C_S_AXI_AXI4LITE_BUS_DATA_WIDTH = 32;
-parameter    C_S_AXI_AXI4LITE_BUS_ADDR_WIDTH = 6;
+parameter    C_S_AXI_AXI4LITE_BUS_ADDR_WIDTH = 7;
 parameter    C_S_AXI_DATA_WIDTH = 32;
 
 parameter C_S_AXI_AXI4LITE_BUS_WSTRB_WIDTH = (32 / 8);
@@ -56,8 +56,8 @@ output   A_in_V_TREADY;
 input  [63:0] B_in_V_TDATA;
 input   B_in_V_TVALID;
 output   B_in_V_TREADY;
-input   A_ready;
-input   B_ready;
+input   A_ready_in;
+input   B_ready_in;
 input   s_axi_AXI4lite_bus_AWVALID;
 output   s_axi_AXI4lite_bus_AWREADY;
 input  [C_S_AXI_AXI4LITE_BUS_ADDR_WIDTH - 1:0] s_axi_AXI4lite_bus_AWADDR;
@@ -93,6 +93,8 @@ wire    B_in_V_0_ack_out;
 reg   [1:0] B_in_V_0_state;
 wire   [63:0] B_out_V;
 wire   [63:0] C_out_V;
+wire    A_ready_out;
+wire    B_ready_out;
 reg   [0:0] ap_NS_fsm;
 
 // power-on initialization
@@ -133,7 +135,9 @@ add_AXI4lite_bus_s_axi_U(
     .ap_idle(ap_idle),
     .A_out_V(A_out_V),
     .B_out_V(B_out_V),
-    .C_out_V(C_out_V)
+    .C_out_V(C_out_V),
+    .A_ready_out(A_ready_out),
+    .B_ready_out(B_ready_out)
 );
 
 always @ (posedge ap_clk) begin

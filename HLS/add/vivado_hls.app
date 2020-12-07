@@ -1,4 +1,4 @@
-<project xmlns="com.autoesl.autopilot.project" top="add" name="add">
+<project xmlns="com.autoesl.autopilot.project" name="add" top="add">
     <includePaths/>
     <libraryPaths/>
     <Simulation>

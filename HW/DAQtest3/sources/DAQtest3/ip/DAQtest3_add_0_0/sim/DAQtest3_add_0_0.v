@@ -48,7 +48,7 @@
 
 
 // IP VLNV: xilinx.com:hls:add:1.0
-// IP Revision: 2011301805
+// IP Revision: 2012012005
 
 `timescale 1ns/1ps
 
@@ -81,12 +81,12 @@ module DAQtest3_add_0_0 (
   B_in_V_TVALID,
   B_in_V_TREADY,
   B_in_V_TDATA,
-  A_ready,
-  B_ready
+  A_ready_in,
+  B_ready_in
 );
 
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi_AXI4lite_bus AWADDR" *)
-input wire [5 : 0] s_axi_AXI4lite_bus_AWADDR;
+input wire [6 : 0] s_axi_AXI4lite_bus_AWADDR;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi_AXI4lite_bus AWVALID" *)
 input wire s_axi_AXI4lite_bus_AWVALID;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi_AXI4lite_bus AWREADY" *)
@@ -106,7 +106,7 @@ output wire s_axi_AXI4lite_bus_BVALID;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi_AXI4lite_bus BREADY" *)
 input wire s_axi_AXI4lite_bus_BREADY;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi_AXI4lite_bus ARADDR" *)
-input wire [5 : 0] s_axi_AXI4lite_bus_ARADDR;
+input wire [6 : 0] s_axi_AXI4lite_bus_ARADDR;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi_AXI4lite_bus ARVALID" *)
 input wire s_axi_AXI4lite_bus_ARVALID;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi_AXI4lite_bus ARREADY" *)
@@ -117,12 +117,12 @@ output wire [31 : 0] s_axi_AXI4lite_bus_RDATA;
 output wire [1 : 0] s_axi_AXI4lite_bus_RRESP;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi_AXI4lite_bus RVALID" *)
 output wire s_axi_AXI4lite_bus_RVALID;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME s_axi_AXI4lite_bus, ADDR_WIDTH 6, DATA_WIDTH 32, PROTOCOL AXI4LITE, READ_WRITE_MODE READ_WRITE, LAYERED_METADATA xilinx.com:interface:datatypes:1.0 {CLK {datatype {name {attribs {resolve_type immediate dependency {} format string minimum {} maximum {}} value {}} bitwidth {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 1} bitoffset {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 0}}}}, FREQ_HZ 250000\
-000, ID_WIDTH 0, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 0, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 0, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 1, PHASE 0.000, CLK_DOMAIN DAQtest3_processing_system7_0_0_FCLK_CLK0, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME s_axi_AXI4lite_bus, ADDR_WIDTH 7, DATA_WIDTH 32, PROTOCOL AXI4LITE, READ_WRITE_MODE READ_WRITE, LAYERED_METADATA xilinx.com:interface:datatypes:1.0 {CLK {datatype {name {attribs {resolve_type immediate dependency {} format string minimum {} maximum {}} value {}} bitwidth {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 1} bitoffset {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 0}}}}, FREQ_HZ 2.5e+0\
+8, ID_WIDTH 0, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 0, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 0, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 1, PHASE 0.000, CLK_DOMAIN DAQtest3_processing_system7_0_0_FCLK_CLK0, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi_AXI4lite_bus RREADY" *)
 input wire s_axi_AXI4lite_bus_RREADY;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME ap_clk, ASSOCIATED_BUSIF s_axi_AXI4lite_bus:A_in_V:B_in_V, ASSOCIATED_RESET ap_rst_n, LAYERED_METADATA xilinx.com:interface:datatypes:1.0 {CLK {datatype {name {attribs {resolve_type immediate dependency {} format string minimum {} maximum {}} value {}} bitwidth {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 1} bitoffset {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 0}}}}, FREQ_HZ 250000000, PHASE\
- 0.000, CLK_DOMAIN DAQtest3_processing_system7_0_0_FCLK_CLK0, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME ap_clk, ASSOCIATED_BUSIF s_axi_AXI4lite_bus:A_in_V:B_in_V, ASSOCIATED_RESET ap_rst_n, LAYERED_METADATA xilinx.com:interface:datatypes:1.0 {CLK {datatype {name {attribs {resolve_type immediate dependency {} format string minimum {} maximum {}} value {}} bitwidth {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 1} bitoffset {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 0}}}}, FREQ_HZ 2.5e+08, PHASE 0\
+.000, CLK_DOMAIN DAQtest3_processing_system7_0_0_FCLK_CLK0, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 ap_clk CLK" *)
 input wire ap_clk;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME ap_rst_n, POLARITY ACTIVE_LOW, LAYERED_METADATA xilinx.com:interface:datatypes:1.0 {RST {datatype {name {attribs {resolve_type immediate dependency {} format string minimum {} maximum {}} value {}} bitwidth {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 1} bitoffset {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 0}}}}, INSERT_VIP 0" *)
@@ -135,25 +135,25 @@ output wire interrupt;
 input wire A_in_V_TVALID;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 A_in_V TREADY" *)
 output wire A_in_V_TREADY;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME A_in_V, TDATA_NUM_BYTES 8, TUSER_WIDTH 0, LAYERED_METADATA undef, TDEST_WIDTH 0, TID_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 0, FREQ_HZ 250000000, PHASE 0.000, CLK_DOMAIN DAQtest3_processing_system7_0_0_FCLK_CLK0, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME A_in_V, TDATA_NUM_BYTES 8, TUSER_WIDTH 0, LAYERED_METADATA undef, TDEST_WIDTH 0, TID_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 0, FREQ_HZ 2.5e+08, PHASE 0.000, CLK_DOMAIN DAQtest3_processing_system7_0_0_FCLK_CLK0, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 A_in_V TDATA" *)
 input wire [63 : 0] A_in_V_TDATA;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 B_in_V TVALID" *)
 input wire B_in_V_TVALID;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 B_in_V TREADY" *)
 output wire B_in_V_TREADY;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME B_in_V, TDATA_NUM_BYTES 8, TUSER_WIDTH 0, LAYERED_METADATA undef, TDEST_WIDTH 0, TID_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 0, FREQ_HZ 250000000, PHASE 0.000, CLK_DOMAIN DAQtest3_processing_system7_0_0_FCLK_CLK0, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME B_in_V, TDATA_NUM_BYTES 8, TUSER_WIDTH 0, LAYERED_METADATA undef, TDEST_WIDTH 0, TID_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 0, FREQ_HZ 2.5e+08, PHASE 0.000, CLK_DOMAIN DAQtest3_processing_system7_0_0_FCLK_CLK0, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 B_in_V TDATA" *)
 input wire [63 : 0] B_in_V_TDATA;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME A_ready, LAYERED_METADATA xilinx.com:interface:datatypes:1.0 {DATA {datatype {name {attribs {resolve_type immediate dependency {} format string minimum {} maximum {}} value {}} bitwidth {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 1} bitoffset {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 0}}}}" *)
-(* X_INTERFACE_INFO = "xilinx.com:signal:data:1.0 A_ready DATA" *)
-input wire A_ready;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME B_ready, LAYERED_METADATA xilinx.com:interface:datatypes:1.0 {DATA {datatype {name {attribs {resolve_type immediate dependency {} format string minimum {} maximum {}} value {}} bitwidth {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 1} bitoffset {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 0}}}}" *)
-(* X_INTERFACE_INFO = "xilinx.com:signal:data:1.0 B_ready DATA" *)
-input wire B_ready;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME A_ready_in, LAYERED_METADATA xilinx.com:interface:datatypes:1.0 {DATA {datatype {name {attribs {resolve_type immediate dependency {} format string minimum {} maximum {}} value {}} bitwidth {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 1} bitoffset {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 0}}}}" *)
+(* X_INTERFACE_INFO = "xilinx.com:signal:data:1.0 A_ready_in DATA" *)
+input wire A_ready_in;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME B_ready_in, LAYERED_METADATA xilinx.com:interface:datatypes:1.0 {DATA {datatype {name {attribs {resolve_type immediate dependency {} format string minimum {} maximum {}} value {}} bitwidth {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 1} bitoffset {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 0}}}}" *)
+(* X_INTERFACE_INFO = "xilinx.com:signal:data:1.0 B_ready_in DATA" *)
+input wire B_ready_in;
 
   add #(
-    .C_S_AXI_AXI4LITE_BUS_ADDR_WIDTH(6),
+    .C_S_AXI_AXI4LITE_BUS_ADDR_WIDTH(7),
     .C_S_AXI_AXI4LITE_BUS_DATA_WIDTH(32)
   ) inst (
     .s_axi_AXI4lite_bus_AWADDR(s_axi_AXI4lite_bus_AWADDR),
@@ -182,7 +182,7 @@ input wire B_ready;
     .B_in_V_TVALID(B_in_V_TVALID),
     .B_in_V_TREADY(B_in_V_TREADY),
     .B_in_V_TDATA(B_in_V_TDATA),
-    .A_ready(A_ready),
-    .B_ready(B_ready)
+    .A_ready_in(A_ready_in),
+    .B_ready_in(B_ready_in)
   );
 endmodule
